@@ -15,8 +15,8 @@ export function AccessOverlay() {
       return
     }
     unlock('access')
-    const t1 = window.setTimeout(() => setStep(1), 700)
-    const t2 = window.setTimeout(() => setStep(2), 1600)
+    const t1 = window.setTimeout(() => setStep(1), 650)
+    const t2 = window.setTimeout(() => setStep(2), 1400)
     return () => {
       window.clearTimeout(t1)
       window.clearTimeout(t2)
@@ -46,7 +46,7 @@ export function AccessOverlay() {
         >
           <button
             type="button"
-            className="absolute top-8 right-8 font-display text-[11px] tracking-[0.28em] uppercase"
+            className="absolute top-8 right-8 text-[11px] tracking-[0.28em] uppercase"
             onClick={() => setAccessOpen(false)}
             onMouseEnter={() => setCursor('close')}
             onMouseLeave={() => setCursor('default')}
@@ -55,31 +55,23 @@ export function AccessOverlay() {
           </button>
           <div className="w-full max-w-3xl">
             <p className="eyebrow mb-10 text-accent">Access 01</p>
-            <p className="display-title mb-4 text-3xl md:text-5xl">
-              {step >= 0 ? accessLayer.lines[0] : ''}
-            </p>
-            <p className="mb-16 text-xl text-muted md:text-3xl">
-              {step >= 1 ? accessLayer.lines[1] : ''}
-            </p>
+            <p className="display mb-5 text-3xl md:text-5xl">{step >= 0 ? accessLayer.lines[0] : ''}</p>
+            <p className="mb-16 text-xl text-muted md:text-3xl">{step >= 1 ? accessLayer.lines[1] : ''}</p>
             {step >= 2 && (
-              <ul className="space-y-4">
+              <ul>
                 {accessLayer.identities.map((item) => (
-                  <li key={item.id}>
+                  <li key={item.id} className="border-b border-line">
                     <button
                       type="button"
-                      className="w-full border-b border-line py-4 text-left"
+                      className="w-full py-4 text-left"
                       onClick={() => setActive(active === item.id ? null : item.id)}
                       onMouseEnter={() => setCursor('open')}
                       onMouseLeave={() => setCursor('default')}
                     >
-                      <span className="mr-4 font-display text-xs tracking-[0.2em] text-accent">
-                        {item.index}
-                      </span>
-                      <span className="font-display text-2xl md:text-4xl">{item.label}</span>
+                      <span className="mr-4 text-xs tracking-[0.2em] text-accent">{item.index} —</span>
+                      <span className="font-display text-2xl uppercase md:text-4xl">{item.label}</span>
                       {active === item.id && (
-                        <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted md:text-base">
-                          {item.description}
-                        </p>
+                        <p className="mt-3 max-w-xl text-sm text-muted md:text-base">{item.description}</p>
                       )}
                     </button>
                   </li>

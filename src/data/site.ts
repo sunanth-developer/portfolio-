@@ -9,21 +9,71 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/sunanth-samala-818b2b169',
   github: 'https://github.com/sunanth-developer',
   year: 2026,
+  status: 'BUILDING',
 }
 
 export const navItems = [
-  { id: 'about', index: '01', label: 'About', href: '/about', short: 'About' },
-  { id: 'ventures', index: '02', label: 'Ventures', href: '/ventures', short: 'Work' },
-  { id: 'engineering', index: '03', label: 'Engineering', href: '/engineering', short: 'Engineering' },
-  { id: 'journey', index: '04', label: 'Journey', href: '/journey', short: 'Journey' },
-  { id: 'lab', index: '05', label: 'Lab', href: '/lab', short: 'Lab' },
-  { id: 'notes', index: '06', label: 'Field Notes', href: '/notes', short: 'Notes' },
-  { id: 'contact', index: '07', label: 'Contact', href: '/contact', short: 'Contact' },
+  {
+    id: 'about',
+    index: '01',
+    label: 'About',
+    href: '/about',
+    short: 'About',
+    description: 'The person behind the products.',
+  },
+  {
+    id: 'work',
+    index: '02',
+    label: 'Work',
+    href: '/work',
+    short: 'Work',
+    description: 'Products, ventures and systems I’ve built.',
+  },
+  {
+    id: 'engineering',
+    index: '03',
+    label: 'Engineering',
+    href: '/engineering',
+    short: 'Engineering',
+    description: 'The technology underneath the work.',
+  },
+  {
+    id: 'journey',
+    index: '04',
+    label: 'Journey',
+    href: '/journey',
+    short: 'Journey',
+    description: 'The build log — not a resume.',
+  },
+  {
+    id: 'lab',
+    index: '05',
+    label: 'Lab',
+    href: '/lab',
+    short: 'Lab',
+    description: 'Experiments that may never become companies.',
+  },
+  {
+    id: 'notes',
+    index: '06',
+    label: 'Field Notes',
+    href: '/notes',
+    short: 'Notes',
+    description: 'Thinking from the work, still in motion.',
+  },
+  {
+    id: 'contact',
+    index: '07',
+    label: 'Contact',
+    href: '/contact',
+    short: 'Contact',
+    description: 'If there is something worth building.',
+  },
 ] as const
 
 export const desktopNav = [
   { label: 'About', href: '/about' },
-  { label: 'Work', href: '/ventures' },
+  { label: 'Work', href: '/work' },
   { label: 'Engineering', href: '/engineering' },
   { label: 'Lab', href: '/lab' },
   { label: 'Notes', href: '/notes' },
@@ -32,7 +82,7 @@ export const desktopNav = [
 export const pageMeta: Record<string, { number: string; label: string }> = {
   '/': { number: '00', label: 'Index' },
   '/about': { number: '01', label: 'About' },
-  '/ventures': { number: '02', label: 'Ventures' },
+  '/work': { number: '02', label: 'Work' },
   '/engineering': { number: '03', label: 'Engineering' },
   '/journey': { number: '04', label: 'Journey' },
   '/lab': { number: '05', label: 'Lab' },
@@ -40,49 +90,32 @@ export const pageMeta: Record<string, { number: string; label: string }> = {
   '/contact': { number: '07', label: 'Contact' },
 }
 
-export const hero = {
-  headline: ['I BUILD', 'THINGS', 'THAT MOVE.'],
-  secondary: 'Founder × Developer',
-  supporting:
-    'Turning ideas into products, products into businesses, and problems into systems.',
-  location: 'Hyderabad, India',
-  primaryCta: 'Explore the work',
-  secondaryCta: 'Enter the lab',
-}
-
 export const accessLayer = {
-  lines: [
-    'Most people see the product.',
-    'I’m interested in the system behind it.',
-  ],
+  lines: ['Most people see the product.', "I'm interested in the system behind it."],
   identities: [
     {
       id: 'founder',
       index: '01',
       label: 'Founder',
-      description:
-        'I start from a real problem, not a feature list. If the demand is not there, the code does not matter.',
+      description: 'I think in problems, users, systems and outcomes.',
     },
     {
       id: 'engineer',
       index: '02',
       label: 'Engineer',
-      description:
-        'I care about the architecture that lets a product survive contact with users — APIs, data, interfaces, deployment.',
+      description: 'I turn product ideas into working software.',
     },
     {
       id: 'experimenter',
       index: '03',
       label: 'Experimenter',
-      description:
-        'Not every idea should become a company. Some exist to test a question I cannot answer any other way.',
+      description: 'I build to understand what is possible.',
     },
     {
       id: 'solver',
       index: '04',
       label: 'Problem Solver',
-      description:
-        'I stay with a problem long enough to see the system: the users, the constraints, the next smallest useful move.',
+      description: 'The best products usually start with an uncomfortable problem.',
     },
   ],
 }
@@ -105,57 +138,19 @@ export const whatIBuild = [
   },
 ]
 
-export const founder = {
-  heading: 'I don’t want to build another app.',
-  supporting: 'I want to build systems that solve problems people repeatedly experience.',
-  stages: ['Observe', 'Question', 'Build', 'Test', 'Learn', 'Repeat'] as const,
-  closing: 'As a founder, I think in problems, users, systems and outcomes.',
-}
+export const thinkingLoop = [
+  'Problem',
+  'User',
+  'Insight',
+  'Product',
+  'Code',
+  'Launch',
+  'Learn',
+] as const
 
 export const ownership = {
-  heading: 'From idea to production.',
   pipeline: ['Idea', 'Wireframe', 'Architecture', 'Code', 'Deployment', 'Users', 'Iteration'] as const,
-  layers: [
-    'Product',
-    'UX',
-    'Architecture',
-    'Frontend',
-    'Mobile',
-    'Backend',
-    'Deployment',
-    'Operations',
-  ] as const,
+  layers: ['Product', 'UX', 'Architecture', 'Frontend', 'Mobile', 'Backend', 'Deployment', 'Operations'] as const,
 }
 
-export const about = {
-  heading: 'The person behind the products.',
-  intro: [
-    "I'm Sunanth Samala, a founder and developer focused on turning real-world problems into technology-driven products.",
-    'I like being involved across the entire journey — understanding the problem, shaping the product, writing the software, launching it and learning from what happens next.',
-  ],
-  sections: [
-    {
-      title: 'As a founder',
-      body: 'I think in problems, users, systems and outcomes.',
-    },
-    {
-      title: 'As a developer',
-      body: 'I think in architecture, interfaces, APIs, data and performance.',
-    },
-    {
-      title: 'The combination',
-      body: "The advantage is simple: I don't have to throw an idea over the wall to someone else before I can build it.",
-    },
-  ],
-}
-
-export const contact = {
-  heading: 'Have something worth building?',
-  supporting:
-    "I'm always interested in ambitious ideas, interesting technical problems and people who want to build something meaningful.",
-}
-
-export const labIntro = {
-  heading: 'Not everything I build becomes a company.',
-  supporting: 'Some ideas exist simply because I wanted to know if I could build them.',
-}
+export const morphWords = ['FOUNDER', 'BUILDER', 'ENGINEER', 'PRODUCT', 'SYSTEM'] as const

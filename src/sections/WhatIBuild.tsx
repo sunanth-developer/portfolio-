@@ -1,52 +1,53 @@
-import { motion } from 'framer-motion'
 import { whatIBuild } from '@/data/site'
-import { SectionHeading } from '@/components/SectionHeading'
 import { useApp } from '@/context/AppContext'
+import { useState } from 'react'
+import { cn } from '@/lib/cn'
 
 export function WhatIBuild() {
   const { setCursor } = useApp()
+  const [active, setActive] = useState('01')
 
   return (
-    <section className="px-5 py-28 md:px-10 md:py-36" id="build">
-      <SectionHeading
-        index="01"
-        eyebrow="Practice"
-        title="I don't just build software."
-      />
-      <p className="mt-8 max-w-2xl text-xl text-muted md:text-3xl">
-        I build systems around problems worth solving.
+    <section className="border-t border-line px-5 py-24 md:px-8 md:py-32">
+      <p className="eyebrow mb-6">
+        <span className="mr-4 text-accent">01</span>
+        Practice
       </p>
-      <div className="mt-16 grid gap-4 md:grid-cols-3" style={{ perspective: 1200 }}>
-        {whatIBuild.map((card, index) => (
-          <motion.article
-            key={card.index}
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10%' }}
-            transition={{ delay: index * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div
-              className="group h-full border border-line p-8 transition-colors duration-500 hover:border-accent/50 md:min-h-[28rem]"
-              onMouseEnter={() => setCursor('view')}
-              onMouseLeave={(event) => {
-                setCursor('default')
-                event.currentTarget.style.transform = 'rotateX(0deg) rotateY(0deg)'
-              }}
-              onMouseMove={(event) => {
-                if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-                  const rect = event.currentTarget.getBoundingClientRect()
-                  const x = (event.clientX - rect.left) / rect.width - 0.5
-                  const y = (event.clientY - rect.top) / rect.height - 0.5
-                  event.currentTarget.style.transform = `rotateX(${y * -7}deg) rotateY(${x * 7}deg)`
-                }
-              }}
-            >
-              <p className="eyebrow text-accent">{card.index}</p>
-              <h3 className="display-title mt-10 text-5xl md:text-6xl">{card.title}</h3>
-              <p className="mt-8 text-sm leading-relaxed text-muted md:text-base">{card.body}</p>
-            </div>
-          </motion.article>
-        ))}
+      <h2 className="display max-w-5xl text-[12vw] md:text-[5.6rem]">I don’t just build software.</h2>
+      <p className="mt-8 max-w-xl text-xl text-muted">I build systems around problems worth solving.</p>
+      <div className="mt-16 divide-y divide-line border-y border-line">
+        {whatIBuild.map((panel) => {
+          const open = active === panel.index
+          return (
+            <article key={panel.index}>
+              <button
+                type="button"
+                className="flex w-full items-baseline justify-between gap-6 py-8 text-left md:py-12"
+                onClick={() => setActive(panel.index)}
+                onMouseEnter={() => setCursor('open')}
+                onMouseLeave={() => setCursor('default')}
+                aria-expanded={open}
+              >
+                <span className="flex items-baseline gap-5 md:gap-10">
+                  <span className="text-xs tracking-[0.2em] text-accent">{panel.index}</span>
+                  <span className={cn('display text-5xl md:text-7xl', open ? 'text-fg' : 'text-muted')}>
+                    {panel.title}
+                  </span>
+                </span>
+              </button>
+              <div
+                className={cn(
+                  'grid transition-[grid-template-rows] duration-500',
+                  open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+                )}
+              >
+                <div className="overflow-hidden">
+                  <p className="max-w-2xl pb-10 text-muted md:text-lg">{panel.body}</p>
+                </div>
+              </div>
+            </article>
+          )
+        })}
       </div>
     </section>
   )

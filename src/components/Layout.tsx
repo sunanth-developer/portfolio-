@@ -4,10 +4,9 @@ import { useLenis } from '@/hooks/useLenis'
 import { useApp } from '@/context/AppContext'
 import { Navbar } from '@/components/Navbar'
 import { FullscreenMenu } from '@/components/FullscreenMenu'
-import { PageTransition } from '@/components/PageTransition'
+import { PageTransition, GrainOverlay } from '@/components/PageTransition'
 import { CustomCursor } from '@/components/CustomCursor'
 import { ScrollProgress } from '@/components/ScrollProgress'
-import { GrainOverlay } from '@/components/GrainOverlay'
 import { Footer } from '@/components/Footer'
 import { AccessOverlay } from '@/components/AccessOverlay'
 import { CommandPalette } from '@/components/CommandPalette'
@@ -24,13 +23,12 @@ export function Layout() {
     experimentId,
     completeOpen,
     setCommandOpen,
-    unlock,
   } = useApp()
   const [booted, setBooted] = useState(() => {
     try {
-      if (sessionStorage.getItem('sunanth-boot') === '1') return true
+      if (sessionStorage.getItem('sunanth-boot-v2') === '1') return true
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        sessionStorage.setItem('sunanth-boot', '1')
+        sessionStorage.setItem('sunanth-boot-v2', '1')
         return true
       }
     } catch {
@@ -39,8 +37,7 @@ export function Layout() {
     return false
   })
   const location = useLocation()
-  const paused =
-    !booted || menuOpen || accessOpen || commandOpen || Boolean(experimentId) || completeOpen
+  const paused = !booted || menuOpen || accessOpen || commandOpen || Boolean(experimentId) || completeOpen
 
   useLenis(paused)
   const finishBoot = useCallback(() => setBooted(true), [])
@@ -56,25 +53,26 @@ export function Layout() {
       if (event.key === 'k' || event.key === 'K') {
         event.preventDefault()
         setCommandOpen(true)
-        unlock('command')
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [setCommandOpen, unlock])
+  }, [setCommandOpen])
 
   useEffect(() => {
     if (location.pathname.startsWith('/notes/')) {
       document.title = `Field Notes — ${site.name}`
       return
     }
-    const meta = pageMeta[location.pathname]
-    document.title = meta
-      ? `${meta.label} — ${site.name}`
-      : `${site.name} — Founder × Developer`
-    if (location.pathname === '/') {
-      document.title = `${site.name} — Founder × Developer`
+    if (location.pathname.startsWith('/work/')) {
+      document.title = `Work — ${site.name}`
+      return
     }
+    const meta = pageMeta[location.pathname]
+    document.title =
+      location.pathname === '/'
+        ? `${site.name} — Founder × Developer`
+        : `${meta?.label ?? 'Index'} — ${site.name}`
   }, [location.pathname])
 
   return (
@@ -95,12 +93,10 @@ export function Layout() {
       <DiscoveryToasts />
       <SystemComplete />
       <div
-        className={booted ? 'opacity-100' : 'opacity-0'}
         id="main"
+        className={booted ? undefined : 'invisible'}
         inert={
-          menuOpen || accessOpen || commandOpen || Boolean(experimentId) || completeOpen
-            ? true
-            : undefined
+          menuOpen || accessOpen || commandOpen || Boolean(experimentId) || completeOpen ? true : undefined
         }
       >
         <Outlet />

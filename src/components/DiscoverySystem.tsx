@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 import { useApp } from '@/context/AppContext'
 import { discoveries, discoveryIds, type DiscoveryId } from '@/data/discoveries'
 
@@ -17,7 +17,7 @@ export function DiscoveryToasts() {
     prev.current = found.length
     if (!latest || found.length >= discoveryIds.length) return
     setToast(latest)
-    const timer = window.setTimeout(() => setToast(null), 2800)
+    const timer = window.setTimeout(() => setToast(null), 2600)
     return () => window.clearTimeout(timer)
   }, [found])
 
@@ -28,7 +28,7 @@ export function DiscoveryToasts() {
       {meta && (
         <motion.div
           className="pointer-events-none fixed bottom-6 left-6 z-[70] border border-line bg-bg px-4 py-3"
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
         >
@@ -57,11 +57,11 @@ export function SystemComplete() {
         >
           <div className="max-w-lg text-center">
             <p className="eyebrow mb-8 text-accent">System complete</p>
-            <h2 className="display-title text-4xl md:text-6xl">You found what most visitors miss.</h2>
-            <p className="mt-8 text-muted">Keep building.</p>
+            <h2 className="display text-4xl md:text-6xl">You found what most visitors miss.</h2>
+            <p className="mt-8 tracking-[0.2em] text-muted uppercase">Keep building.</p>
             <button
               type="button"
-              className="mt-12 font-display text-xs tracking-[0.28em] uppercase"
+              className="mt-12 text-xs tracking-[0.28em] uppercase"
               onClick={() => setCompleteOpen(false)}
               onMouseEnter={() => setCursor('close')}
               onMouseLeave={() => setCursor('default')}

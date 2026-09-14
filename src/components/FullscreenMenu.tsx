@@ -12,15 +12,12 @@ export function FullscreenMenu() {
       if (event.key === 'Escape') setMenuOpen(false)
     }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [menuOpen, setMenuOpen])
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    document.body.style.overflow = 'hidden'
     return () => {
+      window.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
     }
-  }, [menuOpen])
+  }, [menuOpen, setMenuOpen])
 
   return (
     <AnimatePresence>
@@ -34,35 +31,34 @@ export function FullscreenMenu() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.35 }}
         >
           <div className="flex flex-1 flex-col justify-center">
             {navItems.map((item, index) => (
               <motion.button
                 key={item.id}
                 type="button"
-                className="group flex items-baseline gap-5 overflow-hidden border-b border-line py-4 text-left md:gap-10 md:py-5"
-                initial={{ y: 48, opacity: 0 }}
+                className="flex flex-col border-b border-line py-4 text-left md:flex-row md:items-end md:justify-between md:py-5"
+                initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.08 + index * 0.06, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: 0.06 + index * 0.05, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
                 onMouseEnter={() => setCursor('view')}
                 onMouseLeave={() => setCursor('default')}
                 onClick={() => goTo(item.href, item.index, item.label)}
               >
-                <span className="font-display text-xs tracking-[0.24em] text-accent md:text-sm">
-                  {item.index}
+                <span className="flex items-baseline gap-4 md:gap-8">
+                  <span className="text-xs tracking-[0.2em] text-accent">{item.index}</span>
+                  <span className="display text-[11vw] uppercase md:text-6xl lg:text-7xl">{item.label}</span>
                 </span>
-                <span className="display-title text-[12vw] uppercase md:text-7xl lg:text-8xl">
-                  {item.label}
+                <span className="mt-2 max-w-sm text-sm text-muted md:mt-0 md:text-right">
+                  {item.description}
                 </span>
               </motion.button>
             ))}
           </div>
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 text-[11px] tracking-[0.2em] text-muted uppercase">
+          <div className="mt-8 flex justify-between text-[10px] tracking-[0.2em] text-muted uppercase">
             <p>{site.locationShort}</p>
             <button
               type="button"
-              className="hover:text-fg"
               onClick={() => {
                 setMenuOpen(false)
                 setCommandOpen(true)

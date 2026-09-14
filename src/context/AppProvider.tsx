@@ -4,8 +4,8 @@ import { AppContext } from '@/context/AppContext'
 import type { CursorKind } from '@/context/AppContext'
 import { discoveryIds, type DiscoveryId } from '@/data/discoveries'
 
-const STORAGE_KEY = 'sunanth-discoveries'
-const COMPLETE_KEY = 'sunanth-system-complete'
+const STORAGE_KEY = 'sunanth-discoveries-v2'
+const COMPLETE_KEY = 'sunanth-system-complete-v2'
 
 function readFound(): DiscoveryId[] {
   try {
@@ -25,14 +25,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
   const [cursor, setCursor] = useState<CursorKind>('default')
-  const [overlayLocked, setOverlayLocked] = useState(false)
   const [found, setFound] = useState<DiscoveryId[]>(readFound)
   const [completeOpen, setCompleteOpen] = useState(false)
   const [accessOpen, setAccessOpen] = useState(false)
   const [commandOpen, setCommandOpen] = useState(false)
-  const [hiddenProjectVisible, setHiddenProjectVisible] = useState(
-    () => readFound().includes('hidden-project'),
-  )
   const [experimentId, setExperimentId] = useState<string | null>(null)
   const [transition, setTransition] = useState({
     active: false,
@@ -51,17 +47,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
         const already = localStorage.getItem(COMPLETE_KEY)
         if (!already) {
           localStorage.setItem(COMPLETE_KEY, '1')
-          setTimeout(() => setCompleteOpen(true), 480)
+          window.setTimeout(() => setCompleteOpen(true), 500)
         }
       }
       return next
     })
   }, [])
-
-  const revealHiddenProject = useCallback(() => {
-    setHiddenProjectVisible(true)
-    unlock('hidden-project')
-  }, [unlock])
 
   const goTo = useCallback(
     (href: string, number: string, label: string) => {
@@ -76,7 +67,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       }, 420)
       window.setTimeout(() => {
         setTransition((current) => ({ ...current, active: false }))
-      }, 820)
+      }, 780)
     },
     [navigate],
   )
@@ -87,8 +78,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setMenuOpen,
       cursor,
       setCursor,
-      overlayLocked,
-      setOverlayLocked,
       found,
       unlock,
       allFound,
@@ -98,8 +87,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setAccessOpen,
       commandOpen,
       setCommandOpen,
-      hiddenProjectVisible,
-      revealHiddenProject,
       experimentId,
       setExperimentId,
       transition,
@@ -108,15 +95,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     [
       menuOpen,
       cursor,
-      overlayLocked,
       found,
       unlock,
       allFound,
       completeOpen,
       accessOpen,
       commandOpen,
-      hiddenProjectVisible,
-      revealHiddenProject,
       experimentId,
       transition,
       goTo,

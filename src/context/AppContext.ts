@@ -8,8 +8,6 @@ export type AppContextValue = {
   setMenuOpen: (open: boolean) => void
   cursor: CursorKind
   setCursor: (cursor: CursorKind) => void
-  overlayLocked: boolean
-  setOverlayLocked: (locked: boolean) => void
   found: DiscoveryId[]
   unlock: (id: DiscoveryId) => void
   allFound: boolean
@@ -19,8 +17,6 @@ export type AppContextValue = {
   setAccessOpen: (open: boolean) => void
   commandOpen: boolean
   setCommandOpen: (open: boolean) => void
-  hiddenProjectVisible: boolean
-  revealHiddenProject: () => void
   experimentId: string | null
   setExperimentId: (id: string | null) => void
   transition: { active: boolean; number: string; label: string }

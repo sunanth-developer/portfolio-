@@ -1,18 +1,18 @@
-import { Timeline } from '@/components/Timeline'
+import { JourneyTimeline } from '@/components/Timeline'
 
 export default function Journey() {
   return (
-    <article className="px-5 pt-36 pb-28 md:px-10 md:pt-44">
+    <article className="px-5 pt-32 pb-24 md:px-8 md:pt-40">
       <p className="eyebrow mb-6">
         <span className="mr-4 text-accent">04</span>
-        Journey
+        The build log
       </p>
-      <h1 className="display-title text-[14vw] md:text-[7rem]">The build log</h1>
-      <p className="mt-8 max-w-xl text-lg text-muted">
-        Not a resume. A sequence of stages — some still partly in shadow until you ask to see them.
+      <h1 className="display text-[16vw] md:text-[8rem]">2018 → Now</h1>
+      <p className="mt-8 max-w-xl text-muted">
+        Not a resume. A sequence of stages — some still in shadow until you ask to see them.
       </p>
-      <div className="mt-20">
-        <Timeline />
+      <div className="mt-16">
+        <JourneyTimeline />
       </div>
     </article>
   )

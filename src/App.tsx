@@ -5,7 +5,8 @@ import { Layout } from '@/components/Layout'
 import Home from '@/pages/Home'
 
 const About = lazy(() => import('@/pages/About'))
-const VenturesPage = lazy(() => import('@/pages/VenturesPage'))
+const Work = lazy(() => import('@/pages/Work'))
+const ProjectDetail = lazy(() => import('@/pages/ProjectDetail'))
 const EngineeringPage = lazy(() => import('@/pages/EngineeringPage'))
 const Journey = lazy(() => import('@/pages/Journey'))
 const Lab = lazy(() => import('@/pages/Lab'))
@@ -29,7 +30,9 @@ export default function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
-              <Route path="/ventures" element={<VenturesPage />} />
+              <Route path="/work" element={<Work />} />
+              <Route path="/work/:slug" element={<ProjectDetail />} />
+              <Route path="/ventures" element={<Work />} />
               <Route path="/engineering" element={<EngineeringPage />} />
               <Route path="/journey" element={<Journey />} />
               <Route path="/lab" element={<Lab />} />

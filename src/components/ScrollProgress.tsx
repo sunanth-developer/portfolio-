@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useApp } from '@/context/AppContext'
 
 export function ScrollProgress() {
   const [progress, setProgress] = useState(0)
-  const { unlock, found, setCursor } = useApp()
 
   useEffect(() => {
     const onScroll = () => {
@@ -16,27 +14,20 @@ export function ScrollProgress() {
   }, [])
 
   return (
-    <div className="fixed top-0 right-0 left-0 z-50">
-      <div className="h-[2px] bg-transparent" aria-hidden>
-        <div
-          className="h-full origin-left bg-accent transition-none"
-          style={{ transform: `scaleX(${progress})` }}
-        />
+    <div
+      className="pointer-events-none fixed top-1/2 right-4 z-40 hidden -translate-y-1/2 md:flex"
+      aria-hidden
+    >
+      <div className="flex flex-col items-center gap-2 text-[9px] tracking-[0.2em] text-muted">
+        <span>01</span>
+        <div className="relative h-24 w-px bg-line">
+          <div
+            className="absolute top-0 left-0 w-full origin-top bg-accent"
+            style={{ height: `${Math.max(8, progress * 100)}%` }}
+          />
+        </div>
+        <span>07</span>
       </div>
-      <button
-        type="button"
-        className="absolute top-5 right-5 hidden items-center gap-2 font-display text-[10px] tracking-[0.28em] text-muted/70 md:flex"
-        aria-label="Lock frequency signal"
-        onMouseEnter={() => setCursor('open')}
-        onMouseLeave={() => setCursor('default')}
-        onClick={() => unlock('signal')}
-      >
-        <span
-          className="h-1.5 w-1.5 rounded-full bg-accent"
-          style={{ opacity: found.includes('signal') ? 1 : 0.45 }}
-        />
-        FREQ
-      </button>
     </div>
   )
 }

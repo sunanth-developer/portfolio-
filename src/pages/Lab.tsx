@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
-import { experiments, experimentCategories } from '@/data/experiments'
-import { labIntro } from '@/data/site'
+import { experimentCategories, experiments } from '@/data/experiments'
 import { ExperimentCard } from '@/components/ExperimentCard'
 import { cn } from '@/lib/cn'
 
@@ -12,13 +11,17 @@ export default function Lab() {
   )
 
   return (
-    <article className="px-5 pt-36 pb-28 md:px-10 md:pt-44">
+    <article className="px-5 pt-32 pb-24 md:px-8 md:pt-40">
       <p className="eyebrow mb-6">
         <span className="mr-4 text-accent">05</span>
         Lab
       </p>
-      <h1 className="display-title max-w-5xl text-[11vw] md:text-[5.2rem]">{labIntro.heading}</h1>
-      <p className="mt-8 max-w-xl text-lg text-muted">{labIntro.supporting}</p>
+      <h1 className="display max-w-5xl text-[11vw] md:text-[5.2rem]">
+        Not everything I build becomes a company.
+      </h1>
+      <p className="mt-8 max-w-xl text-lg text-muted">
+        Some ideas exist simply because I wanted to know if I could build them.
+      </p>
       <div className="mt-12 flex flex-wrap gap-2">
         {['ALL', ...experimentCategories].map((category) => (
           <button
@@ -35,13 +38,9 @@ export default function Lab() {
         ))}
       </div>
       <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {visible.length === 0 ? (
-          <p className="border border-line p-10 text-muted md:col-span-2">No experiments in this drawer yet.</p>
-        ) : (
-          visible.map((experiment) => (
-            <ExperimentCard key={experiment.id} experiment={experiment} />
-          ))
-        )}
+        {visible.map((experiment) => (
+          <ExperimentCard key={experiment.id} experiment={experiment} />
+        ))}
       </div>
     </article>
   )

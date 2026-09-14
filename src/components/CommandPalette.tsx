@@ -1,23 +1,21 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Terminal } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { commandResponses } from '@/data/discoveries'
 import { useApp } from '@/context/AppContext'
+import { projects } from '@/data/projects'
+import { technologyCategories } from '@/data/technologies'
 
 type Line = { type: 'in' | 'out'; text: string }
 
 export function CommandPalette() {
-  const { commandOpen, setCommandOpen, unlock } = useApp()
+  const { commandOpen, setCommandOpen, unlock, goTo } = useApp()
   const [input, setInput] = useState('')
-  const [lines, setLines] = useState<Line[]>([
-    { type: 'out', text: 'session ready. try whoami' },
-  ])
+  const [lines, setLines] = useState<Line[]>([{ type: 'out', text: 'type a command — help' }])
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (!commandOpen) return
     unlock('command')
-    const t = window.setTimeout(() => inputRef.current?.focus(), 50)
+    const t = window.setTimeout(() => inputRef.current?.focus(), 40)
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setCommandOpen(false)
     }
@@ -36,13 +34,29 @@ export function CommandPalette() {
       setInput('')
       return
     }
-    const response = commandResponses[command] ?? ['command not found']
+
+    const map: Record<string, string[]> = {
+      whoami: ['FOUNDER', 'DEVELOPER', 'BUILDER'],
+      current: ['STATUS', 'BUILDING'],
+      work: ['01 DRIVERSPOT', ...projects.slice(1).map((p) => `${p.index} ${p.title.toUpperCase()}`)],
+      stack: technologyCategories.flatMap((c) => [c.label.toUpperCase(), ...c.items]),
+      lab: ['OPENING LAB'],
+      journey: ['OPENING BUILD LOG'],
+      help: ['whoami', 'work', 'stack', 'lab', 'journey', 'current', 'secret', 'clear'],
+      secret: ['ACCESSING...', '████████████████████ 100%', 'YOU FOUND THE HIDDEN LAYER.'],
+    }
+
+    const response = map[command] ?? ['command not found']
+    if (command === 'secret') unlock('command')
     setLines((current) => [
       ...current,
       { type: 'in', text: command },
       ...response.map((text) => ({ type: 'out' as const, text })),
     ])
     setInput('')
+    if (command === 'lab') window.setTimeout(() => goTo('/lab', '05', 'Lab'), 400)
+    if (command === 'journey') window.setTimeout(() => goTo('/journey', '04', 'Journey'), 400)
+    if (command === 'work') window.setTimeout(() => goTo('/work', '02', 'Work'), 400)
   }
 
   return (
@@ -60,16 +74,12 @@ export function CommandPalette() {
         >
           <motion.div
             className="w-full max-w-xl border border-line bg-bg p-6"
-            initial={{ y: 16, opacity: 0 }}
+            initial={{ y: 14, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 10, opacity: 0 }}
             onClick={(event) => event.stopPropagation()}
           >
-            <p className="eyebrow mb-6 inline-flex items-center gap-2">
-              <Terminal size={12} aria-hidden />
-              Terminal
-            </p>
-            <div className="mb-6 max-h-64 space-y-2 overflow-y-auto font-display text-sm">
+            <p className="eyebrow mb-5">Command</p>
+            <div className="mb-5 max-h-56 space-y-2 overflow-y-auto font-display text-sm">
               {lines.map((line, index) => (
                 <p key={`${line.text}-${index}`} className={line.type === 'in' ? 'text-accent' : 'text-fg'}>
                   {line.type === 'in' ? `> ${line.text}` : line.text}
@@ -86,7 +96,7 @@ export function CommandPalette() {
                   if (event.key === 'Enter') run(input)
                 }}
                 className="w-full bg-transparent font-display text-sm outline-none"
-                placeholder="whoami"
+                placeholder="type a command"
                 aria-label="Command input"
                 autoCapitalize="off"
                 autoCorrect="off"

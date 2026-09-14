@@ -17,15 +17,15 @@ export function RevealText({ text, className, as = 'p', delay = 0 }: Props) {
   return (
     <Tag className={cn(className)}>
       {words.map((word, index) => (
-        <span key={`${word}-${index}`} className="inline-block overflow-hidden align-bottom">
+        <span key={`${word}-${index}`} className="clip-text">
           <motion.span
-            className="inline-block will-change-transform"
-            initial={reduced ? false : { y: '110%' }}
-            whileInView={{ y: '0%' }}
-            viewport={{ once: true, margin: '-8%' }}
+            className="inline-block"
+            initial={reduced ? false : { y: '115%', clipPath: 'inset(100% 0 0 0)' }}
+            whileInView={{ y: '0%', clipPath: 'inset(0% 0 0 0)' }}
+            viewport={{ once: true, margin: '-10%' }}
             transition={{
-              duration: reduced ? 0 : 0.8,
-              delay: reduced ? 0 : delay + index * 0.035,
+              duration: reduced ? 0 : 0.85,
+              delay: reduced ? 0 : delay + index * 0.04,
               ease: [0.16, 1, 0.3, 1],
             }}
           >

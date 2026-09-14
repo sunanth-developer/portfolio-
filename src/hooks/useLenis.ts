@@ -21,6 +21,9 @@ export function useLenis(paused: boolean) {
 
     lenisRef.current = lenis
     lenis.on('scroll', ScrollTrigger.update)
+    requestAnimationFrame(() => ScrollTrigger.refresh())
+    const onLoad = () => ScrollTrigger.refresh()
+    window.addEventListener('load', onLoad)
 
     const update = (time: number) => {
       lenis.raf(time * 1000)
@@ -30,6 +33,7 @@ export function useLenis(paused: boolean) {
     gsap.ticker.lagSmoothing(0)
 
     return () => {
+      window.removeEventListener('load', onLoad)
       gsap.ticker.remove(update)
       lenis.destroy()
       lenisRef.current = null
@@ -39,8 +43,12 @@ export function useLenis(paused: boolean) {
   useEffect(() => {
     const lenis = lenisRef.current
     if (!lenis) return
-    if (paused) lenis.stop()
-    else lenis.start()
+    if (paused) {
+      lenis.stop()
+      return
+    }
+    lenis.start()
+    requestAnimationFrame(() => ScrollTrigger.refresh())
   }, [paused])
 
   return lenisRef

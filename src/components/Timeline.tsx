@@ -4,50 +4,48 @@ import { timeline } from '@/data/timeline'
 import { useApp } from '@/context/AppContext'
 import { cn } from '@/lib/cn'
 
-export function Timeline() {
+export function JourneyTimeline() {
   const [opened, setOpened] = useState<string[]>([])
-  const { setCursor } = useApp()
+  const { setCursor, unlock } = useApp()
 
   return (
-    <div className="space-y-6">
-      {timeline.map((entry, index) => {
+    <div>
+      {timeline.map((entry) => {
         const revealed = opened.includes(entry.id)
         return (
-          <motion.article
-            key={entry.id}
-            className="border-b border-line py-10"
-            initial={{ opacity: 0.28, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-15%' }}
-            transition={{ duration: 0.7 }}
-          >
+          <article key={entry.id} className="border-b border-line py-10">
             <p className="eyebrow text-accent">
-              {String(index + 1).padStart(2, '0')} · {entry.stage}
+              {entry.year ? `${entry.year} · ` : ''}
+              {entry.stage}
             </p>
-            <h3
-              className={cn(
-                'display-title mt-4 text-4xl transition-all duration-500 md:text-6xl',
-                revealed ? 'text-fg' : 'text-muted/70',
-              )}
-            >
-              {entry.title}
+            <h3 className={cn('display mt-4 text-4xl md:text-6xl', revealed ? 'text-fg' : 'text-muted/50')}>
+              {revealed ? entry.title : '██████████████'}
             </h3>
             {revealed ? (
-              <p className="mt-6 max-w-2xl text-muted">{entry.body}</p>
+              <motion.p className="mt-6 max-w-2xl text-muted" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+                {entry.body}
+              </motion.p>
             ) : (
               <button
                 type="button"
-                className="mt-8 font-display text-xs tracking-[0.28em] uppercase"
-                onClick={() => setOpened((current) => [...current, entry.id])}
+                className="mt-8 text-xs tracking-[0.28em] uppercase"
+                onClick={() => {
+                  setOpened((current) => [...current, entry.id])
+                  unlock('journey')
+                }}
                 onMouseEnter={() => setCursor('open')}
                 onMouseLeave={() => setCursor('default')}
               >
-                Reveal →
+                Reveal
               </button>
             )}
-          </motion.article>
+          </article>
         )
       })}
     </div>
   )
+}
+
+export function Timeline() {
+  return <JourneyTimeline />
 }

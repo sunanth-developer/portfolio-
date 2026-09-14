@@ -1,31 +1,22 @@
-export type ExperimentStatus = 'PROTOTYPE' | 'CONCEPT' | 'IN PROGRESS'
-
 export type Experiment = {
   id: string
   code: string
   title: string
-  category: string
-  status: ExperimentStatus
+  category: 'AI' | 'MOBILE' | 'UI' | 'AUTOMATION' | 'PRODUCT' | 'EXPERIMENTS'
+  status: 'PROTOTYPE' | 'CONCEPT' | 'IN PROGRESS'
   stack: string[]
   summary: string
   body: string
 }
 
-export const experimentCategories = [
-  'AI EXPERIMENTS',
-  'MOBILE EXPERIMENTS',
-  'UI EXPERIMENTS',
-  'AUTOMATION',
-  'PRODUCT CONCEPTS',
-  'DEVELOPER TOOLS',
-] as const
+export const experimentCategories = ['AI', 'MOBILE', 'UI', 'AUTOMATION', 'PRODUCT', 'EXPERIMENTS'] as const
 
 export const experiments: Experiment[] = [
   {
     id: 'intent-routing',
     code: 'EXPERIMENT 004',
     title: 'Intent routing sketches',
-    category: 'AI EXPERIMENTS',
+    category: 'AI',
     status: 'PROTOTYPE',
     stack: ['React Native', 'AI', 'Node.js'],
     summary: 'Exploring how a product might classify intent before it becomes a screen.',
@@ -35,7 +26,7 @@ export const experiments: Experiment[] = [
     id: 'driver-flow',
     code: 'EXPERIMENT 011',
     title: 'Driver-side flow studies',
-    category: 'MOBILE EXPERIMENTS',
+    category: 'MOBILE',
     status: 'IN PROGRESS',
     stack: ['React Native', 'TypeScript'],
     summary: 'Interaction studies for how a chauffeur product should feel in the hand.',
@@ -45,11 +36,11 @@ export const experiments: Experiment[] = [
     id: 'density',
     code: 'EXPERIMENT 018',
     title: 'Interface density',
-    category: 'UI EXPERIMENTS',
+    category: 'UI',
     status: 'PROTOTYPE',
     stack: ['React', 'TypeScript'],
     summary: 'How much information an operational product can carry without becoming noise.',
-    body: 'A set of layout studies for dense product surfaces — tables, statuses, and actions — with the constraint that it still has to feel calm.',
+    body: 'Layout studies for dense product surfaces — tables, statuses, actions — with the constraint that it still has to feel calm.',
   },
   {
     id: 'ops-scripts',
@@ -59,26 +50,26 @@ export const experiments: Experiment[] = [
     status: 'CONCEPT',
     stack: ['Node.js', 'Automation'],
     summary: 'Small automations that remove repeated operational friction.',
-    body: 'Not a platform. A collection of scripts and checks that ask: what should a human never have to do twice?',
+    body: 'Not a platform. Scripts and checks that ask: what should a human never have to do twice?',
   },
   {
     id: 'marketplace-mechanic',
     code: 'EXPERIMENT 027',
     title: 'Marketplace mechanic',
-    category: 'PRODUCT CONCEPTS',
+    category: 'PRODUCT',
     status: 'CONCEPT',
     stack: ['Product', 'Systems'],
-    summary: 'A matching mechanic that is not a generic two-sided marketplace clone.',
-    body: 'A concept file for vehicle-aware matching and preference logic. The kind of idea that stays on paper until the system can stand on it.',
+    summary: 'A matching mechanic that is not a generic two-sided clone.',
+    body: 'A concept file for vehicle-aware matching and preference logic.',
   },
   {
-    id: 'deploy-ritual',
+    id: 'lab-index',
     code: 'EXPERIMENT 033',
-    title: 'Local deploy ritual',
-    category: 'DEVELOPER TOOLS',
+    title: 'Unreleased system sketches',
+    category: 'EXPERIMENTS',
     status: 'PROTOTYPE',
-    stack: ['Node.js', 'Git'],
-    summary: 'A personal deployment checklist turned into a repeatable command.',
-    body: 'A developer-side experiment: fewer forgotten steps between “it works here” and “it is live.” Built for my own workflow first.',
+    stack: ['React', 'Node.js'],
+    summary: 'Quiet builds that are not ready to be named as products.',
+    body: 'A drawer for work that exists to answer a question. The file stays thin until the system can stand on it.',
   },
 ]
