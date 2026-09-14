@@ -1,0 +1,76 @@
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useApp } from '@/context/AppContext'
+import { discoveries, discoveryIds, type DiscoveryId } from '@/data/discoveries'
+
+export function DiscoveryToasts() {
+  const { found } = useApp()
+  const [toast, setToast] = useState<DiscoveryId | null>(null)
+  const prev = useRef(found.length)
+
+  useEffect(() => {
+    if (found.length <= prev.current) {
+      prev.current = found.length
+      return
+    }
+    const latest = found[found.length - 1]
+    prev.current = found.length
+    if (!latest || found.length >= discoveryIds.length) return
+    setToast(latest)
+    const timer = window.setTimeout(() => setToast(null), 2800)
+    return () => window.clearTimeout(timer)
+  }, [found])
+
+  const meta = toast ? discoveries[toast] : null
+
+  return (
+    <AnimatePresence>
+      {meta && (
+        <motion.div
+          className="pointer-events-none fixed bottom-6 left-6 z-[70] border border-line bg-bg px-4 py-3"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+        >
+          <p className="eyebrow text-accent">Discovery {meta.index} / 05</p>
+          <p className="mt-1 font-display text-sm">{meta.unlock}</p>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+export function SystemComplete() {
+  const { completeOpen, setCompleteOpen, setCursor } = useApp()
+
+  return (
+    <AnimatePresence>
+      {completeOpen && (
+        <motion.div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-bg px-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="System complete"
+        >
+          <div className="max-w-lg text-center">
+            <p className="eyebrow mb-8 text-accent">System complete</p>
+            <h2 className="display-title text-4xl md:text-6xl">You found what most visitors miss.</h2>
+            <p className="mt-8 text-muted">Keep building.</p>
+            <button
+              type="button"
+              className="mt-12 font-display text-xs tracking-[0.28em] uppercase"
+              onClick={() => setCompleteOpen(false)}
+              onMouseEnter={() => setCursor('close')}
+              onMouseLeave={() => setCursor('default')}
+            >
+              Continue
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}

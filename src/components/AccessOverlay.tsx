@@ -1,0 +1,94 @@
+import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { accessLayer } from '@/data/site'
+import { useApp } from '@/context/AppContext'
+
+export function AccessOverlay() {
+  const { accessOpen, setAccessOpen, unlock, setCursor } = useApp()
+  const [step, setStep] = useState(0)
+  const [active, setActive] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!accessOpen) {
+      setStep(0)
+      setActive(null)
+      return
+    }
+    unlock('access')
+    const t1 = window.setTimeout(() => setStep(1), 700)
+    const t2 = window.setTimeout(() => setStep(2), 1600)
+    return () => {
+      window.clearTimeout(t1)
+      window.clearTimeout(t2)
+    }
+  }, [accessOpen, unlock])
+
+  useEffect(() => {
+    if (!accessOpen) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setAccessOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [accessOpen, setAccessOpen])
+
+  return (
+    <AnimatePresence>
+      {accessOpen && (
+        <motion.div
+          className="fixed inset-0 z-[65] flex items-center justify-center bg-bg px-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Access layer"
+        >
+          <button
+            type="button"
+            className="absolute top-8 right-8 font-display text-[11px] tracking-[0.28em] uppercase"
+            onClick={() => setAccessOpen(false)}
+            onMouseEnter={() => setCursor('close')}
+            onMouseLeave={() => setCursor('default')}
+          >
+            Close
+          </button>
+          <div className="w-full max-w-3xl">
+            <p className="eyebrow mb-10 text-accent">Access 01</p>
+            <p className="display-title mb-4 text-3xl md:text-5xl">
+              {step >= 0 ? accessLayer.lines[0] : ''}
+            </p>
+            <p className="mb-16 text-xl text-muted md:text-3xl">
+              {step >= 1 ? accessLayer.lines[1] : ''}
+            </p>
+            {step >= 2 && (
+              <ul className="space-y-4">
+                {accessLayer.identities.map((item) => (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      className="w-full border-b border-line py-4 text-left"
+                      onClick={() => setActive(active === item.id ? null : item.id)}
+                      onMouseEnter={() => setCursor('open')}
+                      onMouseLeave={() => setCursor('default')}
+                    >
+                      <span className="mr-4 font-display text-xs tracking-[0.2em] text-accent">
+                        {item.index}
+                      </span>
+                      <span className="font-display text-2xl md:text-4xl">{item.label}</span>
+                      {active === item.id && (
+                        <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted md:text-base">
+                          {item.description}
+                        </p>
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
