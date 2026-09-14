@@ -28,7 +28,7 @@ export function JourneyTimeline() {
             ) : (
               <button
                 type="button"
-                className="mt-8 text-xs tracking-[0.28em] uppercase"
+                className="mt-8 flex min-h-11 items-center text-xs tracking-[0.28em] uppercase"
                 onClick={() => {
                   setOpened((current) => [...current, entry.id])
                   unlock('journey')

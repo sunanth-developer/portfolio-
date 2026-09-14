@@ -11,14 +11,15 @@ export default function FieldNotes() {
   )
 
   return (
-    <article className="px-5 pt-32 pb-24 md:px-8 md:pt-40">
+    <article className="px-5 pt-page pb-24 md:px-8">
       <p className="eyebrow mb-6">
         <span className="mr-4 text-accent">06</span>
-        Field notes
+        Thinking out loud
       </p>
-      <h1 className="display text-[14vw] md:text-[7rem]">Field notes</h1>
-      <p className="mt-8 max-w-xl text-muted">
-        Working titles for thinking in public. These are not published articles — they are sketches from the work.
+      <h1 className="display text-[12vw] md:text-[6.2rem]">Thinking out loud</h1>
+      <p className="mt-6 max-w-xl text-muted">
+        Drafts from the work. These are not published articles — they are sketches, marked clearly until they are
+        finished.
       </p>
       <div className="mt-12 flex flex-wrap gap-2">
         {['ALL', ...noteCategories].map((category) => (
@@ -26,7 +27,7 @@ export default function FieldNotes() {
             key={category}
             type="button"
             className={cn(
-              'border px-3 py-2 text-[10px] tracking-[0.16em] uppercase',
+              'min-h-11 border px-4 py-2 text-[10px] tracking-[0.16em] uppercase',
               filter === category ? 'border-accent text-accent' : 'border-line text-muted',
             )}
             onClick={() => setFilter(category)}

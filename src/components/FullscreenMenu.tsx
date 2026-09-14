@@ -27,17 +27,30 @@ export function FullscreenMenu() {
           role="dialog"
           aria-modal="true"
           aria-label="Site menu"
-          className="fixed inset-0 z-[60] flex flex-col bg-bg px-6 py-24 md:px-16"
+          className="fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain bg-bg px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))] md:px-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="flex flex-1 flex-col justify-center">
+          <div className="flex items-center justify-between">
+            <p className="font-display text-[11px] tracking-[0.32em] uppercase">{site.shortName}</p>
+            <button
+              type="button"
+              className="flex min-h-11 min-w-11 items-center justify-end font-display text-[10px] tracking-[0.28em] uppercase hover:text-accent"
+              aria-label="Close menu"
+              onMouseEnter={() => setCursor('close')}
+              onMouseLeave={() => setCursor('default')}
+              onClick={() => setMenuOpen(false)}
+            >
+              Close
+            </button>
+          </div>
+          <div className="flex flex-1 flex-col justify-center py-6 md:px-8">
             {navItems.map((item, index) => (
               <motion.button
                 key={item.id}
                 type="button"
-                className="flex flex-col border-b border-line py-4 text-left md:flex-row md:items-end md:justify-between md:py-5"
+                className="flex min-h-14 flex-col border-b border-line py-3 text-left md:flex-row md:items-end md:justify-between md:py-5"
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.06 + index * 0.05, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
@@ -47,18 +60,19 @@ export function FullscreenMenu() {
               >
                 <span className="flex items-baseline gap-4 md:gap-8">
                   <span className="text-xs tracking-[0.2em] text-accent">{item.index}</span>
-                  <span className="display text-[11vw] uppercase md:text-6xl lg:text-7xl">{item.label}</span>
+                  <span className="display text-4xl uppercase md:text-6xl lg:text-7xl">{item.label}</span>
                 </span>
-                <span className="mt-2 max-w-sm text-sm text-muted md:mt-0 md:text-right">
+                <span className="mt-1 max-w-sm text-sm text-muted md:mt-0 md:text-right">
                   {item.description}
                 </span>
               </motion.button>
             ))}
           </div>
-          <div className="mt-8 flex justify-between text-[10px] tracking-[0.2em] text-muted uppercase">
+          <div className="mt-6 flex items-center justify-between text-[10px] tracking-[0.2em] text-muted uppercase">
             <p>{site.locationShort}</p>
             <button
               type="button"
+              className="flex min-h-11 items-center"
               onClick={() => {
                 setMenuOpen(false)
                 setCommandOpen(true)

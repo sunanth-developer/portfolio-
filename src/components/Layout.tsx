@@ -26,9 +26,9 @@ export function Layout() {
   } = useApp()
   const [booted, setBooted] = useState(() => {
     try {
-      if (sessionStorage.getItem('sunanth-boot-v2') === '1') return true
+      if (sessionStorage.getItem('sunanth-boot-v3') === '1') return true
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        sessionStorage.setItem('sunanth-boot-v2', '1')
+        sessionStorage.setItem('sunanth-boot-v3', '1')
         return true
       }
     } catch {
@@ -61,7 +61,7 @@ export function Layout() {
 
   useEffect(() => {
     if (location.pathname.startsWith('/notes/')) {
-      document.title = `Field Notes — ${site.name}`
+      document.title = `Thinking — ${site.name}`
       return
     }
     if (location.pathname.startsWith('/work/')) {

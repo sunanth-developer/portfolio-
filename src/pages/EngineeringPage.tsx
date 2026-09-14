@@ -3,12 +3,12 @@ import { technologyCategories } from '@/data/technologies'
 
 export default function Engineering() {
   return (
-    <article className="px-5 pt-32 pb-24 md:px-8 md:pt-40">
+    <article className="px-5 pt-page pb-24 md:px-8">
       <p className="eyebrow mb-6">
         <span className="mr-4 text-accent">03</span>
         Engineering
       </p>
-      <h1 className="display text-[18vw] md:text-[9rem]">
+      <h1 className="display text-[14vw] md:text-[9rem]">
         Under
         <br />
         the hood.

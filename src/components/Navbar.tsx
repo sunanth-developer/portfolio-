@@ -20,14 +20,14 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'fixed top-0 right-0 left-0 z-50 px-5 py-5 transition-colors duration-300 md:px-8',
+        'fixed top-0 right-0 left-0 z-50 px-5 py-5 pt-[max(1.25rem,env(safe-area-inset-top))] transition-colors duration-300 md:px-8',
         scrolled && 'border-b border-line bg-bg/85',
       )}
     >
       <div className="flex items-center justify-between">
         <button
           type="button"
-          className="font-display text-[11px] tracking-[0.32em] uppercase"
+          className="flex min-h-11 items-center font-display text-[11px] tracking-[0.32em] uppercase"
           aria-label="Home"
           onMouseEnter={() => setCursor('view')}
           onMouseLeave={() => setCursor('default')}
@@ -45,7 +45,7 @@ export function Navbar() {
               className={cn(
                 'text-[10px] tracking-[0.22em] uppercase transition-colors',
                 location.pathname === item.href || location.pathname.startsWith(`${item.href}/`)
-                  ? 'text-fg'
+                  ? 'text-accent'
                   : 'text-muted hover:text-fg',
               )}
               onMouseEnter={() => setCursor('view')}
@@ -63,7 +63,7 @@ export function Navbar() {
         <div className="flex items-center gap-5">
           <button
             type="button"
-            className="font-display text-[10px] tracking-[0.2em] text-muted uppercase md:hidden"
+            className="flex min-h-11 min-w-11 items-center justify-center font-display text-[10px] tracking-[0.2em] text-muted uppercase md:hidden"
             onClick={() => setCommandOpen(true)}
             aria-label="Open command"
           >
@@ -71,7 +71,7 @@ export function Navbar() {
           </button>
           <button
             type="button"
-            className="font-display text-[10px] tracking-[0.28em] uppercase"
+            className="flex min-h-11 items-center font-display text-[10px] tracking-[0.28em] uppercase"
             aria-expanded={menuOpen}
             aria-controls="site-menu"
             onMouseEnter={() => setCursor(menuOpen ? 'close' : 'open')}

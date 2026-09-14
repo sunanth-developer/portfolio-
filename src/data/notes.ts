@@ -25,8 +25,8 @@ export const notes: FieldNote[] = [
     excerpt: 'If you cannot see the system, you cannot decide what to build next.',
     published: false,
     body: [
-      'A working title. Thinking in public, not a published essay.',
-      'If you cannot see the system, you cannot decide what to build next — you can only hope someone else will.',
+      'Draft. Thinking in public — not a published essay.',
+      'If you cannot see the system, you cannot decide what to build next. You can only hope someone else will.',
     ],
   },
   {
@@ -36,18 +36,18 @@ export const notes: FieldNote[] = [
     excerpt: 'A two-sided product is one matching problem with two kinds of trust.',
     published: false,
     body: [
-      'A working title from the DriverSpot build.',
-      'Owners want reliability. Drivers want clarity. The product has to hold both.',
+      'Draft from the DriverSpot build.',
+      'Owners want reliability. Drivers want clarity. The product has to hold both, or the marketplace does not repeat.',
     ],
   },
   {
     slug: 'building-before-everything-is-perfect',
     title: 'Building before everything is perfect',
     category: 'BUILDING',
-    excerpt: 'The picture only completes in motion.',
+    excerpt: 'A product in the world can be corrected. A product that lives only in your head cannot.',
     published: false,
     body: [
-      'A working title.',
+      'Draft.',
       'A product in the world can be corrected. A product that is only in your head can only be imagined.',
     ],
   },
@@ -58,7 +58,7 @@ export const notes: FieldNote[] = [
     excerpt: 'The important question is rarely “can we build it?”',
     published: false,
     body: [
-      'A working title.',
+      'Draft.',
       'The important question is rarely “can we build it?” It is “should this exist, and for whom?”',
     ],
   },

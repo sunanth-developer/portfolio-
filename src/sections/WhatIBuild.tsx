@@ -8,7 +8,7 @@ export function WhatIBuild() {
   const [active, setActive] = useState('01')
 
   return (
-    <section className="border-t border-line px-5 py-24 md:px-8 md:py-32">
+    <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
       <p className="eyebrow mb-6">
         <span className="mr-4 text-accent">01</span>
         Practice
@@ -30,7 +30,7 @@ export function WhatIBuild() {
               >
                 <span className="flex items-baseline gap-5 md:gap-10">
                   <span className="text-xs tracking-[0.2em] text-accent">{panel.index}</span>
-                  <span className={cn('display text-5xl md:text-7xl', open ? 'text-fg' : 'text-muted')}>
+                  <span className={cn('display text-[2.35rem] leading-[0.9] md:text-7xl', open ? 'text-fg' : 'text-muted')}>
                     {panel.title}
                   </span>
                 </span>

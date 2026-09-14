@@ -20,7 +20,7 @@ export function ExperimentCard({ experiment }: { experiment: Experiment }) {
       </div>
       <button
         type="button"
-        className="mt-auto pt-10 text-left text-xs tracking-[0.22em] uppercase"
+        className="mt-auto flex min-h-11 items-center pt-10 text-left text-xs tracking-[0.22em] uppercase"
         onClick={() => setExperimentId(experiment.id)}
         onMouseEnter={() => setCursor('open')}
         onMouseLeave={() => setCursor('default')}

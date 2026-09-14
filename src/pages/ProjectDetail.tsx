@@ -24,11 +24,11 @@ export default function ProjectDetail() {
   }
 
   return (
-    <article className="px-5 pt-32 pb-24 md:px-8 md:pt-40">
+    <article className="px-5 pt-page pb-24 md:px-8">
       <p className="eyebrow text-accent">
         {project.index} / {project.category}
       </p>
-      <h1 className="display mt-6 text-[16vw] md:text-[8rem]">{project.title}</h1>
+      <h1 className="display mt-6 text-[12vw] md:text-[8rem]">{project.title}</h1>
       <p className="mt-4 text-xs tracking-[0.18em] text-muted uppercase">{project.role || project.status}</p>
       {project.description ? (
         <p className="mt-8 max-w-2xl text-lg text-muted">{project.description}</p>

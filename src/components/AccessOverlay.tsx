@@ -36,7 +36,7 @@ export function AccessOverlay() {
     <AnimatePresence>
       {accessOpen && (
         <motion.div
-          className="fixed inset-0 z-[65] flex items-center justify-center bg-bg px-6"
+          className="fixed inset-0 z-[65] overflow-y-auto overscroll-contain bg-bg px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(2rem,env(safe-area-inset-bottom))] md:px-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -44,9 +44,10 @@ export function AccessOverlay() {
           aria-modal="true"
           aria-label="Access layer"
         >
+          <div className="mx-auto flex min-h-[100svh] max-w-3xl flex-col md:justify-center">
           <button
             type="button"
-            className="absolute top-8 right-8 text-[11px] tracking-[0.28em] uppercase"
+            className="ml-auto flex min-h-11 items-center text-[11px] tracking-[0.28em] uppercase"
             onClick={() => setAccessOpen(false)}
             onMouseEnter={() => setCursor('close')}
             onMouseLeave={() => setCursor('default')}
@@ -78,6 +79,7 @@ export function AccessOverlay() {
                 ))}
               </ul>
             )}
+          </div>
           </div>
         </motion.div>
       )}

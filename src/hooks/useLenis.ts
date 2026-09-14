@@ -2,21 +2,21 @@ import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useReducedMotion } from '@/hooks/useMediaQuery'
+import { useIsFinePointer, useReducedMotion } from '@/hooks/useMediaQuery'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export function useLenis(paused: boolean) {
   const lenisRef = useRef<Lenis | null>(null)
   const reduced = useReducedMotion()
+  const fine = useIsFinePointer()
 
   useEffect(() => {
-    if (reduced) return
+    if (reduced || !fine) return
 
     const lenis = new Lenis({
       duration: 1.1,
       smoothWheel: true,
-      touchMultiplier: 1.1,
     })
 
     lenisRef.current = lenis
@@ -38,7 +38,7 @@ export function useLenis(paused: boolean) {
       lenis.destroy()
       lenisRef.current = null
     }
-  }, [reduced])
+  }, [reduced, fine])
 
   useEffect(() => {
     const lenis = lenisRef.current

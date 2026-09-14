@@ -63,7 +63,7 @@ export function CommandPalette() {
     <AnimatePresence>
       {commandOpen && (
         <motion.div
-          className="fixed inset-0 z-[66] flex items-start justify-center bg-black/80 px-4 pt-[18vh]"
+          className="fixed inset-0 z-[66] flex items-end justify-center bg-black/80 px-4 pt-24 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:items-start sm:pt-[18vh]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -73,13 +73,22 @@ export function CommandPalette() {
           onClick={() => setCommandOpen(false)}
         >
           <motion.div
-            className="w-full max-w-xl border border-line bg-bg p-6"
+            className="w-full max-w-xl border border-line bg-surface p-6"
             initial={{ y: 14, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             onClick={(event) => event.stopPropagation()}
           >
-            <p className="eyebrow mb-5">Command</p>
-            <div className="mb-5 max-h-56 space-y-2 overflow-y-auto font-display text-sm">
+            <div className="mb-4 flex items-center justify-between">
+              <p className="eyebrow">Command</p>
+              <button
+                type="button"
+                className="flex min-h-11 items-center text-[10px] tracking-[0.24em] uppercase"
+                onClick={() => setCommandOpen(false)}
+              >
+                Close
+              </button>
+            </div>
+            <div className="mb-5 max-h-40 space-y-2 overflow-y-auto font-display text-sm sm:max-h-56">
               {lines.map((line, index) => (
                 <p key={`${line.text}-${index}`} className={line.type === 'in' ? 'text-accent' : 'text-fg'}>
                   {line.type === 'in' ? `> ${line.text}` : line.text}
@@ -95,7 +104,7 @@ export function CommandPalette() {
                 onKeyDown={(event) => {
                   if (event.key === 'Enter') run(input)
                 }}
-                className="w-full bg-transparent font-display text-sm outline-none"
+                className="w-full bg-transparent font-display text-base outline-none md:text-sm"
                 placeholder="type a command"
                 aria-label="Command input"
                 autoCapitalize="off"

@@ -112,10 +112,17 @@ export const projects: Project[] = [
         label: '05 Business',
         title: 'Founder work is supply, demand, operations and trust.',
         body: 'DriverSpot is a marketplace. Driver supply has to be real. Owner demand has to be timed. Operations have to hold the after-party hour and the outstation edge case. Monetization only works if the match is reliable enough to repeat.',
+        points: ['Product', 'Supply', 'Demand', 'Operations', 'Monetization'],
+      },
+      {
+        id: 'traction',
+        label: '06 Traction',
+        title: 'A real product. A real marketplace. A real business.',
+        body: 'Verified contact with the city — not a pitch deck metric set. Users, drivers, completed rides and revenue from the live marketplace.',
       },
       {
         id: 'next',
-        label: '06 Next',
+        label: '07 Next',
         title: 'Tighten matching, trust and the operational details.',
         body: 'The next move is iteration: matching quality, owner trust, driver reliability, and the unglamorous operations that make a chauffeur network usable. The work is not a launch. It is the system after contact with the city.',
       },

@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { projects, type Project, type ProjectStory } from '@/data/projects'
 import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/cn'
-import { PhoneStage } from '@/components/ProjectGallery'
+import { PhoneStage, FragmentField, ProductFrames, ArchitectureStack, MarketplaceLoop, TractionBlock } from '@/components/ProjectGallery'
 import { MagneticButton } from '@/components/MagneticButton'
 import { useApp } from '@/context/AppContext'
 
@@ -35,10 +35,10 @@ function Intro({ venture }: { venture: Project }) {
   const { goTo } = useApp()
 
   return (
-    <div className="px-5 pt-24 md:px-8 md:pt-32">
+    <div className="px-5 pt-16 md:px-8 md:pt-20">
       <p className="eyebrow text-accent">01 / Venture</p>
       <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
-        <h2 className="display text-[16vw] md:text-[8rem]">{venture.title}</h2>
+        <h2 className="display text-[12vw] md:text-[8rem]">{venture.title}</h2>
         <MagneticButton variant="ghost" cursor="explore" onClick={() => goTo('/work/driverspot', '02', 'Work')}>
           Full file →
         </MagneticButton>
@@ -67,15 +67,18 @@ function StackedStory({ story }: { story: ProjectStory[] }) {
           <p className="eyebrow text-accent">{item.label}</p>
           <h3 className="mt-4 font-display text-2xl md:text-4xl">{item.title}</h3>
           <p className="mt-6 text-muted md:text-lg">{item.body}</p>
-          {item.points && (
-            <ul className="mt-6 grid gap-2 sm:grid-cols-2">
-              {item.points.map((point) => (
-                <li key={point} className="border-b border-line py-2 text-sm text-muted">
-                  {point}
-                </li>
-              ))}
-            </ul>
-          )}
+              {item.points && (
+                <ul className="mt-6 grid gap-2 sm:grid-cols-2">
+                  {item.points.map((point) => (
+                    <li key={point} className="border-b border-line py-2 text-sm text-muted">
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div className="mt-8">
+                <ChapterVisual id={item.id} index={0} />
+              </div>
         </article>
       ))}
     </div>
@@ -211,8 +214,11 @@ function PinnedContent({
             >
               <p className="eyebrow text-accent">{chapter.label}</p>
               <h3 className="mt-5 font-display text-3xl md:text-5xl">{chapter.title}</h3>
-              <p className="mt-6 max-w-xl text-muted md:text-lg">{chapter.body}</p>
-              {chapter.points && (
+                    <p className="mt-6 max-w-xl text-muted md:text-lg">{chapter.body}</p>
+                    <div className="mt-8">
+                      <ChapterVisual id={chapter.id} index={active} />
+                    </div>
+                    {chapter.points && (
                 <ul className="mt-6 grid gap-2 sm:grid-cols-2">
                   {chapter.points.map((point) => (
                     <li key={point} className="border-b border-line py-2 text-sm text-muted">
@@ -227,6 +233,16 @@ function PinnedContent({
       </div>
     </div>
   )
+}
+
+function ChapterVisual({ id, index }: { id: string; index: number }) {
+  if (id === 'problem') return <FragmentField collapsed={false} />
+  if (id === 'insight') return <FragmentField collapsed />
+  if (id === 'product') return <ProductFrames active={index} />
+  if (id === 'engineering') return <ArchitectureStack />
+  if (id === 'business') return <MarketplaceLoop />
+  if (id === 'traction') return <TractionBlock />
+  return <PhoneStage index={index} />
 }
 
 export default DriverSpotStory

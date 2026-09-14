@@ -26,7 +26,7 @@ export function MagneticButton({
     <button
       ref={ref}
       className={cn(
-        'inline-flex items-center justify-center px-5 py-3 font-display text-[11px] tracking-[0.22em] uppercase transition-colors duration-300',
+        'inline-flex min-h-11 w-full items-center justify-center px-5 py-3 font-display text-[11px] tracking-[0.22em] uppercase transition-colors duration-300 sm:w-auto',
         variant === 'solid' && 'bg-fg text-bg hover:bg-accent',
         variant === 'ghost' && 'border border-line text-fg hover:border-accent hover:text-accent',
         variant === 'text' && 'px-0 py-2 text-muted hover:text-fg',

@@ -22,10 +22,10 @@ export default function FieldNoteDetail() {
   }
 
   return (
-    <article className="px-5 pt-32 pb-24 md:px-8 md:pt-40">
+    <article className="px-5 pt-page pb-24 md:px-8">
       <p className="eyebrow text-accent">{note.category}</p>
       {!note.published && (
-        <p className="mt-4 text-[10px] tracking-[0.18em] text-muted uppercase">Working title — not a published article</p>
+        <p className="mt-4 text-[10px] tracking-[0.18em] text-accent uppercase">Draft — not a published article</p>
       )}
       <h1 className="display mt-6 max-w-5xl text-[11vw] md:text-7xl">{note.title}</h1>
       <div className="mt-14 max-w-2xl space-y-6 text-lg text-muted">
@@ -34,8 +34,8 @@ export default function FieldNoteDetail() {
         ))}
       </div>
       <div className="mt-16">
-        <MagneticButton variant="text" onClick={() => goTo('/notes', '06', 'Field Notes')}>
-          ← Field notes
+        <MagneticButton variant="text" onClick={() => goTo('/notes', '06', 'Thinking')}>
+          ← Thinking
         </MagneticButton>
       </div>
     </article>

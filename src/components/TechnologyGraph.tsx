@@ -1,49 +1,50 @@
-import { useMemo, useRef } from 'react'
-import type { PointerEvent as ReactPointerEvent } from 'react'
-import { ecosystem, technologyCategories } from '@/data/technologies'
-import { useIsMobile } from '@/hooks/useMediaQuery'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { architectureStages, graphNodes, technologyCategories } from '@/data/technologies'
+import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
+import { cn } from '@/lib/cn'
 
-const W = 900
-const H = 640
-const CX = W / 2
-const CY = H / 2
+gsap.registerPlugin(ScrollTrigger)
 
 export function TechnologyGraph() {
   const mobile = useIsMobile()
-  const svgRef = useRef<SVGSVGElement>(null)
+  const reduced = useReducedMotion()
+  const rootRef = useRef<HTMLDivElement>(null)
+  const [stage, setStage] = useState(reduced || mobile ? 5 : 0)
+  const [open, setOpen] = useState<string | null>(null)
 
-  const nodes = useMemo(
-    () =>
-      ecosystem.map((item, index) => {
-        const angle = -90 + (360 / ecosystem.length) * index
-        const radius = item.ring === 'product' ? 210 : item.ring === 'system' ? 250 : 290
-        const rad = (angle * Math.PI) / 180
-        return {
-          ...item,
-          x: CX + Math.cos(rad) * radius,
-          y: CY + Math.sin(rad) * radius,
-        }
-      }),
-    [],
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root || mobile || reduced) return
+    const trigger = ScrollTrigger.create({
+      trigger: root,
+      start: 'top 70%',
+      end: 'bottom 40%',
+      scrub: 0.35,
+      onUpdate: (self) => {
+        const next = Math.min(5, Math.floor(self.progress * 6))
+        setStage((current) => (current === next ? current : next))
+      },
+    })
+    return () => trigger.kill()
+  }, [mobile, reduced])
+
+  const visible = useMemo(
+    () => graphNodes.filter((node) => node.stage <= stage),
+    [stage],
   )
-
-  const onMove = (event: ReactPointerEvent<SVGSVGElement>) => {
-    if (mobile) return
-    const svg = svgRef.current
-    if (!svg) return
-    const rect = svg.getBoundingClientRect()
-    const px = ((event.clientX - rect.left) / rect.width - 0.5) * 16
-    const py = ((event.clientY - rect.top) / rect.height - 0.5) * 16
-    svg.style.transform = `translate(${px}px, ${py}px)`
-  }
+  const selected = graphNodes.find((node) => node.id === open)
 
   if (mobile) {
     return (
-      <div className="space-y-10">
-        <div className="border border-accent/50 px-5 py-4">
-          <p className="eyebrow text-accent">Center</p>
-          <p className="mt-2 font-display text-4xl">Product</p>
-        </div>
+      <div className="space-y-8">
+        {architectureStages.map((item) => (
+          <div key={item.id} className="border-t border-line pt-4">
+            <p className="eyebrow text-accent">{item.label}</p>
+            <p className="mt-3 text-muted">{item.detail}</p>
+          </div>
+        ))}
         {technologyCategories.map((category) => (
           <div key={category.id}>
             <p className="eyebrow mb-3 text-accent">{category.label}</p>
@@ -61,41 +62,64 @@ export function TechnologyGraph() {
   }
 
   return (
-    <svg
-      ref={svgRef}
-      viewBox={`0 0 ${W} ${H}`}
-      className="h-auto w-full transition-transform duration-500"
-      onPointerMove={onMove}
-      onPointerLeave={() => {
-        if (svgRef.current) svgRef.current.style.transform = 'translate(0,0)'
-      }}
-      role="img"
-      aria-label="Technology ecosystem centered on product"
-    >
-      {nodes.map((node) => (
-        <line
-          key={`l-${node.id}`}
-          x1={CX}
-          y1={CY}
-          x2={node.x}
-          y2={node.y}
-          stroke="rgba(78,124,255,0.35)"
-          strokeWidth="1"
-        />
-      ))}
-      <circle cx={CX} cy={CY} r="58" fill="#050505" stroke="#4E7CFF" />
-      <text x={CX} y={CY + 5} textAnchor="middle" fill="#F5F5F5" fontSize="14" fontFamily="Space Grotesk">
-        PRODUCT
-      </text>
-      {nodes.map((node) => (
-        <g key={node.id}>
-          <circle cx={node.x} cy={node.y} r="4" fill="#4E7CFF" />
-          <text x={node.x} y={node.y - 12} textAnchor="middle" fill="#8A8A8A" fontSize="11" fontFamily="Inter">
-            {node.label}
-          </text>
-        </g>
-      ))}
-    </svg>
+    <div ref={rootRef} className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="min-h-[28rem] border border-line bg-surface p-8">
+        <p className="display text-4xl text-accent">PRODUCT</p>
+        <ol className="mt-8 space-y-3">
+          {architectureStages.map((item, index) => (
+            <li
+              key={item.id}
+              className={cn(
+                'flex items-baseline gap-4 transition-opacity duration-300',
+                index <= stage ? 'opacity-100' : 'opacity-20',
+              )}
+            >
+              <span className="text-accent">↓</span>
+              <span className="font-display text-2xl uppercase">{item.label}</span>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-10 flex flex-wrap gap-2">
+          {visible.map((node) => (
+            <button
+              key={node.id}
+              type="button"
+              className={cn(
+                'border px-3 py-2 text-[11px] tracking-[0.14em] uppercase',
+                open === node.id ? 'border-accent text-accent' : 'border-line text-muted',
+              )}
+              onClick={() => setOpen(open === node.id ? null : node.id)}
+            >
+              {node.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <aside className="border border-line bg-bg p-6">
+        {selected ? (
+          <>
+            <p className="eyebrow text-accent">{selected.label}</p>
+            <ul className="mt-6 space-y-3">
+              {selected.panel.map((line) => (
+                <li key={line} className="border-b border-line pb-3 font-display text-xl">
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <>
+            <p className="eyebrow text-accent">Select a node</p>
+            <p className="mt-6 text-muted">
+              Click a technology to see where it sits in the system — not a list, a map of responsibility.
+            </p>
+            <p className="mt-8 text-sm text-meta">
+              {architectureStages[Math.min(stage, architectureStages.length - 1)]?.detail}
+            </p>
+          </>
+        )}
+      </aside>
+    </div>
   )
 }
 

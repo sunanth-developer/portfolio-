@@ -56,10 +56,10 @@ export const navItems = [
   {
     id: 'notes',
     index: '06',
-    label: 'Field Notes',
+    label: 'Notes',
     href: '/notes',
     short: 'Notes',
-    description: 'Thinking from the work, still in motion.',
+    description: 'Thinking out loud — drafts from the work.',
   },
   {
     id: 'contact',
@@ -86,7 +86,7 @@ export const pageMeta: Record<string, { number: string; label: string }> = {
   '/engineering': { number: '03', label: 'Engineering' },
   '/journey': { number: '04', label: 'Journey' },
   '/lab': { number: '05', label: 'Lab' },
-  '/notes': { number: '06', label: 'Field Notes' },
+  '/notes': { number: '06', label: 'Thinking' },
   '/contact': { number: '07', label: 'Contact' },
 }
 
@@ -124,7 +124,7 @@ export const whatIBuild = [
   {
     index: '01',
     title: 'Products',
-    body: 'I design and build digital products from the ground up — from the first idea to architecture, interface, deployment and iteration.',
+    body: 'I take products from the first problem definition through architecture, interface, deployment and iteration.',
   },
   {
     index: '02',
@@ -134,7 +134,7 @@ export const whatIBuild = [
   {
     index: '03',
     title: 'Systems',
-    body: 'I enjoy the engineering underneath the product — APIs, mobile applications, databases, cloud infrastructure, automation and AI.',
+    body: 'I build production interfaces and mobile experiences with React and React Native, and the APIs, data and deployment underneath them.',
   },
 ]
 
@@ -153,4 +153,8 @@ export const ownership = {
   layers: ['Product', 'UX', 'Architecture', 'Frontend', 'Mobile', 'Backend', 'Deployment', 'Operations'] as const,
 }
 
-export const morphWords = ['FOUNDER', 'BUILDER', 'ENGINEER', 'PRODUCT', 'SYSTEM'] as const
+export const identitySignals = [
+  { kicker: 'Founder', line: 'DriverSpot' },
+  { kicker: 'Engineer', line: 'Products · Mobile · Systems' },
+  { kicker: 'Builder', line: 'Ideas → Users → Business' },
+] as const

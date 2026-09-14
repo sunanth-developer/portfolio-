@@ -4,7 +4,7 @@ import { scrambleTo } from '@/animations/scramble'
 import { useReducedMotion } from '@/hooks/useMediaQuery'
 
 const STEPS = ['IDENTITY', 'PRODUCTS', 'ENGINEERING', 'EXPERIMENTS'] as const
-const SESSION_KEY = 'sunanth-boot-v2'
+const SESSION_KEY = 'sunanth-boot-v3'
 
 export function Loader({ onDone }: { onDone: () => void }) {
   const reduced = useReducedMotion()

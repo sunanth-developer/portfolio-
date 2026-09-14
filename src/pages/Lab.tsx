@@ -11,7 +11,7 @@ export default function Lab() {
   )
 
   return (
-    <article className="px-5 pt-32 pb-24 md:px-8 md:pt-40">
+    <article className="px-5 pt-page pb-24 md:px-8">
       <p className="eyebrow mb-6">
         <span className="mr-4 text-accent">05</span>
         Lab
@@ -28,7 +28,7 @@ export default function Lab() {
             key={category}
             type="button"
             className={cn(
-              'border px-3 py-2 text-[10px] tracking-[0.16em] uppercase',
+              'min-h-11 border px-4 py-2 text-[10px] tracking-[0.16em] uppercase',
               filter === category ? 'border-accent text-accent' : 'border-line text-muted',
             )}
             onClick={() => setFilter(category)}

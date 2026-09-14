@@ -4,8 +4,8 @@ import { AppContext } from '@/context/AppContext'
 import type { CursorKind } from '@/context/AppContext'
 import { discoveryIds, type DiscoveryId } from '@/data/discoveries'
 
-const STORAGE_KEY = 'sunanth-discoveries-v2'
-const COMPLETE_KEY = 'sunanth-system-complete-v2'
+const STORAGE_KEY = 'sunanth-discoveries-v3'
+const COMPLETE_KEY = 'sunanth-system-complete-v3'
 
 function readFound(): DiscoveryId[] {
   try {
@@ -64,10 +64,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       window.setTimeout(() => {
         navigate(href)
         window.scrollTo(0, 0)
-      }, 420)
+      }, 520)
       window.setTimeout(() => {
         setTransition((current) => ({ ...current, active: false }))
-      }, 780)
+      }, 820)
     },
     [navigate],
   )

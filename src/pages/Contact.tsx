@@ -6,14 +6,14 @@ export default function Contact() {
   const mail = `mailto:${site.email}?subject=${encodeURIComponent('Something worth building')}`
 
   return (
-    <article className="px-5 pt-32 pb-24 md:px-8 md:pt-40">
+    <article className="px-5 pt-page pb-24 md:px-8">
       <div className="grid items-end gap-12 lg:grid-cols-[1.3fr_0.7fr]">
         <div>
           <p className="eyebrow mb-6">
             <span className="mr-4 text-accent">07</span>
             Contact
           </p>
-          <h1 className="display text-[14vw] md:text-[6.4rem]">
+          <h1 className="display text-[12vw] md:text-[6.4rem]">
             Have something
             <br />
             worth building?

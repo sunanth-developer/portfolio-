@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useApp } from '@/context/AppContext'
-import { useIsFinePointer } from '@/hooks/useMediaQuery'
+import { useIsFinePointer, useReducedMotion } from '@/hooks/useMediaQuery'
 
 const labels: Record<string, string> = {
   default: '',
   view: '',
-  explore: 'EXPLORE',
+  explore: 'EXPLORE →',
   open: 'OPEN →',
   close: 'CLOSE',
 }
@@ -14,11 +14,12 @@ const labels: Record<string, string> = {
 export function CustomCursor() {
   const { cursor } = useApp()
   const fine = useIsFinePointer()
+  const reduced = useReducedMotion()
   const [pos, setPos] = useState({ x: -40, y: -40 })
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    if (!fine) {
+    if (!fine || reduced) {
       document.documentElement.classList.remove('has-custom-cursor')
       return
     }
@@ -35,29 +36,31 @@ export function CustomCursor() {
       document.removeEventListener('mouseleave', onLeave)
       document.documentElement.classList.remove('has-custom-cursor')
     }
-  }, [fine])
+  }, [fine, reduced])
 
-  if (!fine) return null
+  if (!fine || reduced) return null
 
-  const expanded = cursor === 'explore' || cursor === 'open' || cursor === 'close'
-  const navExpand = cursor === 'view'
+  const labeled = cursor === 'explore' || cursor === 'open' || cursor === 'close'
+  const hover = cursor === 'view' || labeled
 
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed top-0 left-0 z-[70] mix-blend-difference"
+      className="pointer-events-none fixed top-0 left-0 z-[70]"
       animate={{ x: pos.x, y: pos.y, opacity: visible ? 1 : 0 }}
       transition={{ type: 'spring', stiffness: 520, damping: 38, mass: 0.25 }}
     >
       <div
-        className="flex items-center justify-center rounded-full bg-white text-[9px] tracking-[0.16em] text-black transition-[width,height] duration-300"
+        className="flex items-center justify-center rounded-full text-[9px] tracking-[0.16em] text-fg"
         style={{
-          width: expanded ? 84 : navExpand ? 22 : 8,
-          height: expanded ? 84 : navExpand ? 22 : 8,
+          width: labeled ? 88 : hover ? 22 : 8,
+          height: labeled ? 88 : hover ? 22 : 8,
           transform: 'translate(-50%, -50%)',
+          background: labeled || hover ? 'transparent' : '#F2EFE7',
+          border: hover ? '1px solid #FF5A36' : '0',
         }}
       >
-        {expanded ? labels[cursor] : null}
+        {labeled ? labels[cursor] : null}
       </div>
     </motion.div>
   )
