@@ -3,11 +3,12 @@ import { MagneticButton } from '@/components/MagneticButton'
 import { Portrait } from '@/components/Portrait'
 import { TractionBlock } from '@/components/ProjectGallery'
 import { DisplayHeadline } from '@/components/DisplayHeadline'
-import { SectionMeta } from '@/components/SectionMeta'
 import { useApp } from '@/context/AppContext'
 import { notes } from '@/data/notes'
 import { site } from '@/data/site'
 import { JourneyTimeline } from '@/components/Timeline'
+import { EditorialImage } from '@/components/EditorialImage'
+import { visuals } from '@/data/visuals'
 
 const DriverSpotStory = lazy(() => import('@/sections/DriverSpotStory'))
 
@@ -20,12 +21,11 @@ export default function FounderHome() {
 
   return (
     <>
-      <section className="relative grid min-h-svh items-end gap-10 overflow-x-clip px-5 pt-page pb-16 md:px-8 lg:grid-cols-12 lg:pb-20">
+      <section className="relative grid items-center gap-10 overflow-x-clip px-5 pt-page pb-16 md:min-h-svh md:px-8 lg:grid-cols-12 lg:gap-12 lg:pb-20">
         <div className="relative z-10 lg:col-span-7">
-          <SectionMeta index="01" label="Founder" />
           <DisplayHeadline
             lines={['I build companies', 'around problems', 'worth solving.']}
-            className="mt-6 max-w-4xl text-[12vw] md:text-[clamp(3.5rem,7.4vw,6.8rem)]"
+            className="max-w-4xl text-[12vw] md:text-[clamp(3.5rem,7.4vw,6.8rem)]"
           />
           <p className="mt-8 max-w-lg text-lg text-muted">
             Founder and developer building products that create real-world value — from the first problem definition
@@ -41,17 +41,16 @@ export default function FounderHome() {
             </MagneticButton>
           </div>
         </div>
-        <div className="relative z-10 mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none lg:justify-self-end">
-          <Portrait priority className="lg:aspect-[4/5]" />
+        <div className="relative z-10 flex w-full justify-center lg:col-span-5 lg:justify-end">
+          <Portrait priority className="w-full max-w-[19rem] sm:max-w-[22rem] lg:max-w-[26rem]" />
         </div>
       </section>
 
       <section className="border-t border-line px-5 py-16 md:px-8 md:py-20">
-        <p className="font-mono text-[11px] tracking-[0.28em] text-meta uppercase">Proof</p>
         <DisplayHeadline
           as="h2"
           lines={['Built.', 'Shipped.', 'Used.']}
-          className="mt-4 text-[12vw] md:text-6xl"
+          className="text-[12vw] md:text-6xl"
         />
         <p className="mt-6 max-w-xl text-muted">
           Verified DriverSpot contact with the city — users, drivers, completed rides and revenue. Nothing padded.
@@ -62,19 +61,32 @@ export default function FounderHome() {
       </section>
 
       <Suspense fallback={<Slot />}>
-        <DriverSpotStory eyebrow="02 / Venture" />
+        <DriverSpotStory />
       </Suspense>
 
       <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
-        <SectionMeta index="03" label="Journey" />
-        <DisplayHeadline
-          as="h2"
-          lines={['A journey of building.']}
-          className="mt-4 max-w-4xl text-[12vw] md:text-6xl"
-        />
-        <p className="mt-6 max-w-xl text-muted">
-          A build log — not a resume. Stages that already exist in the work, without invented dates.
-        </p>
+        <div className="lg:grid lg:grid-cols-12 lg:items-center lg:gap-12">
+          <div className="lg:col-span-7">
+            <DisplayHeadline
+              as="h2"
+              lines={['A journey of building.']}
+              className="max-w-4xl text-[12vw] md:text-6xl"
+            />
+            <p className="mt-6 max-w-xl text-muted">
+              A build log — not a resume. Stages that already exist in the work, without invented dates.
+            </p>
+          </div>
+          <div className="mt-8 lg:col-span-5 lg:mt-0">
+            <EditorialImage
+              src={visuals.journeyDesk.src}
+              alt={visuals.journeyDesk.alt}
+              width={visuals.journeyDesk.width}
+              height={visuals.journeyDesk.height}
+              className="aspect-[16/10]"
+              imgClassName="object-[center_42%]"
+            />
+          </div>
+        </div>
         <div className="mt-12">
           <JourneyTimeline limit={4} />
         </div>
@@ -88,11 +100,10 @@ export default function FounderHome() {
       <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
         <div className="lg:grid lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-5">
-            <SectionMeta index="04" label="Thinking" />
             <DisplayHeadline
               as="h2"
               lines={['Ideas,', 'observations', 'and lessons.']}
-              className="mt-4 text-[12vw] md:text-6xl"
+              className="text-[12vw] md:text-6xl"
             />
             <p className="mt-6 max-w-xl text-muted">
               Thoughts on products, business, technology and building in public. Drafts — not published articles.
@@ -132,11 +143,10 @@ export default function FounderHome() {
       </section>
 
       <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
-        <SectionMeta index="05" label="Next" />
         <DisplayHeadline
           as="h2"
           lines={['Have something', 'worth building?']}
-          className="mt-4 max-w-4xl text-[12vw] md:text-[5.2rem]"
+          className="max-w-4xl text-[12vw] md:text-[5.2rem]"
         />
         <p className="mt-6 max-w-xl text-muted">
           I'm interested in ambitious ideas, interesting technical problems and people who want to build something

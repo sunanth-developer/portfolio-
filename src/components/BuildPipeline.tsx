@@ -33,10 +33,6 @@ export function BuildPipeline() {
 
   return (
     <section ref={rootRef} className="border-t border-line px-5 py-16 md:px-8 md:py-24">
-      <p className="eyebrow mb-5">
-        <span className="mr-4 text-accent">04</span>
-        Ownership
-      </p>
       <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <h2 className="display max-w-[14ch] text-[12vw] md:text-[5.2rem]">
           From idea

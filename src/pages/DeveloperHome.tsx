@@ -4,11 +4,12 @@ import { ArchitectureGraph } from '@/components/ArchitectureGraph'
 import { CodePanel } from '@/components/CodePanel'
 import { DisplayHeadline } from '@/components/DisplayHeadline'
 import { ProjectFiles } from '@/components/ProjectFiles'
-import { SectionMeta } from '@/components/SectionMeta'
 import { useApp } from '@/context/AppContext'
 import { experiments } from '@/data/experiments'
 import { technologyDetails } from '@/data/technologies'
 import { site } from '@/data/site'
+import { visuals } from '@/data/visuals'
+import { EditorialImage } from '@/components/EditorialImage'
 
 const TechnologyGraph = lazy(() => import('@/components/TechnologyGraph'))
 
@@ -21,12 +22,11 @@ export default function DeveloperHome() {
 
   return (
     <>
-      <section className="relative grid min-h-svh items-end gap-10 overflow-x-clip px-5 pt-page pb-16 md:px-8 lg:grid-cols-12 lg:pb-20">
+      <section className="relative grid items-center gap-10 overflow-x-clip px-5 pt-page pb-16 md:min-h-svh md:px-8 lg:grid-cols-12 lg:gap-12 lg:pb-20">
         <div className="relative z-10 lg:col-span-7">
-          <SectionMeta index="01" label="Developer" />
           <DisplayHeadline
             lines={['I turn ideas', 'into working', 'systems.']}
-            className="mt-6 max-w-4xl text-[12vw] md:text-[clamp(3.5rem,7.4vw,6.8rem)]"
+            className="max-w-4xl text-[12vw] md:text-[clamp(3.5rem,7.4vw,6.8rem)]"
           />
           <p className="mt-8 max-w-lg text-lg text-muted">
             Full-stack developer focused on building scalable, real-world systems — React and React Native on the
@@ -42,14 +42,24 @@ export default function DeveloperHome() {
             </MagneticButton>
           </div>
         </div>
-        <div className="relative z-10 lg:col-span-5">
-          <CodePanel />
+        <div className="relative z-10 w-full lg:col-span-5">
+          <EditorialImage
+            src={visuals.developerWorkspace.src}
+            alt={visuals.developerWorkspace.alt}
+            width={visuals.developerWorkspace.width}
+            height={visuals.developerWorkspace.height}
+            priority
+            className="aspect-[16/10]"
+            imgClassName="object-[center_40%]"
+          />
+          <div className="-mt-px">
+            <CodePanel />
+          </div>
         </div>
       </section>
 
       <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
-        <SectionMeta index="02" label="Projects" />
-        <DisplayHeadline as="h2" lines={["Things I've built."]} className="mt-4 text-[12vw] md:text-6xl" />
+        <DisplayHeadline as="h2" lines={["Things I've built."]} className="text-[12vw] md:text-6xl" />
         <p className="mt-6 max-w-xl text-muted">
           A collection of real projects, products and systems. Indexed files stay thin until verified detail exists.
         </p>
@@ -59,8 +69,7 @@ export default function DeveloperHome() {
       </section>
 
       <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
-        <SectionMeta index="03" label="Engineering" />
-        <DisplayHeadline as="h2" lines={['Under the hood.']} className="mt-4 text-[12vw] md:text-6xl" />
+        <DisplayHeadline as="h2" lines={['Under the hood.']} className="text-[12vw] md:text-6xl" />
         <p className="mt-6 max-w-xl text-muted">The technology behind the products — relationships, not percentage bars.</p>
         <div className="mt-12">
           <ArchitectureGraph />
@@ -89,15 +98,28 @@ export default function DeveloperHome() {
       </section>
 
       <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
-        <SectionMeta index="04" label="Lab" />
-        <DisplayHeadline
-          as="h2"
-          lines={['Experiments today.', 'Big things tomorrow.']}
-          className="mt-4 max-w-4xl text-[12vw] md:text-6xl"
-        />
-        <p className="mt-6 max-w-xl text-muted">
-          A collection of side projects, experiments and ideas. Some may never become companies.
-        </p>
+        <div className="lg:grid lg:grid-cols-12 lg:items-center lg:gap-12">
+          <div className="lg:col-span-7">
+            <DisplayHeadline
+              as="h2"
+              lines={['Experiments today.', 'Big things tomorrow.']}
+              className="max-w-4xl text-[12vw] md:text-6xl"
+            />
+            <p className="mt-6 max-w-xl text-muted">
+              A collection of side projects, experiments and ideas. Some may never become companies.
+            </p>
+          </div>
+          <div className="mt-8 lg:col-span-5 lg:mt-0">
+            <EditorialImage
+              src={visuals.labPrototype.src}
+              alt={visuals.labPrototype.alt}
+              width={visuals.labPrototype.width}
+              height={visuals.labPrototype.height}
+              className="aspect-[16/10]"
+              imgClassName="object-center"
+            />
+          </div>
+        </div>
         <div className="mt-12 grid gap-px bg-line md:grid-cols-2">
           {experiments.map((experiment) => (
             <button
@@ -127,11 +149,10 @@ export default function DeveloperHome() {
       </section>
 
       <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
-        <SectionMeta index="05" label="Next" />
         <DisplayHeadline
           as="h2"
           lines={["Let's build", 'something great.']}
-          className="mt-4 max-w-4xl text-[12vw] md:text-[5.2rem]"
+          className="max-w-4xl text-[12vw] md:text-[5.2rem]"
         />
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <MagneticButton cursor="open" onClick={() => goTo('/contact', '06', 'Contact')}>

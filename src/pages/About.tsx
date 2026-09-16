@@ -1,7 +1,6 @@
 import { Portrait } from '@/components/Portrait'
 import { DisplayHeadline } from '@/components/DisplayHeadline'
 import { MagneticButton } from '@/components/MagneticButton'
-import { SectionMeta } from '@/components/SectionMeta'
 import { useApp } from '@/context/AppContext'
 
 export default function About() {
@@ -10,14 +9,13 @@ export default function About() {
 
   return (
     <article className="px-5 pt-page pb-20 md:px-8">
-      <SectionMeta index="05" label="About" />
       <DisplayHeadline
         lines={['More than just code.']}
-        className="mt-5 max-w-5xl text-[12vw] md:text-[5.2rem]"
+        className="max-w-5xl text-[12vw] md:text-[5.2rem]"
       />
       <div className="mt-12 grid items-start gap-10 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-5">
-          <Portrait priority />
+        <div className="flex justify-center lg:col-span-5 lg:justify-start">
+          <Portrait priority className="w-full max-w-[19rem] sm:max-w-[22rem] lg:max-w-[24rem]" />
         </div>
         <div className="space-y-6 text-lg text-muted md:text-xl lg:col-span-7">
           <p>
@@ -33,8 +31,7 @@ export default function About() {
       </div>
 
       <section className="mt-16 border-t border-line pt-10">
-        <p className="font-mono text-[11px] tracking-[0.28em] text-accent uppercase">Intersection</p>
-        <p className="mt-4 max-w-xl text-muted">
+        <p className="max-w-xl text-muted">
           Technology, products, business, curiosity and execution — the same mind, looking through two lenses.
         </p>
         <div className="mt-8 overflow-x-auto font-display text-sm tracking-[0.12em] uppercase md:text-base">

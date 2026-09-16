@@ -2,8 +2,9 @@ import { useMemo, useState } from 'react'
 import { experimentCategories, experiments } from '@/data/experiments'
 import { ExperimentCard } from '@/components/ExperimentCard'
 import { DisplayHeadline } from '@/components/DisplayHeadline'
-import { SectionMeta } from '@/components/SectionMeta'
+import { EditorialImage } from '@/components/EditorialImage'
 import { cn } from '@/lib/cn'
+import { visuals } from '@/data/visuals'
 
 export default function Lab() {
   const [filter, setFilter] = useState<string>('ALL')
@@ -14,14 +15,21 @@ export default function Lab() {
 
   return (
     <article className="px-5 pt-page pb-24 md:px-8">
-      <SectionMeta index="04" label="Lab" />
       <DisplayHeadline
         lines={['Experiments today.', 'Big things tomorrow.']}
-        className="mt-6 max-w-5xl text-[11vw] md:text-[5.2rem]"
+        className="max-w-5xl text-[11vw] md:text-[5.2rem]"
       />
       <p className="mt-8 max-w-xl text-lg text-muted">
         Some ideas exist simply because I wanted to know if I could build them.
       </p>
+      <EditorialImage
+        src={visuals.labPrototype.src}
+        alt={visuals.labPrototype.alt}
+        width={visuals.labPrototype.width}
+        height={visuals.labPrototype.height}
+        className="mt-10 aspect-[16/10] md:max-w-xl"
+        imgClassName="object-center"
+      />
       <div className="mt-12 flex flex-wrap gap-2">
         {['ALL', ...experimentCategories].map((category) => (
           <button

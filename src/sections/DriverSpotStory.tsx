@@ -8,11 +8,13 @@ import { cn } from '@/lib/cn'
 import { PhoneStage, FragmentField, ProductFrames, ArchitectureStack, MarketplaceLoop, TractionBlock } from '@/components/ProjectGallery'
 import { MagneticButton } from '@/components/MagneticButton'
 import { MetricCount } from '@/components/MetricCount'
+import { EditorialImage } from '@/components/EditorialImage'
+import { visuals } from '@/data/visuals'
 import { useApp } from '@/context/AppContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export function DriverSpotStory({ eyebrow = '01 / Venture' }: { eyebrow?: string }) {
+export function DriverSpotStory() {
   const venture = projects[0]
   const mobile = useIsMobile()
   const reduced = useReducedMotion()
@@ -22,7 +24,7 @@ export function DriverSpotStory({ eyebrow = '01 / Venture' }: { eyebrow?: string
 
   return (
     <section className="border-t border-line">
-      <Intro venture={venture} eyebrow={eyebrow} />
+      <Intro venture={venture} />
       {mobile || reduced ? (
         <StackedStory story={story} />
       ) : (
@@ -32,13 +34,12 @@ export function DriverSpotStory({ eyebrow = '01 / Venture' }: { eyebrow?: string
   )
 }
 
-function Intro({ venture, eyebrow }: { venture: Project; eyebrow: string }) {
+function Intro({ venture }: { venture: Project }) {
   const { goTo } = useApp()
 
   return (
     <div className="px-5 pt-16 md:px-8 md:pt-20">
-      <p className="eyebrow text-accent">{eyebrow}</p>
-      <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
+      <div className="flex flex-wrap items-end justify-between gap-6">
         <h2 className="display text-[12vw] md:text-[8rem]">{venture.title}</h2>
         <MagneticButton variant="ghost" cursor="explore" onClick={() => goTo('/work/driverspot', '02', 'Work')}>
           Full file →
@@ -47,6 +48,15 @@ function Intro({ venture, eyebrow }: { venture: Project; eyebrow: string }) {
       <p className="mt-2 font-mono text-xs tracking-[0.18em] text-muted uppercase">{venture.role}</p>
       <p className="mt-3 font-mono text-[10px] tracking-[0.2em] text-accent uppercase">{venture.status}</p>
       <p className="mt-6 max-w-2xl text-lg text-muted">{venture.description}</p>
+      <EditorialImage
+        src={visuals.driverspotHandover.src}
+        alt={visuals.driverspotHandover.alt}
+        width={visuals.driverspotHandover.width}
+        height={visuals.driverspotHandover.height}
+        className="mt-10 aspect-[16/10] md:aspect-[2.2/1]"
+        imgClassName="object-[center_42%]"
+        sizes="100vw"
+      />
       {venture.metrics && (
         <div className="mt-12 grid grid-cols-2 gap-px bg-line md:grid-cols-4">
           {venture.metrics.map((metric) => (
@@ -68,8 +78,7 @@ function StackedStory({ story }: { story: ProjectStory[] }) {
     <div className="space-y-16 px-5 py-16 md:px-8">
       {story.map((item) => (
         <article key={item.id}>
-          <p className="eyebrow text-accent">{item.label}</p>
-          <h3 className="mt-4 font-display text-2xl md:text-4xl">{item.title}</h3>
+          <h3 className="font-display text-2xl md:text-4xl">{item.title}</h3>
           <p className="mt-6 text-muted md:text-lg">{item.body}</p>
               {item.points && (
                 <ul className="mt-6 grid gap-2 sm:grid-cols-2">
@@ -216,8 +225,7 @@ function PinnedContent({
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0 overflow-y-auto"
             >
-              <p className="eyebrow text-accent">{chapter.label}</p>
-              <h3 className="mt-5 font-display text-3xl md:text-5xl">{chapter.title}</h3>
+              <h3 className="font-display text-3xl md:text-5xl">{chapter.title}</h3>
                     <p className="mt-6 max-w-xl text-muted md:text-lg">{chapter.body}</p>
                     <div className="mt-8">
                       <ChapterVisual id={chapter.id} index={active} />
@@ -240,8 +248,20 @@ function PinnedContent({
 }
 
 function ChapterVisual({ id, index }: { id: string; index: number }) {
-  if (id === 'problem') return <FragmentField collapsed={false} />
-  if (id === 'insight') return <FragmentField collapsed />
+  if (id === 'problem') {
+    return (
+      <EditorialImage
+        src={visuals.driverspotKeys.src}
+        alt={visuals.driverspotKeys.alt}
+        width={visuals.driverspotKeys.width}
+        height={visuals.driverspotKeys.height}
+        className="aspect-[4/3] max-w-xl"
+      />
+    )
+  }
+  if (id === 'insight') {
+    return <FragmentField collapsed />
+  }
   if (id === 'product') return <ProductFrames active={index} />
   if (id === 'engineering') return <ArchitectureStack />
   if (id === 'business') return <MarketplaceLoop />

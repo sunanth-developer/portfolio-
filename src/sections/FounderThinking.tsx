@@ -13,8 +13,7 @@ export function FounderThinking() {
   return (
     <section className="border-t border-line">
       <div className="px-5 pt-16 md:px-8 md:pt-20">
-        <p className="eyebrow text-accent">How I think</p>
-        <h2 className="display mt-4 text-[12vw] md:text-[6.4rem]">
+        <h2 className="display text-[12vw] md:text-[6.4rem]">
           I don’t start
           <br />
           with code.

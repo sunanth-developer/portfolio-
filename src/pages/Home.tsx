@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useApp } from '@/context/AppContext'
 import { developerFocus, founderFocus, site } from '@/data/site'
+import { asset, visuals } from '@/data/visuals'
 import { cn } from '@/lib/cn'
 import { useReducedMotion } from '@/hooks/useMediaQuery'
 
@@ -12,17 +13,58 @@ export default function Home() {
 
   return (
     <section className="relative flex min-h-svh flex-col overflow-x-clip">
+      <div className="pointer-events-none absolute inset-0 hidden lg:grid lg:grid-cols-2" aria-hidden>
+        <div className="relative overflow-hidden">
+          <img
+            src={asset(visuals.gateFounder.src)}
+            alt=""
+            width={visuals.gateFounder.width}
+            height={visuals.gateFounder.height}
+            decoding="async"
+            loading="eager"
+            fetchPriority="high"
+            sizes="50vw"
+            className="h-full w-full object-cover object-left transition-transform duration-700 ease-out"
+            style={{ transform: !reduced && hover === 'founder' ? 'scale(1.04)' : 'scale(1)' }}
+          />
+          <div
+            className="absolute inset-0 bg-bg transition-opacity duration-500"
+            style={{ opacity: hover === 'founder' ? 0.28 : 0.5 }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-bg/20 to-bg/80" />
+        </div>
+        <div className="relative overflow-hidden">
+          <img
+            src={asset(visuals.gateDeveloper.src)}
+            alt=""
+            width={visuals.gateDeveloper.width}
+            height={visuals.gateDeveloper.height}
+            decoding="async"
+            loading="eager"
+            fetchPriority="high"
+            sizes="50vw"
+            className="h-full w-full object-cover object-right transition-transform duration-700 ease-out"
+            style={{ transform: !reduced && hover === 'developer' ? 'scale(1.04)' : 'scale(1)' }}
+          />
+          <div
+            className="absolute inset-0 bg-bg transition-opacity duration-500"
+            style={{ opacity: hover === 'developer' ? 0.28 : 0.5 }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-bg/20 to-bg/80" />
+        </div>
+      </div>
+
       <motion.div
         aria-hidden
         className="pointer-events-none absolute top-[8%] left-[-18%] h-[55vw] w-[55vw] rounded-full"
-        animate={{ opacity: hover === 'founder' ? 0.85 : 0 }}
+        animate={{ opacity: hover === 'founder' ? 0.55 : 0 }}
         transition={{ duration: reduced ? 0 : 0.5 }}
         style={{ background: 'radial-gradient(circle, rgba(255,90,54,0.16) 0%, transparent 68%)' }}
       />
       <motion.div
         aria-hidden
         className="pointer-events-none absolute right-[-18%] bottom-[4%] h-[55vw] w-[55vw] rounded-full"
-        animate={{ opacity: hover === 'developer' ? 0.85 : 0 }}
+        animate={{ opacity: hover === 'developer' ? 0.55 : 0 }}
         transition={{ duration: reduced ? 0 : 0.5 }}
         style={{ background: 'radial-gradient(circle, rgba(99,245,194,0.12) 0%, transparent 68%)' }}
       />
@@ -35,7 +77,7 @@ export default function Home() {
         <button
           type="button"
           className={cn(
-            'flex min-h-[22rem] flex-col justify-between px-5 py-8 text-left md:min-h-[26rem] md:px-8 md:py-12 lg:pr-14',
+            'relative flex min-h-[22rem] flex-col justify-between overflow-hidden px-5 py-8 text-left md:min-h-[26rem] md:px-8 md:py-12 lg:overflow-visible lg:pr-14',
             hover === 'founder' && 'text-fg',
           )}
           onMouseEnter={() => {
@@ -50,7 +92,21 @@ export default function Home() {
           onBlur={() => setHover(null)}
           onClick={() => enterProfile('founder')}
         >
-          <div>
+          <div className="pointer-events-none absolute inset-0 lg:hidden" aria-hidden>
+            <img
+              src={asset(visuals.gateFounder.src)}
+              alt=""
+              width={visuals.gateFounder.width}
+              height={visuals.gateFounder.height}
+              decoding="async"
+              loading="eager"
+              sizes="100vw"
+              className="h-full w-full object-cover object-[left_center]"
+            />
+            <div className="absolute inset-0 bg-bg/55" />
+            <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/50 to-bg/30" />
+          </div>
+          <div className="relative z-10">
             <p
               className={cn(
                 'font-mono text-[11px] tracking-[0.28em] uppercase transition-colors',
@@ -68,7 +124,7 @@ export default function Home() {
               Building products, businesses and real-world impact.
             </p>
           </div>
-          <div>
+          <div className="relative z-10">
             <ul className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] tracking-[0.22em] text-meta uppercase">
               {founderFocus.map((item) => (
                 <li key={item}>{item}</li>
@@ -93,9 +149,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 px-5 lg:hidden" aria-hidden>
+        <div className="relative z-10 flex items-center gap-4 px-5 lg:hidden" aria-hidden>
           <span className="h-px flex-1 bg-line" />
-          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-line font-display text-sm">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-bg font-display text-sm">
             {site.monogram}
           </span>
           <span className="h-px flex-1 bg-line" />
@@ -103,7 +159,7 @@ export default function Home() {
 
         <button
           type="button"
-          className="flex min-h-[22rem] flex-col justify-between px-5 py-8 text-left md:min-h-[26rem] md:px-8 md:py-12 lg:pl-14"
+          className="relative flex min-h-[22rem] flex-col justify-between overflow-hidden px-5 py-8 text-left md:min-h-[26rem] md:px-8 md:py-12 lg:overflow-visible lg:pl-14"
           onMouseEnter={() => {
             setHover('developer')
             setCursor('explore')
@@ -116,7 +172,21 @@ export default function Home() {
           onBlur={() => setHover(null)}
           onClick={() => enterProfile('developer')}
         >
-          <div>
+          <div className="pointer-events-none absolute inset-0 lg:hidden" aria-hidden>
+            <img
+              src={asset(visuals.gateDeveloper.src)}
+              alt=""
+              width={visuals.gateDeveloper.width}
+              height={visuals.gateDeveloper.height}
+              decoding="async"
+              loading="lazy"
+              sizes="100vw"
+              className="h-full w-full object-cover object-[right_center]"
+            />
+            <div className="absolute inset-0 bg-bg/55" />
+            <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/50 to-bg/30" />
+          </div>
+          <div className="relative z-10">
             <p
               className={cn(
                 'font-mono text-[11px] tracking-[0.28em] uppercase transition-colors',
@@ -132,7 +202,7 @@ export default function Home() {
             </h2>
             <p className="mt-6 max-w-sm text-base text-muted md:text-lg">Turning ideas into working systems.</p>
           </div>
-          <div>
+          <div className="relative z-10">
             <ul className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] tracking-[0.22em] text-meta uppercase">
               {developerFocus.map((item) => (
                 <li key={item}>{item}</li>

@@ -51,6 +51,14 @@ html[data-profile='neutral'] body {
 @layer base {
   * {
     border-color: var(--color-line);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 
   html {
@@ -60,6 +68,7 @@ html[data-profile='neutral'] body {
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    scrollbar-width: none;
   }
 
   body {

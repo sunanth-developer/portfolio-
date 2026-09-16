@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { technologyDetails } from '@/data/technologies'
+import { asset, visuals } from '@/data/visuals'
 import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/cn'
 
@@ -58,6 +59,17 @@ export function ArchitectureGraph({ compact = false }: { compact?: boolean }) {
         </ul>
       ) : (
         <div className="relative mt-4 min-h-[18rem] overflow-hidden border border-line bg-bg">
+          <img
+            src={asset(visuals.engineeringNodes.src)}
+            alt=""
+            width={visuals.engineeringNodes.width}
+            height={visuals.engineeringNodes.height}
+            decoding="async"
+            loading="lazy"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30"
+          />
+          <div className="pointer-events-none absolute inset-0 grid-bg opacity-60" />
+          <div className="pointer-events-none absolute inset-0 bg-bg/50" />
           <svg className="absolute inset-0 h-full w-full text-fg" aria-hidden>
             {links.map((link) => {
               const from = nodePoint(link.from)

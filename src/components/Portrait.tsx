@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { site } from '@/data/site'
+import { asset, visuals } from '@/data/visuals'
 
 export function Portrait({
   className,
@@ -11,37 +12,50 @@ export function Portrait({
   caption?: boolean
   priority?: boolean
 }) {
-  const src = `${import.meta.env.BASE_URL}sunanth.jpg`
-  const [failed, setFailed] = useState(false)
+  const photoSrc = `${import.meta.env.BASE_URL}sunanth.jpg`
+  const [photo, setPhoto] = useState(false)
+  const fallback = visuals.founderWorkspace
+
+  useEffect(() => {
+    const image = new Image()
+    image.onload = () => setPhoto(true)
+    image.src = photoSrc
+  }, [photoSrc])
 
   return (
-    <figure className={cn('media-zoom relative aspect-[3/4] overflow-hidden border border-line bg-surface', className)}>
-      {failed ? (
-        <div className="flex h-full flex-col justify-end p-5">
-          <p className="eyebrow text-accent">Portrait file</p>
-          <p className="mt-3 font-display text-2xl uppercase">{site.name}</p>
-          <p className="mt-4 max-w-xs text-sm text-muted">
-            Place a real photograph at <code className="text-accent">public/sunanth.jpg</code>. No stock image. No
-            generated stand-in.
-          </p>
-        </div>
-      ) : (
+    <figure
+      className={cn(
+        'media-zoom relative aspect-[4/5] w-full overflow-hidden border border-line bg-surface',
+        className,
+      )}
+    >
+      {photo ? (
         <img
-          src={src}
+          src={photoSrc}
           alt={`${site.name}, founder and developer`}
           width={1086}
           height={1448}
           decoding="async"
           loading={priority ? 'eager' : 'lazy'}
           fetchPriority={priority ? 'high' : undefined}
-          className="h-full w-full object-cover object-[center_12%]"
-          onError={() => setFailed(true)}
+          className="absolute inset-0 h-full w-full object-cover object-[center_12%]"
+        />
+      ) : (
+        <img
+          src={asset(fallback.src)}
+          alt={fallback.alt}
+          width={fallback.width}
+          height={fallback.height}
+          decoding="async"
+          loading={priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : undefined}
+          className="absolute inset-0 h-full w-full object-cover object-center"
         />
       )}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(8,9,9,0.5)_0%,transparent_45%)]" />
-      {caption && !failed && (
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(8,9,9,0.55)_0%,transparent_45%)]" />
+      {caption && (
         <figcaption className="absolute right-4 bottom-4 left-4">
-          <p className="eyebrow text-accent">Subject</p>
+          <p className="eyebrow text-accent">{photo ? 'Subject' : 'Workspace'}</p>
           <p className="mt-1 font-display tracking-[0.12em] uppercase">{site.name}</p>
         </figcaption>
       )}

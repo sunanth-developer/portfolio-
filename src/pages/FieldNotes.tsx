@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import { notes, noteCategories } from '@/data/notes'
 import { FieldNoteCard } from '@/components/FieldNoteCard'
 import { DisplayHeadline } from '@/components/DisplayHeadline'
-import { SectionMeta } from '@/components/SectionMeta'
 import { cn } from '@/lib/cn'
 
 export default function FieldNotes() {
@@ -14,10 +13,9 @@ export default function FieldNotes() {
 
   return (
     <article className="px-5 pt-page pb-24 md:px-8">
-      <SectionMeta index="04" label="Thinking" />
       <DisplayHeadline
         lines={['Ideas.', 'Observations.', 'Lessons.']}
-        className="mt-6 text-[12vw] md:text-[6.2rem]"
+        className="text-[12vw] md:text-[6.2rem]"
       />
       <p className="mt-6 max-w-xl text-muted">
         Drafts from the work. These are not published articles — they are sketches, marked clearly until they are

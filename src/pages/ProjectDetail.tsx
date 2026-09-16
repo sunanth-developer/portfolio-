@@ -1,5 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { projectById } from '@/data/projects'
+import { projectCovers } from '@/data/visuals'
+import { EditorialImage } from '@/components/EditorialImage'
 import { ProjectCaseStudy } from '@/components/ProjectCaseStudy'
 import { MagneticButton } from '@/components/MagneticButton'
 import { useApp } from '@/context/AppContext'
@@ -9,6 +11,7 @@ export default function ProjectDetail() {
   const { slug } = useParams()
   const { goTo } = useApp()
   const project = slug ? projectById(slug) : undefined
+  const cover = project ? projectCovers[project.id] : undefined
 
   if (!project) {
     return (
@@ -25,17 +28,26 @@ export default function ProjectDetail() {
 
   return (
     <article className="px-5 pt-page pb-24 md:px-8">
-      <p className="eyebrow text-accent">
-        {project.index} / {project.category}
+      <h1 className="display text-[12vw] md:text-[8rem]">{project.title}</h1>
+      <p className="mt-4 text-xs tracking-[0.18em] text-muted uppercase">
+        {[project.role, project.status].filter(Boolean).join(' · ')}
       </p>
-      <h1 className="display mt-6 text-[12vw] md:text-[8rem]">{project.title}</h1>
-      <p className="mt-4 text-xs tracking-[0.18em] text-muted uppercase">{project.role || project.status}</p>
       {project.description ? (
         <p className="mt-8 max-w-2xl text-lg text-muted">{project.description}</p>
       ) : (
         <p className="mt-8 max-w-2xl text-lg text-muted">
           This file is indexed. The full case study populates as verified detail is added to the data layer.
         </p>
+      )}
+      {cover && (
+        <EditorialImage
+          src={cover.src}
+          alt={cover.alt}
+          width={cover.width}
+          height={cover.height}
+          className="mt-10 aspect-[16/10] md:aspect-[2.1/1]"
+          sizes="100vw"
+        />
       )}
       {project.featured && (
         <div className="mt-12 md:hidden">

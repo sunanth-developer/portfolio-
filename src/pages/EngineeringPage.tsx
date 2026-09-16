@@ -1,16 +1,14 @@
 import { TechnologyGraph } from '@/components/TechnologyGraph'
 import { ArchitectureGraph } from '@/components/ArchitectureGraph'
 import { DisplayHeadline } from '@/components/DisplayHeadline'
-import { SectionMeta } from '@/components/SectionMeta'
 import { technologyCategories, technologyDetails } from '@/data/technologies'
 
 export default function Engineering() {
   return (
     <article className="px-5 pt-page pb-24 md:px-8">
-      <SectionMeta index="03" label="Engineering" />
       <DisplayHeadline
         lines={['Under', 'the hood.']}
-        className="mt-6 text-[14vw] md:text-[8rem]"
+        className="text-[14vw] md:text-[8rem]"
       />
       <p className="mt-8 max-w-xl text-lg text-muted">
         I build the technology behind the products. Click a layer to see what it does, why it is used, and where it
