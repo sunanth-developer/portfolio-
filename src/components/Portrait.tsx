@@ -15,7 +15,7 @@ export function Portrait({
   const [failed, setFailed] = useState(false)
 
   return (
-    <figure className={cn('relative aspect-[3/4] overflow-hidden border border-line bg-surface', className)}>
+    <figure className={cn('media-zoom relative aspect-[3/4] overflow-hidden border border-line bg-surface', className)}>
       {failed ? (
         <div className="flex h-full flex-col justify-end p-5">
           <p className="eyebrow text-accent">Portrait file</p>
@@ -38,7 +38,7 @@ export function Portrait({
           onError={() => setFailed(true)}
         />
       )}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(11,11,10,0.45)_0%,transparent_45%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(8,9,9,0.5)_0%,transparent_45%)]" />
       {caption && !failed && (
         <figcaption className="absolute right-4 bottom-4 left-4">
           <p className="eyebrow text-accent">Subject</p>

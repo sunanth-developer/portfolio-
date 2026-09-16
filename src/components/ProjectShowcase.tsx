@@ -42,8 +42,8 @@ export function ProjectShowcase() {
               {item.description ||
                 'Indexed. The file expands when verified detail is added to the data layer — nothing invented here.'}
             </p>
-            <p className={cn('mt-8 text-[11px] tracking-[0.22em] uppercase', index === active && 'text-accent')}>
-              Explore →
+            <p className={cn('group mt-8 inline-flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase', index === active && 'text-accent')}>
+              Explore <span className="btn-arrow">→</span>
             </p>
           </button>
         ))}

@@ -9,9 +9,9 @@ export default function NotFound() {
       <p className="eyebrow text-accent">404</p>
       <h1 className="display mt-6 text-5xl md:text-8xl">This layer does not exist.</h1>
       <div className="mt-10">
-        <MagneticButton variant="ghost" onClick={() => goTo('/', '00', 'Index')}>
-          Return to index →
-        </MagneticButton>
+          <MagneticButton variant="ghost" onClick={() => goTo('/', '00', 'Perspectives')}>
+            Return to perspectives →
+          </MagneticButton>
       </div>
     </article>
   )

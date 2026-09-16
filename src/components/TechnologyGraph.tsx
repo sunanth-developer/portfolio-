@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { architectureStages, graphNodes, technologyCategories } from '@/data/technologies'
+import { architectureStages, graphNodes, technologyCategories, technologyDetails } from '@/data/technologies'
 import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/cn'
 
@@ -35,6 +35,7 @@ export function TechnologyGraph() {
     [stage],
   )
   const selected = graphNodes.find((node) => node.id === open)
+  const detail = technologyDetails.find((item) => item.id === open)
 
   if (mobile) {
     return (
@@ -99,13 +100,27 @@ export function TechnologyGraph() {
         {selected ? (
           <>
             <p className="eyebrow text-accent">{selected.label}</p>
-            <ul className="mt-6 space-y-3">
-              {selected.panel.map((line) => (
-                <li key={line} className="border-b border-line pb-3 font-display text-xl">
-                  {line}
-                </li>
-              ))}
-            </ul>
+            {detail ? (
+              <div className="mt-6 space-y-4 text-muted">
+                <p>
+                  <span className="text-accent">What</span> — {detail.what}
+                </p>
+                <p>
+                  <span className="text-accent">Why</span> — {detail.why}
+                </p>
+                <p>
+                  <span className="text-accent">Where</span> — {detail.where}
+                </p>
+              </div>
+            ) : (
+              <ul className="mt-6 space-y-3">
+                {selected.panel.map((line) => (
+                  <li key={line} className="border-b border-line pb-3 font-display text-xl">
+                    {line}
+                  </li>
+                ))}
+              </ul>
+            )}
           </>
         ) : (
           <>

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { scrambleTo } from '@/animations/scramble'
 import { useReducedMotion } from '@/hooks/useMediaQuery'
 
-const STEPS = ['IDENTITY', 'PRODUCTS', 'ENGINEERING', 'EXPERIMENTS'] as const
+const STEPS = ['FOUNDER', 'DEVELOPER', 'BUILDER', 'SYSTEM'] as const
 const SESSION_KEY = 'sunanth-boot-v3'
 
 export function Loader({ onDone }: { onDone: () => void }) {

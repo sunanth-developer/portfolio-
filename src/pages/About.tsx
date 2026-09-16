@@ -1,23 +1,27 @@
 import { Portrait } from '@/components/Portrait'
-import { RevealText } from '@/components/RevealText'
+import { DisplayHeadline } from '@/components/DisplayHeadline'
+import { MagneticButton } from '@/components/MagneticButton'
+import { SectionMeta } from '@/components/SectionMeta'
+import { useApp } from '@/context/AppContext'
 
 export default function About() {
+  const { goTo, profile } = useApp()
+  const home = profile === 'developer' ? '/developer' : '/founder'
+
   return (
     <article className="px-5 pt-page pb-20 md:px-8">
-      <p className="eyebrow mb-5">
-        <span className="mr-4 text-accent">01</span>
-        About
-      </p>
-      <RevealText
-        as="h1"
-        text="The person behind the products."
-        className="display max-w-5xl text-[12vw] md:text-[5.2rem]"
+      <SectionMeta index="05" label="About" />
+      <DisplayHeadline
+        lines={['More than just code.']}
+        className="mt-5 max-w-5xl text-[12vw] md:text-[5.2rem]"
       />
-      <div className="mt-12 grid items-start gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-        <Portrait priority />
-        <div className="space-y-6 text-lg text-muted md:text-xl">
+      <div className="mt-12 grid items-start gap-10 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-5">
+          <Portrait priority />
+        </div>
+        <div className="space-y-6 text-lg text-muted md:text-xl lg:col-span-7">
           <p>
-            I'm Sunanth Samala, a founder and developer focused on turning real-world problems into
+            I'm Sunanth Samala — founder, builder, technologist, product thinker. I turn real-world problems into
             technology-driven products.
           </p>
           <p>
@@ -29,7 +33,10 @@ export default function About() {
       </div>
 
       <section className="mt-16 border-t border-line pt-10">
-        <p className="eyebrow text-accent">Intersection</p>
+        <p className="font-mono text-[11px] tracking-[0.28em] text-accent uppercase">Intersection</p>
+        <p className="mt-4 max-w-xl text-muted">
+          Technology, products, business, curiosity and execution — the same mind, looking through two lenses.
+        </p>
         <div className="mt-8 overflow-x-auto font-display text-sm tracking-[0.12em] uppercase md:text-base">
           <div className="mx-auto grid min-w-[20rem] max-w-xl grid-cols-3 items-center gap-y-3 text-center">
             <span />
@@ -57,6 +64,14 @@ export default function About() {
             <span>Systems</span>
             <span />
           </div>
+        </div>
+        <div className="mt-12">
+          <MagneticButton
+            variant="ghost"
+            onClick={() => goTo(home, '01', profile === 'developer' ? 'Developer' : 'Founder')}
+          >
+            Back to profile →
+          </MagneticButton>
         </div>
       </section>
     </article>

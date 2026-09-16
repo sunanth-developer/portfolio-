@@ -4,6 +4,8 @@ import { AppProvider } from '@/context/AppProvider'
 import { Layout } from '@/components/Layout'
 import Home from '@/pages/Home'
 
+const FounderHome = lazy(() => import('@/pages/FounderHome'))
+const DeveloperHome = lazy(() => import('@/pages/DeveloperHome'))
 const About = lazy(() => import('@/pages/About'))
 const Work = lazy(() => import('@/pages/Work'))
 const ProjectDetail = lazy(() => import('@/pages/ProjectDetail'))
@@ -29,6 +31,8 @@ export default function App() {
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
+              <Route path="/founder" element={<FounderHome />} />
+              <Route path="/developer" element={<DeveloperHome />} />
               <Route path="/about" element={<About />} />
               <Route path="/work" element={<Work />} />
               <Route path="/work/:slug" element={<ProjectDetail />} />

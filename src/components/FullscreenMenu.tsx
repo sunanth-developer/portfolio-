@@ -1,10 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect } from 'react'
 import { useApp } from '@/context/AppContext'
-import { navItems, site } from '@/data/site'
+import { site } from '@/data/site'
+import { ProfileSwitcher } from '@/components/ProfileSwitcher'
 
 export function FullscreenMenu() {
-  const { menuOpen, setMenuOpen, goTo, setCursor, setCommandOpen, unlock } = useApp()
+  const { menuOpen, setMenuOpen, goTo, setCursor, setCommandOpen, unlock, nav, profile } = useApp()
 
   useEffect(() => {
     if (!menuOpen) return
@@ -32,11 +33,11 @@ export function FullscreenMenu() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <p className="font-display text-[11px] tracking-[0.32em] uppercase">{site.shortName}</p>
             <button
               type="button"
-              className="flex min-h-11 min-w-11 items-center justify-end font-display text-[10px] tracking-[0.28em] uppercase hover:text-accent"
+              className="flex min-h-11 min-w-11 items-center justify-end font-mono text-[10px] tracking-[0.28em] uppercase hover:text-accent"
               aria-label="Close menu"
               onMouseEnter={() => setCursor('close')}
               onMouseLeave={() => setCursor('default')}
@@ -45,21 +46,44 @@ export function FullscreenMenu() {
               Close
             </button>
           </div>
+          {profile !== 'neutral' && (
+            <div className="mt-6 sm:hidden">
+              <ProfileSwitcher />
+            </div>
+          )}
           <div className="flex flex-1 flex-col justify-center py-6 md:px-8">
-            {navItems.map((item, index) => (
+            <motion.button
+              type="button"
+              className="flex min-h-14 flex-col border-b border-line py-3 text-left md:flex-row md:items-end md:justify-between md:py-5"
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.04, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              onMouseEnter={() => setCursor('view')}
+              onMouseLeave={() => setCursor('default')}
+              onClick={() => goTo('/', '00', 'Perspectives')}
+            >
+              <span className="flex items-baseline gap-4 md:gap-8">
+                <span className="font-mono text-xs tracking-[0.2em] text-accent">00</span>
+                <span className="display text-4xl uppercase md:text-6xl lg:text-7xl">Perspectives</span>
+              </span>
+              <span className="mt-1 max-w-sm text-sm text-muted md:mt-0 md:text-right">
+                Choose how you want to explore.
+              </span>
+            </motion.button>
+            {nav.map((item, index) => (
               <motion.button
                 key={item.id}
                 type="button"
                 className="flex min-h-14 flex-col border-b border-line py-3 text-left md:flex-row md:items-end md:justify-between md:py-5"
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.06 + index * 0.05, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: 0.08 + index * 0.05, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
                 onMouseEnter={() => setCursor('view')}
                 onMouseLeave={() => setCursor('default')}
                 onClick={() => goTo(item.href, item.index, item.label)}
               >
                 <span className="flex items-baseline gap-4 md:gap-8">
-                  <span className="text-xs tracking-[0.2em] text-accent">{item.index}</span>
+                  <span className="font-mono text-xs tracking-[0.2em] text-accent">{item.index}</span>
                   <span className="display text-4xl uppercase md:text-6xl lg:text-7xl">{item.label}</span>
                 </span>
                 <span className="mt-1 max-w-sm text-sm text-muted md:mt-0 md:text-right">
@@ -72,7 +96,7 @@ export function FullscreenMenu() {
             <p>{site.locationShort}</p>
             <button
               type="button"
-              className="flex min-h-11 items-center"
+              className="flex min-h-11 items-center font-mono"
               onClick={() => {
                 setMenuOpen(false)
                 setCommandOpen(true)

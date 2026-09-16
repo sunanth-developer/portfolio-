@@ -13,18 +13,42 @@ export function Footer() {
       <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="font-display text-2xl tracking-[0.16em] uppercase md:text-4xl">{site.name}</p>
-          <p className="mt-4 text-xs tracking-[0.18em] text-muted uppercase">Founder · Developer · Builder</p>
+          <p className="mt-4 font-mono text-[10px] tracking-[0.18em] text-muted uppercase">
+            {site.title}
+          </p>
+          <p className="mt-3 font-mono text-[10px] tracking-[0.2em] text-meta uppercase">
+            Ideas · Code · Products · Impact
+          </p>
         </div>
         <div className="text-xs tracking-[0.16em] text-muted uppercase">
           <p>{site.locationShort}</p>
           <div className="mt-4 flex flex-wrap gap-5">
-            <a href={`mailto:${site.email}`} className="inline-flex min-h-11 items-center hover:text-fg" onMouseEnter={() => setCursor('open')} onMouseLeave={() => setCursor('default')}>
+            <a
+              href={`mailto:${site.email}`}
+              className="inline-flex min-h-11 items-center hover:text-fg"
+              onMouseEnter={() => setCursor('open')}
+              onMouseLeave={() => setCursor('default')}
+            >
               Email
             </a>
-            <a href={site.linkedin} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center hover:text-fg" onMouseEnter={() => setCursor('view')} onMouseLeave={() => setCursor('default')}>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-11 items-center hover:text-fg"
+              onMouseEnter={() => setCursor('view')}
+              onMouseLeave={() => setCursor('default')}
+            >
               LinkedIn
             </a>
-            <a href={site.github} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center hover:text-fg" onMouseEnter={() => setCursor('view')} onMouseLeave={() => setCursor('default')}>
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-11 items-center hover:text-fg"
+              onMouseEnter={() => setCursor('view')}
+              onMouseLeave={() => setCursor('default')}
+            >
               GitHub
             </a>
           </div>
@@ -57,7 +81,11 @@ export function Footer() {
           </div>
         </div>
       </div>
-      {open && <p className="mt-8 max-w-md text-sm text-muted">Still compiling. The floor of a system is never the end of it.</p>}
+      {open && (
+        <p className="mt-8 max-w-md text-sm text-muted">
+          Still compiling. The floor of a system is never the end of it.
+        </p>
+      )}
     </footer>
   )
 }

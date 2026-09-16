@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { projects } from '@/data/projects'
 import { cn } from '@/lib/cn'
+import { MetricCount } from '@/components/MetricCount'
 
 const frames = [
   { id: 'customer-app', label: 'Customer app', file: 'customer-app.jpg' },
@@ -128,12 +129,14 @@ export function TractionBlock() {
   const metrics = projects[0]?.metrics ?? []
   return (
     <div>
-      <div className="grid grid-cols-2 gap-px bg-line">
+      <div className="grid grid-cols-2 gap-px bg-line md:grid-cols-4">
         {metrics.map((metric) => (
-          <div key={metric.label} className="bg-bg px-4 py-5">
-            <p className="display text-3xl text-accent md:text-4xl">{metric.value}</p>
-            <p className="mt-2 text-[10px] tracking-[0.16em] text-meta uppercase">{metric.label}</p>
-          </div>
+          <MetricCount
+            key={metric.label}
+            value={metric.value}
+            label={metric.label}
+            className="bg-bg px-4 py-6 md:py-8"
+          />
         ))}
       </div>
       <div className="mt-6 space-y-1 font-display text-xl uppercase md:text-2xl">

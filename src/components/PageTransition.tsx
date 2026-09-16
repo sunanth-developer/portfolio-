@@ -11,14 +11,14 @@ export function PageTransition() {
       {transition.active && (
         <motion.div
           className="fixed inset-0 z-[75] flex flex-col items-center justify-center bg-bg"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: reduced ? 0.12 : 0.45 }}
+          initial={reduced ? { opacity: 0 } : { clipPath: 'inset(0 0 100% 0)' }}
+          animate={reduced ? { opacity: 1 } : { clipPath: 'inset(0% 0 0% 0)' }}
+          exit={reduced ? { opacity: 0 } : { clipPath: 'inset(100% 0 0 0)' }}
+          transition={{ duration: reduced ? 0.12 : 0.45, ease: [0.16, 1, 0.3, 1] }}
           aria-hidden
         >
           <motion.p
-            className="font-display text-sm tracking-[0.42em] text-muted uppercase"
+            className="font-mono text-[11px] tracking-[0.42em] text-muted uppercase"
             initial={reduced ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
           >

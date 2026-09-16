@@ -10,6 +10,19 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'solid' | 'ghost' | 'text'
 }
 
+function withArrow(children: ReactNode) {
+  if (typeof children !== 'string' || !children.includes('→')) return children
+  const [label] = children.split('→')
+  return (
+    <>
+      {label.trim()}
+      <span className="btn-arrow" aria-hidden>
+        →
+      </span>
+    </>
+  )
+}
+
 export function MagneticButton({
   children,
   className,
@@ -26,10 +39,10 @@ export function MagneticButton({
     <button
       ref={ref}
       className={cn(
-        'inline-flex min-h-11 w-full items-center justify-center px-5 py-3 font-display text-[11px] tracking-[0.22em] uppercase transition-colors duration-300 sm:w-auto',
-        variant === 'solid' && 'bg-fg text-bg hover:bg-accent',
+        'group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full px-5 py-3 font-mono text-[11px] tracking-[0.22em] uppercase transition-colors duration-300 sm:w-auto',
+        variant === 'solid' && 'bg-fg text-bg hover:bg-accent hover:text-bg',
         variant === 'ghost' && 'border border-line text-fg hover:border-accent hover:text-accent',
-        variant === 'text' && 'px-0 py-2 text-muted hover:text-fg',
+        variant === 'text' && 'rounded-none px-0 py-2 text-muted hover:text-fg',
         className,
       )}
       onMouseEnter={(event) => {
@@ -42,7 +55,7 @@ export function MagneticButton({
       }}
       {...props}
     >
-      {children}
+      {withArrow(children)}
     </button>
   )
 }

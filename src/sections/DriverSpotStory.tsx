@@ -7,11 +7,12 @@ import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/cn'
 import { PhoneStage, FragmentField, ProductFrames, ArchitectureStack, MarketplaceLoop, TractionBlock } from '@/components/ProjectGallery'
 import { MagneticButton } from '@/components/MagneticButton'
+import { MetricCount } from '@/components/MetricCount'
 import { useApp } from '@/context/AppContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export function DriverSpotStory() {
+export function DriverSpotStory({ eyebrow = '01 / Venture' }: { eyebrow?: string }) {
   const venture = projects[0]
   const mobile = useIsMobile()
   const reduced = useReducedMotion()
@@ -21,7 +22,7 @@ export function DriverSpotStory() {
 
   return (
     <section className="border-t border-line">
-      <Intro venture={venture} />
+      <Intro venture={venture} eyebrow={eyebrow} />
       {mobile || reduced ? (
         <StackedStory story={story} />
       ) : (
@@ -31,27 +32,30 @@ export function DriverSpotStory() {
   )
 }
 
-function Intro({ venture }: { venture: Project }) {
+function Intro({ venture, eyebrow }: { venture: Project; eyebrow: string }) {
   const { goTo } = useApp()
 
   return (
     <div className="px-5 pt-16 md:px-8 md:pt-20">
-      <p className="eyebrow text-accent">01 / Venture</p>
+      <p className="eyebrow text-accent">{eyebrow}</p>
       <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
         <h2 className="display text-[12vw] md:text-[8rem]">{venture.title}</h2>
         <MagneticButton variant="ghost" cursor="explore" onClick={() => goTo('/work/driverspot', '02', 'Work')}>
           Full file →
         </MagneticButton>
       </div>
-      <p className="mt-2 text-xs tracking-[0.18em] text-muted uppercase">{venture.role}</p>
+      <p className="mt-2 font-mono text-xs tracking-[0.18em] text-muted uppercase">{venture.role}</p>
+      <p className="mt-3 font-mono text-[10px] tracking-[0.2em] text-accent uppercase">{venture.status}</p>
       <p className="mt-6 max-w-2xl text-lg text-muted">{venture.description}</p>
       {venture.metrics && (
         <div className="mt-12 grid grid-cols-2 gap-px bg-line md:grid-cols-4">
           {venture.metrics.map((metric) => (
-            <div key={metric.label} className="bg-bg px-4 py-6">
-              <p className="display text-3xl md:text-4xl">{metric.value}</p>
-              <p className="mt-2 text-[10px] tracking-[0.16em] text-muted uppercase">{metric.label}</p>
-            </div>
+            <MetricCount
+              key={metric.label}
+              value={metric.value}
+              label={metric.label}
+              className="bg-bg px-4 py-6"
+            />
           ))}
         </div>
       )}

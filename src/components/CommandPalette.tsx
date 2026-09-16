@@ -38,11 +38,13 @@ export function CommandPalette() {
     const map: Record<string, string[]> = {
       whoami: ['FOUNDER', 'DEVELOPER', 'BUILDER'],
       current: ['STATUS', 'BUILDING'],
+      founder: ['OPENING FOUNDER PROFILE'],
+      developer: ['OPENING DEVELOPER PROFILE'],
       work: ['01 DRIVERSPOT', ...projects.slice(1).map((p) => `${p.index} ${p.title.toUpperCase()}`)],
       stack: technologyCategories.flatMap((c) => [c.label.toUpperCase(), ...c.items]),
       lab: ['OPENING LAB'],
       journey: ['OPENING BUILD LOG'],
-      help: ['whoami', 'work', 'stack', 'lab', 'journey', 'current', 'secret', 'clear'],
+      help: ['whoami', 'founder', 'developer', 'work', 'stack', 'lab', 'journey', 'current', 'secret', 'clear'],
       secret: ['ACCESSING...', '████████████████████ 100%', 'YOU FOUND THE HIDDEN LAYER.'],
     }
 
@@ -54,9 +56,11 @@ export function CommandPalette() {
       ...response.map((text) => ({ type: 'out' as const, text })),
     ])
     setInput('')
-    if (command === 'lab') window.setTimeout(() => goTo('/lab', '05', 'Lab'), 400)
-    if (command === 'journey') window.setTimeout(() => goTo('/journey', '04', 'Journey'), 400)
+    if (command === 'lab') window.setTimeout(() => goTo('/lab', '04', 'Lab'), 400)
+    if (command === 'journey') window.setTimeout(() => goTo('/journey', '03', 'Journey'), 400)
     if (command === 'work') window.setTimeout(() => goTo('/work', '02', 'Work'), 400)
+    if (command === 'founder') window.setTimeout(() => goTo('/founder', '01', 'Founder'), 400)
+    if (command === 'developer') window.setTimeout(() => goTo('/developer', '01', 'Developer'), 400)
   }
 
   return (

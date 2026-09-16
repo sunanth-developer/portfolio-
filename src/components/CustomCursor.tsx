@@ -48,16 +48,17 @@ export function CustomCursor() {
       aria-hidden
       className="pointer-events-none fixed top-0 left-0 z-[70]"
       animate={{ x: pos.x, y: pos.y, opacity: visible ? 1 : 0 }}
-      transition={{ type: 'spring', stiffness: 520, damping: 38, mass: 0.25 }}
+      transition={{ type: 'spring', stiffness: 500, damping: 36, mass: 0.22 }}
     >
       <div
-        className="flex items-center justify-center rounded-full text-[9px] tracking-[0.16em] text-fg"
+        className="flex items-center justify-center rounded-full font-mono text-[9px] tracking-[0.16em] text-fg"
         style={{
-          width: labeled ? 88 : hover ? 22 : 8,
-          height: labeled ? 88 : hover ? 22 : 8,
+          width: labeled ? 84 : hover ? 28 : 8,
+          height: labeled ? 84 : hover ? 28 : 8,
           transform: 'translate(-50%, -50%)',
-          background: labeled || hover ? 'transparent' : '#F2EFE7',
-          border: hover ? '1px solid #FF5A36' : '0',
+          background: labeled || hover ? 'transparent' : '#F5F4EF',
+          border: hover ? '1px solid var(--color-accent)' : '0',
+          transition: 'width 0.22s ease, height 0.22s ease, border-color 0.22s ease',
         }}
       >
         {labeled ? labels[cursor] : null}

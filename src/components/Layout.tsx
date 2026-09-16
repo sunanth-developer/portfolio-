@@ -8,6 +8,7 @@ import { PageTransition, GrainOverlay } from '@/components/PageTransition'
 import { CustomCursor } from '@/components/CustomCursor'
 import { ScrollProgress } from '@/components/ScrollProgress'
 import { Footer } from '@/components/Footer'
+import { ProfileTransition } from '@/components/ProfileTransition'
 import { AccessOverlay } from '@/components/AccessOverlay'
 import { CommandPalette } from '@/components/CommandPalette'
 import { DiscoveryToasts, SystemComplete } from '@/components/DiscoverySystem'
@@ -23,6 +24,7 @@ export function Layout() {
     experimentId,
     completeOpen,
     setCommandOpen,
+    profileSwitch,
   } = useApp()
   const [booted, setBooted] = useState(() => {
     try {
@@ -37,7 +39,14 @@ export function Layout() {
     return false
   })
   const location = useLocation()
-  const paused = !booted || menuOpen || accessOpen || commandOpen || Boolean(experimentId) || completeOpen
+  const paused =
+    !booted ||
+    menuOpen ||
+    accessOpen ||
+    commandOpen ||
+    Boolean(experimentId) ||
+    completeOpen ||
+    profileSwitch.active
 
   useLenis(paused)
   const finishBoot = useCallback(() => setBooted(true), [])
@@ -71,7 +80,7 @@ export function Layout() {
     const meta = pageMeta[location.pathname]
     document.title =
       location.pathname === '/'
-        ? `${site.name} — Founder × Developer`
+        ? `${site.name} — Founder × Developer × Builder`
         : `${meta?.label ?? 'Index'} — ${site.name}`
   }, [location.pathname])
 
@@ -87,6 +96,7 @@ export function Layout() {
       <Navbar />
       <FullscreenMenu />
       <PageTransition />
+      <ProfileTransition />
       <AccessOverlay />
       <CommandPalette />
       <ExperimentOverlay />
@@ -96,11 +106,18 @@ export function Layout() {
         id="main"
         className={booted ? undefined : 'invisible'}
         inert={
-          menuOpen || accessOpen || commandOpen || Boolean(experimentId) || completeOpen ? true : undefined
+          menuOpen ||
+          accessOpen ||
+          commandOpen ||
+          Boolean(experimentId) ||
+          completeOpen ||
+          profileSwitch.active
+            ? true
+            : undefined
         }
       >
         <Outlet />
-        <Footer />
+        {location.pathname !== '/' && <Footer />}
       </div>
     </>
   )

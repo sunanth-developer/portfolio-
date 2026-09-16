@@ -2,7 +2,8 @@ export const site = {
   name: 'Sunanth Samala',
   shortName: 'Sunanth',
   monogram: 'S',
-  title: 'Founder × Developer',
+  title: 'Founder × Developer × Builder',
+  statement: 'Two perspectives. One builder.',
   location: 'Hyderabad, India',
   locationShort: 'Hyderabad · India',
   email: 'sunanth.samala7@gmail.com',
@@ -12,22 +13,82 @@ export const site = {
   status: 'BUILDING',
 }
 
-export const navItems = [
+export type NavItem = {
+  id: string
+  index: string
+  label: string
+  href: string
+  short: string
+  description: string
+}
+
+export const founderNav: NavItem[] = [
+  {
+    id: 'home',
+    index: '01',
+    label: 'Home',
+    href: '/founder',
+    short: 'Home',
+    description: 'The founder perspective.',
+  },
+  {
+    id: 'driverspot',
+    index: '02',
+    label: 'DriverSpot',
+    href: '/work/driverspot',
+    short: 'DriverSpot',
+    description: 'The flagship venture.',
+  },
+  {
+    id: 'journey',
+    index: '03',
+    label: 'Journey',
+    href: '/journey',
+    short: 'Journey',
+    description: 'A journey of building.',
+  },
+  {
+    id: 'thinking',
+    index: '04',
+    label: 'Thinking',
+    href: '/notes',
+    short: 'Thinking',
+    description: 'Ideas, observations, lessons — drafts.',
+  },
   {
     id: 'about',
-    index: '01',
+    index: '05',
     label: 'About',
     href: '/about',
     short: 'About',
-    description: 'The person behind the products.',
+    description: 'More than just code.',
   },
   {
-    id: 'work',
+    id: 'contact',
+    index: '06',
+    label: 'Contact',
+    href: '/contact',
+    short: 'Contact',
+    description: "Let's build something great.",
+  },
+]
+
+export const developerNav: NavItem[] = [
+  {
+    id: 'home',
+    index: '01',
+    label: 'Home',
+    href: '/developer',
+    short: 'Home',
+    description: 'The developer perspective.',
+  },
+  {
+    id: 'projects',
     index: '02',
-    label: 'Work',
+    label: 'Projects',
     href: '/work',
-    short: 'Work',
-    description: 'Products, ventures and systems I’ve built.',
+    short: 'Projects',
+    description: "Things I've built.",
   },
   {
     id: 'engineering',
@@ -35,59 +96,51 @@ export const navItems = [
     label: 'Engineering',
     href: '/engineering',
     short: 'Engineering',
-    description: 'The technology underneath the work.',
-  },
-  {
-    id: 'journey',
-    index: '04',
-    label: 'Journey',
-    href: '/journey',
-    short: 'Journey',
-    description: 'The build log — not a resume.',
+    description: 'Under the hood.',
   },
   {
     id: 'lab',
-    index: '05',
+    index: '04',
     label: 'Lab',
     href: '/lab',
     short: 'Lab',
-    description: 'Experiments that may never become companies.',
+    description: 'Experiments today. Bigger things tomorrow.',
   },
   {
-    id: 'notes',
-    index: '06',
-    label: 'Notes',
-    href: '/notes',
-    short: 'Notes',
-    description: 'Thinking out loud — drafts from the work.',
+    id: 'about',
+    index: '05',
+    label: 'About',
+    href: '/about',
+    short: 'About',
+    description: 'More than just code.',
   },
   {
     id: 'contact',
-    index: '07',
+    index: '06',
     label: 'Contact',
     href: '/contact',
     short: 'Contact',
-    description: 'If there is something worth building.',
+    description: "Let's build something great.",
   },
-] as const
+]
 
-export const desktopNav = [
-  { label: 'About', href: '/about' },
-  { label: 'Work', href: '/work' },
-  { label: 'Engineering', href: '/engineering' },
-  { label: 'Lab', href: '/lab' },
-  { label: 'Notes', href: '/notes' },
-] as const
+export const navItems = founderNav
+
+export const desktopNav = founderNav
+  .filter((item) => item.id !== 'home' && item.id !== 'contact')
+  .map((item) => ({ label: item.label, href: item.href }))
 
 export const pageMeta: Record<string, { number: string; label: string }> = {
-  '/': { number: '00', label: 'Index' },
-  '/about': { number: '01', label: 'About' },
+  '/': { number: '00', label: 'Perspectives' },
+  '/founder': { number: '01', label: 'Founder' },
+  '/developer': { number: '01', label: 'Developer' },
+  '/about': { number: '05', label: 'About' },
   '/work': { number: '02', label: 'Work' },
   '/engineering': { number: '03', label: 'Engineering' },
-  '/journey': { number: '04', label: 'Journey' },
-  '/lab': { number: '05', label: 'Lab' },
-  '/notes': { number: '06', label: 'Thinking' },
-  '/contact': { number: '07', label: 'Contact' },
+  '/journey': { number: '03', label: 'Journey' },
+  '/lab': { number: '04', label: 'Lab' },
+  '/notes': { number: '04', label: 'Thinking' },
+  '/contact': { number: '06', label: 'Contact' },
 }
 
 export const accessLayer = {
@@ -102,7 +155,7 @@ export const accessLayer = {
     {
       id: 'engineer',
       index: '02',
-      label: 'Engineer',
+      label: 'Developer',
       description: 'I turn product ideas into working software.',
     },
     {
@@ -155,6 +208,9 @@ export const ownership = {
 
 export const identitySignals = [
   { kicker: 'Founder', line: 'DriverSpot' },
-  { kicker: 'Engineer', line: 'Products · Mobile · Systems' },
+  { kicker: 'Developer', line: 'Products · Mobile · Systems' },
   { kicker: 'Builder', line: 'Ideas → Users → Business' },
 ] as const
+
+export const founderFocus = ['Products', 'Strategy', 'Leadership', 'Impact'] as const
+export const developerFocus = ['Code', 'Systems', 'Architecture', 'Experiments'] as const

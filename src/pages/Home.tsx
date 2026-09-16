@@ -1,97 +1,159 @@
-import { lazy, Suspense } from 'react'
-import { Hero } from '@/components/Hero'
-import { WhatIBuild } from '@/sections/WhatIBuild'
-import { MagneticButton } from '@/components/MagneticButton'
-import { TractionBlock } from '@/components/ProjectGallery'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { useApp } from '@/context/AppContext'
-
-const FounderWhoCodes = lazy(() => import('@/sections/FounderWhoCodes'))
-const DriverSpotStory = lazy(() => import('@/sections/DriverSpotStory'))
-const FounderThinking = lazy(() => import('@/sections/FounderThinking'))
-const TechnologyGraph = lazy(() => import('@/components/TechnologyGraph'))
-const BuildPipeline = lazy(() => import('@/components/BuildPipeline'))
-const ProjectShowcase = lazy(() => import('@/components/ProjectShowcase'))
-
-function Slot() {
-  return <div className="min-h-[16vh]" />
-}
+import { developerFocus, founderFocus, site } from '@/data/site'
+import { cn } from '@/lib/cn'
+import { useReducedMotion } from '@/hooks/useMediaQuery'
 
 export default function Home() {
-  const { goTo } = useApp()
+  const { enterProfile, setCursor } = useApp()
+  const reduced = useReducedMotion()
+  const [hover, setHover] = useState<'founder' | 'developer' | null>(null)
 
   return (
-    <>
-      <Hero />
-      <Suspense fallback={<Slot />}>
-        <FounderWhoCodes />
-      </Suspense>
-      <WhatIBuild />
-      <Suspense fallback={<Slot />}>
-        <FounderThinking />
-        <DriverSpotStory />
-      </Suspense>
-      <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
-        <p className="eyebrow mb-4 text-accent">Proof</p>
-        <h2 className="display text-[12vw] md:text-[5.6rem]">
-          Built.
-          <br />
-          Shipped.
-          <br />
-          Used.
-        </h2>
-        <p className="mt-6 max-w-xl text-muted">
-          Verified DriverSpot contact with the city — users, drivers, completed rides and revenue. Nothing padded.
-        </p>
-        <div className="mt-10">
-          <TractionBlock />
+    <section className="relative flex min-h-svh flex-col overflow-x-clip">
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute top-[8%] left-[-18%] h-[55vw] w-[55vw] rounded-full"
+        animate={{ opacity: hover === 'founder' ? 0.85 : 0 }}
+        transition={{ duration: reduced ? 0 : 0.5 }}
+        style={{ background: 'radial-gradient(circle, rgba(255,90,54,0.16) 0%, transparent 68%)' }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute right-[-18%] bottom-[4%] h-[55vw] w-[55vw] rounded-full"
+        animate={{ opacity: hover === 'developer' ? 0.85 : 0 }}
+        transition={{ duration: reduced ? 0 : 0.5 }}
+        style={{ background: 'radial-gradient(circle, rgba(99,245,194,0.12) 0%, transparent 68%)' }}
+      />
+
+      <p className="relative z-10 px-5 pt-page text-center font-mono text-[11px] tracking-[0.32em] text-muted uppercase md:px-8">
+        {site.statement}
+      </p>
+
+      <div className="relative z-10 mt-6 grid flex-1 lg:mt-4 lg:grid-cols-[1fr_5.5rem_1fr]">
+        <button
+          type="button"
+          className={cn(
+            'flex min-h-[22rem] flex-col justify-between px-5 py-8 text-left md:min-h-[26rem] md:px-8 md:py-12 lg:pr-14',
+            hover === 'founder' && 'text-fg',
+          )}
+          onMouseEnter={() => {
+            setHover('founder')
+            setCursor('explore')
+          }}
+          onMouseLeave={() => {
+            setHover(null)
+            setCursor('default')
+          }}
+          onFocus={() => setHover('founder')}
+          onBlur={() => setHover(null)}
+          onClick={() => enterProfile('founder')}
+        >
+          <div>
+            <p
+              className={cn(
+                'font-mono text-[11px] tracking-[0.28em] uppercase transition-colors',
+                hover === 'founder' ? 'text-founder' : 'text-meta',
+              )}
+            >
+              01
+            </p>
+            <h2 className="display mt-5 text-[12vw] md:text-6xl lg:text-[5.6rem]">
+              Founder
+              <br />
+              Perspective
+            </h2>
+            <p className="mt-6 max-w-sm text-base text-muted md:text-lg">
+              Building products, businesses and real-world impact.
+            </p>
+          </div>
+          <div>
+            <ul className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] tracking-[0.22em] text-meta uppercase">
+              {founderFocus.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <p
+              className={cn(
+                'group mt-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase',
+                hover === 'founder' ? 'text-founder' : 'text-fg',
+              )}
+            >
+              Explore founder profile
+              <span className="btn-arrow">→</span>
+            </p>
+          </div>
+        </button>
+
+        <div className="relative hidden items-stretch justify-center lg:flex" aria-hidden>
+          <div className="mx-auto h-full w-px bg-line" />
+          <div className="absolute top-1/2 left-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg font-display text-lg tracking-[0.18em]">
+            {site.monogram}
+          </div>
         </div>
-        <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[10px] tracking-[0.18em] text-meta uppercase">
-          {['Product', 'Mobile', 'Backend', 'Marketplace', 'Operations'].map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </section>
-      <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
-        <p className="eyebrow mb-4 text-accent">Engineering</p>
-        <h2 className="display text-[12vw] md:text-[6rem]">Under the hood.</h2>
-        <p className="mt-5 max-w-xl text-muted">I build the technology behind the products.</p>
-        <div className="mt-10">
-          <Suspense fallback={<Slot />}>
-            <TechnologyGraph />
-          </Suspense>
+
+        <div className="flex items-center gap-4 px-5 lg:hidden" aria-hidden>
+          <span className="h-px flex-1 bg-line" />
+          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-line font-display text-sm">
+            {site.monogram}
+          </span>
+          <span className="h-px flex-1 bg-line" />
         </div>
-        <div className="mt-8">
-          <MagneticButton variant="ghost" onClick={() => goTo('/engineering', '03', 'Engineering')}>
-            Open engineering →
-          </MagneticButton>
-        </div>
-      </section>
-      <Suspense fallback={<Slot />}>
-        <BuildPipeline />
-      </Suspense>
-      <Suspense fallback={<Slot />}>
-        <ProjectShowcase />
-      </Suspense>
-      <section className="border-t border-line px-5 py-16 md:px-8 md:py-24">
-        <p className="eyebrow mb-4 text-accent">07 / Next</p>
-        <h2 className="display max-w-4xl text-[12vw] md:text-[5.4rem]">
-          Have something
-          <br />
-          worth building?
-        </h2>
-        <p className="mt-6 max-w-xl text-muted">
-          I'm interested in ambitious ideas, interesting technical problems and people who want to build something
-          meaningful.
-        </p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <MagneticButton cursor="open" onClick={() => goTo('/contact', '07', 'Contact')}>
-            Start a conversation →
-          </MagneticButton>
-          <MagneticButton variant="ghost" cursor="view" onClick={() => goTo('/lab', '05', 'Lab')}>
-            Enter the lab
-          </MagneticButton>
-        </div>
-      </section>
-    </>
+
+        <button
+          type="button"
+          className="flex min-h-[22rem] flex-col justify-between px-5 py-8 text-left md:min-h-[26rem] md:px-8 md:py-12 lg:pl-14"
+          onMouseEnter={() => {
+            setHover('developer')
+            setCursor('explore')
+          }}
+          onMouseLeave={() => {
+            setHover(null)
+            setCursor('default')
+          }}
+          onFocus={() => setHover('developer')}
+          onBlur={() => setHover(null)}
+          onClick={() => enterProfile('developer')}
+        >
+          <div>
+            <p
+              className={cn(
+                'font-mono text-[11px] tracking-[0.28em] uppercase transition-colors',
+                hover === 'developer' ? 'text-developer' : 'text-meta',
+              )}
+            >
+              02
+            </p>
+            <h2 className="display mt-5 text-[12vw] md:text-6xl lg:text-[5.6rem]">
+              Developer
+              <br />
+              Perspective
+            </h2>
+            <p className="mt-6 max-w-sm text-base text-muted md:text-lg">Turning ideas into working systems.</p>
+          </div>
+          <div>
+            <ul className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] tracking-[0.22em] text-meta uppercase">
+              {developerFocus.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <p
+              className={cn(
+                'group mt-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase',
+                hover === 'developer' ? 'text-developer' : 'text-fg',
+              )}
+            >
+              Explore developer profile
+              <span className="btn-arrow">→</span>
+            </p>
+          </div>
+        </button>
+      </div>
+
+      <p className="relative z-10 px-5 py-5 font-mono text-[10px] tracking-[0.22em] text-meta uppercase md:px-8">
+        Same mind. Different lenses. Bigger possibilities.
+      </p>
+    </section>
   )
 }
