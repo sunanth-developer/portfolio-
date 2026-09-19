@@ -5,12 +5,12 @@ import { IdentityHero } from '@/components/home/IdentityHero'
 import type { HomeLens } from '@/components/home/types'
 import { useApp } from '@/context/AppContext'
 import type { ProfileId } from '@/context/AppContext'
-import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
+import { useIsCompact, useReducedMotion } from '@/hooks/useMediaQuery'
 
 export default function Home() {
   const { enterProfile, setCursor } = useApp()
   const reduced = useReducedMotion()
-  const mobile = useIsMobile()
+  const compact = useIsCompact()
   const [phase, setPhase] = useState(reduced ? 5 : 0)
   const [hover, setHover] = useState<ProfileId | null>(null)
   const [selected, setSelected] = useState<ProfileId | null>(null)
@@ -60,13 +60,13 @@ export default function Home() {
   }
 
   return (
-    <section className="home relative h-svh overflow-hidden">
+    <section className="home relative min-h-svh lg:h-svh lg:overflow-hidden">
       <HomeEnvironment active={lens.active} ready={reduced || phase >= 1} reduced={reduced} />
       <div className="home-shell">
         <IdentityHero {...lens} />
         <DualLensStage
           lens={lens}
-          mobile={mobile}
+          compact={compact}
           onActivate={activate}
           onClear={clear}
           onChoose={choose}

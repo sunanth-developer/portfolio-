@@ -28,7 +28,7 @@ export function FounderHero() {
   }, [reduced])
 
   return (
-    <section ref={root} className="relative min-h-svh overflow-hidden">
+    <section ref={root} className="founder-hero relative overflow-hidden">
       <motion.div
         className="absolute inset-0"
         style={{ y: imageY }}
@@ -45,7 +45,7 @@ export function FounderHero() {
           height={900}
           decoding="async"
           fetchPriority="high"
-          className="h-full w-full object-cover object-center"
+          className="founder-hero-image"
           initial={false}
           animate={{
             filter: revealed ? 'blur(0px)' : 'blur(28px)',
@@ -53,13 +53,13 @@ export function FounderHero() {
           }}
           transition={{ duration: reduced ? 0 : 1.45, ease: waveEase }}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgb(255_248_240/0.42),rgb(255_248_240/0.12)_55%,rgb(255_248_240/0.22))]" />
+        <div className="founder-hero-wash" />
       </motion.div>
 
-      <div className="relative z-10 flex min-h-svh items-center justify-center px-[var(--page-padding)]">
-        <div className="text-center" style={{ color: heroInk }}>
+      <div className="founder-hero-copy" style={{ color: heroInk }}>
+        <div>
           <motion.h1
-            className="font-display whitespace-nowrap tracking-[-0.05em] text-[clamp(1.7rem,5.4vw,4.8rem)] leading-none"
+            className="founder-hero-title"
             initial={false}
             animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : 18 }}
             transition={{ duration: reduced ? 0 : 0.9, ease: waveSettle }}
@@ -67,7 +67,7 @@ export function FounderHero() {
             I start with the problem.
           </motion.h1>
           <motion.p
-            className="mx-auto mt-6 whitespace-nowrap font-display tracking-[-0.03em] text-[clamp(1.5rem,3.1vw,2.5rem)] leading-snug"
+            className="founder-hero-sub mt-6"
             initial={false}
             animate={{ opacity: phase >= 5 ? 1 : 0 }}
             transition={{ duration: reduced ? 0 : 0.55, ease: waveEase }}
@@ -83,7 +83,7 @@ export function FounderHero() {
             aria-hidden
           />
           <motion.p
-            className="mx-auto mt-6 whitespace-nowrap font-display tracking-[-0.02em] text-[clamp(1.05rem,1.8vw,1.4rem)] leading-snug"
+            className="founder-hero-tag mt-6"
             initial={false}
             animate={{ opacity: phase >= 5 ? 1 : 0 }}
             transition={{ duration: reduced ? 0 : 0.5, ease: waveEase }}

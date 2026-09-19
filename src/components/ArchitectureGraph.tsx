@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { technologyDetails } from '@/data/technologies'
 import { asset, visuals } from '@/data/visuals'
-import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
+import { useIsCompact, useReducedMotion } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/cn'
 
 const nodes = [
@@ -26,7 +26,7 @@ function nodePoint(id: string) {
 }
 
 export function ArchitectureGraph({ compact = false }: { compact?: boolean }) {
-  const mobile = useIsMobile()
+  const stacked = useIsCompact()
   const reduced = useReducedMotion()
   const [open, setOpen] = useState<string | null>('api')
   const selected = technologyDetails.find((item) => item.id === open)
@@ -38,7 +38,7 @@ export function ArchitectureGraph({ compact = false }: { compact?: boolean }) {
         <p className="font-mono text-[10px] tracking-[0.18em] text-meta uppercase">System map</p>
       </div>
 
-      {mobile ? (
+      {stacked ? (
         <ul className="mt-4 space-y-2">
           {nodes.map((node) => (
             <li key={node.id}>

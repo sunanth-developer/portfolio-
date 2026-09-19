@@ -7,43 +7,45 @@ import type { ProfileId } from '@/context/AppContext'
 
 export function DualLensStage({
   lens,
-  mobile,
+  compact,
   onActivate,
   onClear,
   onChoose,
 }: {
   lens: HomeLens
-  mobile: boolean
+  compact: boolean
   onActivate: (id: ProfileId) => void
   onClear: () => void
   onChoose: (id: ProfileId) => void
 }) {
-  const { selected, reduced } = lens
+  const { active, reduced } = lens
 
-  if (mobile) {
+  if (compact) {
     return (
-      <div className="relative flex min-h-0 flex-1 flex-col justify-center">
-        <OriginTrace {...lens} />
+      <div className="relative mt-6 flex flex-col pb-2 md:mt-10">
         <LensChoice
           id="founder"
           title="Founder"
           kicker="The problem"
           line="See how I think,"
           support="question and solve."
-          active={selected}
+          active={active}
           stacked
           reduced={reduced}
+          onEnter={() => onActivate('founder')}
           onChoose={() => onChoose('founder')}
         />
+        <div className="home-origin-mobile" aria-hidden />
         <LensChoice
           id="developer"
           title="Developer"
           kicker="The system"
           line="See how I design,"
           support="trace and build."
-          active={selected}
+          active={active}
           stacked
           reduced={reduced}
+          onEnter={() => onActivate('developer')}
           onChoose={() => onChoose('developer')}
         />
       </div>

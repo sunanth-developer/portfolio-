@@ -144,7 +144,7 @@ export function FounderPinnedChapters() {
     <section className="relative">
       <div
         ref={pinRef}
-        className="relative flex h-svh items-center justify-center px-[var(--page-padding)]"
+        className="relative flex h-svh items-center justify-center px-[var(--page-gutter)]"
       >
         <div className="founder-story w-full">
           <ChapterType key={chapter.id} chapter={chapter} reduced={reduced} />
@@ -207,7 +207,7 @@ function ChapterType({ chapter, reduced }: { chapter: Chapter; reduced: boolean 
           <p
             key={`${chapter.id}-${line.text}`}
             className={cn(
-              'max-w-[95%] text-center',
+              'max-w-[95%] text-center text-balance',
               line.role === 'title' && 'type-l mt-0',
               line.role === 'body' && 'type-body mt-5 text-muted',
               line.role === 'point' && 'type-m mt-4',

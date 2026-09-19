@@ -4,7 +4,7 @@ import { TraceDot, TraceLine } from '@/components/TraceLine'
 import { driverSpotSystem, systemLinks } from '@/data/developer'
 import type { SystemNode } from '@/data/developer'
 import { useApp } from '@/context/AppContext'
-import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
+import { useIsCompact, useReducedMotion } from '@/hooks/useMediaQuery'
 import { traceEase } from '@/lib/trace'
 import { cn } from '@/lib/cn'
 
@@ -25,7 +25,7 @@ function nodeIndex(id: string) {
 
 export function SystemInspect({ compact = false }: { compact?: boolean }) {
   const { setCursor } = useApp()
-  const mobile = useIsMobile()
+  const mobile = useIsCompact()
   const reduced = useReducedMotion()
   const rootRef = useRef<HTMLDivElement>(null)
   const [started, setStarted] = useState(reduced)

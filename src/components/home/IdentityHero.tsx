@@ -7,7 +7,7 @@ export function IdentityHero({ phase, reduced }: HomeLens) {
   return (
     <div className="home-identity">
       <motion.p
-        className="font-display text-[clamp(0.95rem,1.4vw,1.2rem)] tracking-[0.34em] uppercase"
+        className="font-display text-[clamp(0.88rem,3.4vw,1.2rem)] tracking-[0.18em] uppercase sm:tracking-[0.34em]"
         initial={false}
         animate={{ opacity: phase >= 2 ? 1 : 0 }}
         transition={{ duration: reduced ? 0 : 0.45, ease: waveEase }}
@@ -23,7 +23,7 @@ export function IdentityHero({ phase, reduced }: HomeLens) {
         Founder × Developer
       </motion.p>
 
-      <div className="mt-4 flex flex-col gap-4 lg:mt-6 lg:flex-row lg:items-end lg:justify-between">
+      <div className="mt-3 flex flex-col gap-3 lg:mt-6 lg:flex-row lg:items-end lg:justify-between lg:gap-4">
         <motion.h1
           className="home-statement"
           initial={false}
@@ -35,7 +35,7 @@ export function IdentityHero({ phase, reduced }: HomeLens) {
           Two perspectives.
         </motion.h1>
         <motion.p
-          className="max-w-[16rem] text-[0.95rem] leading-6 text-[var(--home-muted)] lg:mb-1 lg:text-right"
+          className="max-w-[16rem] text-[0.9rem] leading-6 text-[var(--home-muted)] max-[430px]:hidden lg:mb-1 lg:text-right"
           initial={false}
           animate={{ opacity: phase >= 3 ? 1 : 0 }}
           transition={{ duration: reduced ? 0 : 0.5, ease: waveEase }}

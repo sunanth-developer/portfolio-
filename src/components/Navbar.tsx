@@ -50,7 +50,7 @@ export function Navbar() {
         scrolled ? 'nav-glass py-2.5' : 'py-4',
       )}
     >
-      <div className="container relative z-10 flex items-center justify-between gap-6">
+      <div className="container relative z-10 flex items-center justify-between gap-3 sm:gap-6">
         <div className="flex min-w-0 items-center gap-5">
           <button
             type="button"

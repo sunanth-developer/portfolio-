@@ -120,7 +120,7 @@ function Band({
           <img
             src={asset(background.src)}
             alt=""
-            className="h-full w-full object-cover object-[center_30%]"
+            className="h-full w-full object-cover object-[center_22%] md:object-[center_28%] lg:object-[center_32%]"
           />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgb(8_9_9/0.28),rgb(8_9_9/0.18)_50%,rgb(8_9_9/0.42))]" />
         </div>
@@ -134,18 +134,23 @@ function FlowLine({ stages }: { stages: readonly string[] }) {
   const reduced = useReducedMotion()
 
   return (
-    <ol className="mt-16 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+    <ol className="mt-16 flex flex-col items-center gap-3 md:flex-row md:flex-wrap md:justify-center md:gap-x-6">
       {stages.map((stage, index) => (
         <motion.li
           key={stage}
-          className="flex items-center gap-6"
+          className="flex flex-col items-center gap-3 md:flex-row md:gap-6"
           initial={reduced ? false : { opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: reduced ? 0 : 0.5, delay: reduced ? 0 : index * 0.05, ease: waveSettle }}
         >
           <span className="type-meta">{stage}</span>
-          {index < stages.length - 1 && <span className="hidden h-px w-8 bg-founder/70 md:block" aria-hidden />}
+          {index < stages.length - 1 && (
+            <>
+              <span className="h-6 w-px bg-founder/70 md:hidden" aria-hidden />
+              <span className="hidden h-px w-8 bg-founder/70 md:block" aria-hidden />
+            </>
+          )}
         </motion.li>
       ))}
     </ol>

@@ -10,7 +10,7 @@ export function OriginTrace({ active, selected, phase, reduced }: HomeLens) {
 
   return (
     <svg
-      className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+      className="pointer-events-none absolute inset-0 hidden h-full w-full overflow-visible lg:block"
       viewBox="0 0 1200 520"
       fill="none"
       aria-hidden

@@ -12,7 +12,7 @@ export function ProjectShowcase() {
   return (
     <section className="border-t border-line py-16">
       <div className="px-5 md:px-8">
-        <h2 className="display text-[12vw] md:text-6xl">Other builds</h2>
+        <h2 className="display text-[clamp(2rem,12vw,4.5rem)]">Other builds</h2>
       </div>
       <div className="mt-8 flex gap-0 overflow-x-auto overscroll-x-contain border-y border-line [-webkit-overflow-scrolling:touch]">
         {projects.map((item, index) => {

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { waveEase } from '@/lib/wave'
+import { cn } from '@/lib/cn'
 import { useReducedMotion } from '@/hooks/useMediaQuery'
 
 export function FounderConvergence() {
@@ -7,7 +8,17 @@ export function FounderConvergence() {
 
   return (
     <div className="relative mx-auto max-w-3xl">
-      <svg viewBox="0 0 640 280" className="h-auto w-full overflow-visible" aria-hidden>
+      <ol className="flex flex-col items-center gap-3 py-6 sm:hidden">
+        {['Founder', 'Developer', 'Curiosity', 'Problem Solver'].map((label, index) => (
+          <li key={label} className="flex flex-col items-center gap-3">
+            <span className={cn('font-mono text-[10px] tracking-[0.22em] uppercase', index === 3 ? 'text-founder' : index === 2 ? 'text-gold' : index === 0 ? 'text-founder' : '')}>
+              {label}
+            </span>
+            {index < 3 && <span className="h-6 w-px bg-founder/50" aria-hidden />}
+          </li>
+        ))}
+      </ol>
+      <svg viewBox="0 0 640 280" className="hidden h-auto w-full overflow-visible sm:block" aria-hidden>
         <motion.path
           d="M 40 48 L 280 48 C 360 48, 320 140, 400 140 L 600 140"
           fill="none"
@@ -52,11 +63,13 @@ export function FounderConvergence() {
           transition={{ duration: reduced ? 0 : 0.45, delay: reduced ? 0 : 0.9, ease: waveEase }}
         />
       </svg>
-      <p className="absolute top-0 left-0 font-mono text-[10px] tracking-[0.22em] text-founder uppercase">Founder</p>
-      <p className="absolute top-1/2 left-0 -translate-y-1/2 font-mono text-[10px] tracking-[0.22em] uppercase">
+      <p className="absolute top-0 left-0 hidden font-mono text-[10px] tracking-[0.22em] text-founder uppercase sm:block">
+        Founder
+      </p>
+      <p className="absolute top-1/2 left-0 hidden -translate-y-1/2 font-mono text-[10px] tracking-[0.22em] uppercase sm:block">
         Developer
       </p>
-      <p className="absolute bottom-0 left-0 font-mono text-[10px] tracking-[0.22em] text-gold uppercase">
+      <p className="absolute bottom-0 left-0 hidden font-mono text-[10px] tracking-[0.22em] text-gold uppercase sm:block">
         Curiosity
       </p>
       <motion.p

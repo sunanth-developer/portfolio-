@@ -28,7 +28,7 @@ export function FullscreenMenu() {
           role="dialog"
           aria-modal="true"
           aria-label="Site menu"
-          className="fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain bg-bg px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))] md:px-8"
+          className="fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain bg-bg px-[var(--page-gutter)] pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -63,7 +63,7 @@ export function FullscreenMenu() {
               onClick={() => goTo('/', '00', 'Perspectives')}
             >
               <span className="flex items-baseline gap-4 md:gap-8">
-                <span className="display text-4xl uppercase md:text-6xl lg:text-7xl">Perspectives</span>
+                <span className="display text-[clamp(2rem,9vw,4.5rem)] uppercase">Perspectives</span>
               </span>
               <span className="mt-1 max-w-sm text-sm text-muted md:mt-0 md:text-right">
                 Choose how you want to explore.
@@ -82,7 +82,7 @@ export function FullscreenMenu() {
                 onClick={() => goTo(item.href, item.index, item.label)}
               >
                 <span className="flex items-baseline gap-4 md:gap-8">
-                  <span className="display text-4xl uppercase md:text-6xl lg:text-7xl">{item.label}</span>
+                  <span className="display text-[clamp(2rem,9vw,4.5rem)] uppercase">{item.label}</span>
                 </span>
                 <span className="mt-1 max-w-sm text-sm text-muted md:mt-0 md:text-right">
                   {item.description}

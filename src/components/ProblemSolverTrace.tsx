@@ -58,11 +58,11 @@ export function MindsetTrace() {
   const steps = ['IDEA', 'SYSTEM', 'EDGE CASE', 'SOLUTION'] as const
 
   return (
-    <ol className="mt-12 flex flex-wrap items-center gap-x-4 gap-y-3">
+    <ol className="mt-12 flex flex-col items-start gap-3 md:flex-row md:flex-wrap md:items-center md:gap-x-4">
       {steps.map((step, index) => (
         <motion.li
           key={step}
-          className="flex items-center gap-4"
+          className="flex flex-col items-start gap-3 md:flex-row md:items-center md:gap-4"
           initial={reduced ? false : { opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -70,7 +70,10 @@ export function MindsetTrace() {
         >
           <span className="font-mono text-[11px] tracking-[0.22em] uppercase">{step}</span>
           {index < steps.length - 1 && (
-            <span className="h-px w-8 bg-developer/70 md:w-12" aria-hidden />
+            <>
+              <span className="h-6 w-px bg-developer/70 md:hidden" aria-hidden />
+              <span className="hidden h-px w-8 bg-developer/70 md:block md:w-12" aria-hidden />
+            </>
           )}
         </motion.li>
       ))}

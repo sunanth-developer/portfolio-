@@ -205,6 +205,7 @@ html[data-brand='driverspot'] ::selection {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     scrollbar-width: none;
+    overflow-x: clip;
   }
 
   body {
@@ -212,13 +213,7 @@ html[data-brand='driverspot'] ::selection {
     min-width: 320px;
     background: var(--color-bg);
     font-family: var(--font-sans);
-  }
-
-  @media (max-width: 767px) {
-    html,
-    body {
-      overflow-x: clip;
-    }
+    overflow-x: clip;
   }
 
   ::selection {
@@ -245,16 +240,17 @@ html[data-brand='driverspot'] ::selection {
 
 :root {
   --font-body: var(--font-sans);
-  --content-max: 1240px;
-  --page-padding: clamp(24px, 5vw, 80px);
+  --content-max: 1280px;
+  --page-padding: clamp(20px, 5.2vw, 80px);
+  --page-gutter: max(var(--page-padding), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
   --space-xs: 8px;
   --space-sm: 16px;
   --space-md: 24px;
-  --space-lg: 40px;
-  --space-xl: 64px;
-  --space-2xl: 96px;
-  --space-3xl: clamp(96px, 12vw, 144px);
-  --space-4xl: clamp(120px, 16vw, 200px);
+  --space-lg: clamp(28px, 4vw, 40px);
+  --space-xl: clamp(40px, 6vw, 64px);
+  --space-2xl: clamp(64px, 8vw, 96px);
+  --space-3xl: clamp(72px, 10vw, 160px);
+  --space-4xl: clamp(96px, 14vw, 200px);
   --ease-major: cubic-bezier(0.22, 1, 0.36, 1);
   --home-bg: #eeede8;
   --home-text: #111111;
@@ -274,7 +270,7 @@ html[data-brand='driverspot'] ::selection {
     --home-bg: #eeede8;
     --home-text: #111111;
     --home-muted: #6b6c67;
-    --home-display: clamp(3rem, 6.2vw, 6.2rem);
+    --home-display: clamp(2.1rem, 8vw, 6.2rem);
     color: var(--home-text);
   }
 
@@ -294,12 +290,19 @@ html[data-brand='driverspot'] ::selection {
     position: relative;
     z-index: 10;
     display: flex;
-    height: 100%;
-    width: min(calc(100% - 2 * var(--page-padding)), 1280px);
+    min-height: 100svh;
+    width: min(calc(100% - 2 * var(--page-gutter)), var(--content-max));
     margin-inline: auto;
     flex-direction: column;
-    padding-top: calc(5.25rem + env(safe-area-inset-top, 0px));
+    padding-top: calc(4.75rem + env(safe-area-inset-top, 0px));
     padding-bottom: max(1.1rem, env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 1024px) {
+    .home-shell {
+      height: 100%;
+      min-height: 0;
+    }
   }
 
   .home-identity {
@@ -315,43 +318,65 @@ html[data-brand='driverspot'] ::selection {
     max-width: 18ch;
   }
 
+  .home-origin-mobile {
+    height: 1.5rem;
+    width: 1px;
+    margin-inline: 0;
+    background: currentColor;
+    opacity: 0.22;
+  }
+
   @media (max-height: 820px) {
     .home {
-      --home-display: clamp(2.5rem, 5.2vw, 4.4rem);
-    }
-    .home-shell {
-      padding-top: calc(4.75rem + env(safe-area-inset-top, 0px));
+      --home-display: clamp(2rem, 5.2vw, 4.4rem);
     }
   }
 
   @media (max-height: 700px) {
     .home {
-      --home-display: clamp(2.2rem, 4.6vw, 3.6rem);
+      --home-display: clamp(1.85rem, 4.6vw, 3.6rem);
+    }
+  }
+
+  @media (max-height: 560px) {
+    .home {
+      height: auto;
+      min-height: 100svh;
+      overflow: visible;
+    }
+
+    .home-shell {
+      height: auto;
+      min-height: 100svh;
+      padding-bottom: 2rem;
     }
   }
 
   .type-xl {
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(3.4rem, 8vw, 7.2rem);
+    font-size: clamp(2.2rem, 8.4vw, 7.2rem);
     letter-spacing: -0.055em;
-    line-height: 0.9;
+    line-height: 0.92;
+    text-wrap: balance;
   }
 
   .type-l {
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(2.6rem, 5.6vw, 5.2rem);
+    font-size: clamp(1.7rem, 6.2vw, 5.2rem);
     letter-spacing: -0.05em;
-    line-height: 0.94;
+    line-height: 0.96;
+    text-wrap: balance;
   }
 
   .type-m {
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(2rem, 3.8vw, 3.6rem);
+    font-size: clamp(1.35rem, 4.2vw, 3.6rem);
     letter-spacing: -0.04em;
-    line-height: 1.02;
+    line-height: 1.05;
+    text-wrap: balance;
   }
 
   .type-h {
@@ -365,7 +390,7 @@ html[data-brand='driverspot'] ::selection {
   .type-body {
     font-size: clamp(1rem, 1.15vw, 1.2rem);
     line-height: 1.65;
-    max-width: 620px;
+    max-width: 70ch;
   }
 
   .type-long {
@@ -400,7 +425,7 @@ html[data-brand='driverspot'] ::selection {
   }
 
   .container {
-    width: min(calc(100% - 2 * var(--page-padding)), var(--content-max));
+    width: min(calc(100% - 2 * var(--page-gutter)), var(--content-max));
     margin-inline: auto;
   }
 
@@ -413,8 +438,9 @@ html[data-brand='driverspot'] ::selection {
   }
 
   .founder-story {
-    width: 95%;
+    width: min(100%, 72rem);
     margin-inline: auto;
+    padding-inline: var(--page-gutter);
     text-align: center;
   }
 
@@ -437,11 +463,137 @@ html[data-brand='driverspot'] ::selection {
     font-size: clamp(1.25rem, 2.4vw, 2.2rem);
   }
 
-  @media (min-width: 768px) {
+  .founder-story .line-fit {
+    text-wrap: balance;
+  }
+
+  @media (min-width: 1280px) {
     .founder-story .line-fit {
       white-space: nowrap;
     }
   }
+
+  .founder-hero {
+    min-height: 100svh;
+  }
+
+  .founder-hero-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: 62% 78%;
+  }
+
+  .founder-hero-wash {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at center,
+      rgb(255 248 240 / 0.38),
+      rgb(255 248 240 / 0.08) 52%,
+      rgb(255 248 240 / 0.16)
+    );
+  }
+
+  .founder-hero-copy {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
+    justify-content: center;
+    padding-top: calc(5.25rem + env(safe-area-inset-top, 0px));
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+    padding-inline: var(--page-gutter);
+    text-align: center;
+    color: #111111;
+  }
+
+  .founder-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.55rem, 9.4vw, 4.8rem);
+    letter-spacing: -0.05em;
+    line-height: 0.94;
+    max-width: 11ch;
+    margin-inline: auto;
+    text-wrap: balance;
+  }
+
+  .founder-hero-sub {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 4.2vw, 2.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    max-width: 14ch;
+    margin-inline: auto;
+    text-wrap: balance;
+  }
+
+  .founder-hero-tag {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+    max-width: 18ch;
+    margin-inline: auto;
+    text-wrap: balance;
+  }
+
+  @media (min-width: 768px) {
+    .founder-hero-image {
+      object-position: 52% 48%;
+    }
+
+    .founder-hero-wash {
+      background: radial-gradient(
+        ellipse at center,
+        rgb(255 248 240 / 0.46),
+        rgb(255 248 240 / 0.16) 55%,
+        rgb(255 248 240 / 0.28)
+      );
+    }
+
+    .founder-hero-title,
+    .founder-hero-sub,
+    .founder-hero-tag {
+      max-width: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .founder-hero-image {
+      object-position: 50% 36%;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .founder-hero-title,
+    .founder-hero-sub,
+    .founder-hero-tag {
+      white-space: nowrap;
+    }
+  }
+
+  @media (max-height: 720px) and (min-width: 1024px) {
+    .founder-hero-copy {
+      padding-block: 4.5rem;
+    }
+
+    .founder-hero-title {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+    }
+  }
+
+  .developer-hero-title {
+    max-width: 12ch;
+  }
+
+  @media (min-width: 768px) {
+    .developer-hero-title {
+      max-width: 16ch;
+    }
+  }
+
 
   .nav-glass {
     background: linear-gradient(180deg, rgb(255 255 255 / 0.72), rgb(255 250 244 / 0.42));
@@ -590,7 +742,7 @@ html[data-brand='driverspot'] ::selection {
 
   .page-shell,
   .container {
-    width: min(calc(100% - 2 * var(--page-padding)), var(--content-max));
+    width: min(calc(100% - 2 * var(--page-gutter)), var(--content-max));
     margin-inline: auto;
   }
 
@@ -660,14 +812,8 @@ html[data-brand='driverspot'] ::selection {
 }
 
 .ds-shell {
-  width: min(1180px, calc(100% - 2.5rem));
+  width: min(1180px, calc(100% - 2 * var(--page-gutter)));
   margin-inline: auto;
-}
-
-@media (min-width: 768px) {
-  .ds-shell {
-    width: min(1180px, calc(100% - 4rem));
-  }
 }
 
 .ds-display {
@@ -699,6 +845,12 @@ html[data-brand='driverspot'] ::selection {
 html[data-brand='driverspot'] :focus-visible {
   outline: 1px solid #ffc107;
   outline-offset: 3px;
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --content-max: 1360px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

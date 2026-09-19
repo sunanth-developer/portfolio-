@@ -2,13 +2,13 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { architectureStages, graphNodes, technologyCategories, technologyDetails } from '@/data/technologies'
-import { useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
+import { useIsCompact, useReducedMotion } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/cn'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export function TechnologyGraph() {
-  const mobile = useIsMobile()
+  const mobile = useIsCompact()
   const reduced = useReducedMotion()
   const rootRef = useRef<HTMLDivElement>(null)
   const [stage, setStage] = useState(reduced || mobile ? 5 : 0)

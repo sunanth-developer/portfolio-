@@ -56,9 +56,10 @@ export function LensChoice({
       data-portal={id}
       aria-label={`Enter ${title} profile. ${kicker}. ${line} ${support}`}
       className={cn(
-        'group relative z-10 w-full max-w-[18rem] min-h-11 py-2 text-left',
-        stacked && 'border-t border-current/15 py-4',
+        'group relative z-10 min-h-11 py-2 text-left',
+        stacked ? 'w-full max-w-none py-3' : 'w-full max-w-[18rem]',
       )}
+      onPointerDown={onEnter}
       onMouseEnter={onEnter}
       onMouseLeave={(event) => {
         const next = event.relatedTarget
@@ -83,7 +84,13 @@ export function LensChoice({
         transition={{ duration: reduced ? 0 : 0.58, ease: waveEase }}
         style={{
           color: accent,
-          fontSize: selected ? 'clamp(2rem, 3.6vw, 3.1rem)' : 'clamp(1.7rem, 3vw, 2.6rem)',
+          fontSize: stacked
+            ? selected
+              ? 'clamp(2rem, 8.5vw, 3.2rem)'
+              : 'clamp(1.85rem, 8vw, 2.8rem)'
+            : selected
+              ? 'clamp(2rem, 3.6vw, 3.1rem)'
+              : 'clamp(1.7rem, 3vw, 2.6rem)',
           transformOrigin: 'left bottom',
         }}
       >
@@ -98,7 +105,7 @@ export function LensChoice({
       >
         {kicker}
       </p>
-      <p className={cn('mt-3 max-w-[16rem] text-left text-[0.95rem] leading-6', copy, quiet ? 'opacity-30' : 'opacity-80')}>
+      <p className={cn('mt-3 max-w-[20rem] text-left text-[0.95rem] leading-6', copy, quiet ? 'opacity-30' : 'opacity-80')}>
         {line}
         <br />
         {support}

@@ -10,13 +10,13 @@ import {
   toolkitTech,
 } from '@/data/toolkit'
 import type { ToolkitCategoryId, ToolkitTech } from '@/data/toolkit'
-import { useIsFinePointer, useIsMobile, useReducedMotion } from '@/hooks/useMediaQuery'
+import { useIsFinePointer, useIsCompact, useReducedMotion } from '@/hooks/useMediaQuery'
 import { traceEase, traceStroke } from '@/lib/trace'
 import { cn } from '@/lib/cn'
 
 export function EngineeringToolkit() {
   const { setCursor, goTo } = useApp()
-  const mobile = useIsMobile()
+  const mobile = useIsCompact()
   const fine = useIsFinePointer()
   const reduced = useReducedMotion()
   const rootRef = useRef<HTMLElement>(null)

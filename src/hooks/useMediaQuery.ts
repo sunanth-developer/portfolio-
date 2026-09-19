@@ -25,6 +25,10 @@ export function useIsMobile() {
   return useMediaQuery('(max-width: 767px)')
 }
 
+export function useIsCompact() {
+  return useMediaQuery('(max-width: 1023px)')
+}
+
 export function useReducedMotion() {
   return useMediaQuery('(prefers-reduced-motion: reduce)')
 }

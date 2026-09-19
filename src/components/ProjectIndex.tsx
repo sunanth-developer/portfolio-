@@ -54,7 +54,7 @@ export function ProjectIndex() {
               <div className="flex items-start justify-between gap-6">
                 <div className="min-w-0 flex-1">
                   <motion.h3
-                    className="display mt-2 text-[11vw] leading-[0.92] md:text-[clamp(2.6rem,7vw,6.4rem)]"
+                    className="display mt-2 text-[clamp(2rem,11vw,6.4rem)] leading-[0.92]"
                     animate={{ opacity: lit ? 1 : 0.22 }}
                     transition={{ duration: reduced ? 0 : 0.35 }}
                   >
