@@ -55,7 +55,7 @@ export function AccessOverlay() {
             Close
           </button>
           <div className="w-full max-w-3xl">
-            <p className="eyebrow mb-10 text-accent">Access 01</p>
+            <p className="mb-10 font-mono text-[10px] tracking-[0.28em] text-meta uppercase">Access</p>
             <p className="display mb-5 text-3xl md:text-5xl">{step >= 0 ? accessLayer.lines[0] : ''}</p>
             <p className="mb-16 text-xl text-muted md:text-3xl">{step >= 1 ? accessLayer.lines[1] : ''}</p>
             {step >= 2 && (
@@ -69,7 +69,6 @@ export function AccessOverlay() {
                       onMouseEnter={() => setCursor('open')}
                       onMouseLeave={() => setCursor('default')}
                     >
-                      <span className="mr-4 text-xs tracking-[0.2em] text-accent">{item.index} —</span>
                       <span className="font-display text-2xl uppercase md:text-4xl">{item.label}</span>
                       {active === item.id && (
                         <p className="mt-3 max-w-xl text-sm text-muted md:text-base">{item.description}</p>

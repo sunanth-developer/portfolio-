@@ -10,33 +10,39 @@ export default function FieldNoteDetail() {
 
   if (!note) {
     return (
-      <article className="px-5 pt-36 pb-24 md:px-8">
-        <h1 className="display text-5xl">Note not found</h1>
-        <div className="mt-8">
-          <MagneticButton variant="ghost" onClick={() => goTo('/notes', '06', 'Field Notes')}>
-            Back to field notes
-          </MagneticButton>
+      <article className="pt-page pb-[var(--space-4xl)]">
+        <div className="container">
+          <h1 className="type-l">Note not found</h1>
+          <div className="mt-8">
+            <MagneticButton variant="ghost" onClick={() => goTo('/notes', '06', 'Field Notes')}>
+              Back to field notes
+            </MagneticButton>
+          </div>
         </div>
       </article>
     )
   }
 
   return (
-    <article className="px-5 pt-page pb-24 md:px-8">
-      <p className="eyebrow text-accent">{note.category}</p>
-      {!note.published && (
-        <p className="mt-4 text-[10px] tracking-[0.18em] text-accent uppercase">Draft — not a published article</p>
-      )}
-      <h1 className="display mt-6 max-w-5xl text-[11vw] md:text-7xl">{note.title}</h1>
-      <div className="mt-14 max-w-2xl space-y-6 text-lg text-muted">
-        {note.body.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
-      </div>
-      <div className="mt-16">
-        <MagneticButton variant="text" onClick={() => goTo('/notes', '06', 'Thinking')}>
-          ← Thinking
-        </MagneticButton>
+    <article className="pt-page pb-[var(--space-4xl)]">
+      <div className="container">
+        <p className="type-meta">{note.category}</p>
+        {!note.published && (
+          <p className="mt-4 font-mono text-[10px] tracking-[0.18em] text-gold uppercase">
+            Draft — not a published article
+          </p>
+        )}
+        <h1 className="type-l mt-6 display-w">{note.title}</h1>
+        <div className="type-long mt-14 space-y-6 text-muted">
+          {note.body.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+        <div className="mt-16">
+          <MagneticButton variant="text" onClick={() => goTo('/notes', '06', 'Thinking')}>
+            ← Thinking
+          </MagneticButton>
+        </div>
       </div>
     </article>
   )

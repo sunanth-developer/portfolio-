@@ -1,20 +1,33 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useApp } from '@/context/AppContext'
 import { site } from '@/data/site'
-import { ProfileSwitcher } from '@/components/ProfileSwitcher'
 import { cn } from '@/lib/cn'
 import { homePath, metaForPath } from '@/lib/routes'
-import { useLocation } from 'react-router-dom'
+
+const founderLinks = [
+  { label: 'Story', href: '/founder' },
+  { label: 'DriverSpot', href: '/work/driverspot' },
+  { label: 'Thinking', href: '/notes' },
+  { label: 'Contact', href: '/contact' },
+] as const
+
+const developerLinks = [
+  { label: 'Projects', href: '/work' },
+  { label: 'Engineering', href: '/engineering' },
+  { label: 'Lab', href: '/lab' },
+  { label: 'Contact', href: '/contact' },
+] as const
 
 export function Navbar() {
-  const { menuOpen, setMenuOpen, goTo, setCursor, setCommandOpen, profile, nav } = useApp()
+  const { menuOpen, setMenuOpen, goTo, setCursor, profile, switchProfile } = useApp()
   const location = useLocation()
   const [scrolled, setScrolled] = useState(false)
   const isGate = location.pathname === '/'
-  const desktopItems = nav.filter((item) => item.id !== 'home' && item.id !== 'contact')
+  const links = profile === 'developer' ? developerLinks : founderLinks
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16)
+    const onScroll = () => setScrolled(window.scrollY > 20)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -33,30 +46,37 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'fixed top-0 right-0 left-0 z-50 px-5 pt-[max(0.75rem,env(safe-area-inset-top))] transition-[padding,background-color,border-color] duration-300 md:px-8',
-        scrolled && !isGate ? 'border-b border-line bg-bg/92 py-2.5' : 'py-4',
+        'fixed top-0 right-0 left-0 z-50 pt-[max(0.7rem,env(safe-area-inset-top))] text-fg transition-[padding,background,box-shadow,border-color] duration-500',
+        scrolled ? 'nav-glass py-2.5' : 'py-4',
       )}
     >
-      <div className="flex items-center justify-between gap-4">
-        <button
-          type="button"
-          className="flex min-h-11 items-center font-display text-[11px] tracking-[0.28em] uppercase"
-          aria-label={isGate ? site.name : 'Home'}
-          onMouseEnter={() => setCursor('view')}
-          onMouseLeave={() => setCursor('default')}
-          onClick={goHome}
-        >
-          <span className="md:hidden">{site.monogram}</span>
-          <span className="hidden md:inline">{site.name}</span>
-        </button>
+      <div className="container relative z-10 flex items-center justify-between gap-6">
+        <div className="flex min-w-0 items-center gap-5">
+          <button
+            type="button"
+            className="flex min-h-11 items-center font-display text-[13px] font-medium tracking-[0.22em] uppercase"
+            aria-label={isGate ? site.name : 'Home'}
+            onMouseEnter={() => setCursor('view')}
+            onMouseLeave={() => setCursor('default')}
+            onClick={goHome}
+          >
+            <span className="md:hidden">{site.monogram}</span>
+            <span className="hidden md:inline">{site.name}</span>
+          </button>
+          {!isGate && (
+            <p className="hidden font-mono text-[11px] tracking-[0.2em] text-fg/70 uppercase lg:block">
+              {profile === 'developer' ? 'Developer' : 'Founder'}
+            </p>
+          )}
+        </div>
 
         {isGate ? (
-          <p className="hidden font-mono text-[10px] tracking-[0.28em] text-muted uppercase lg:block">
-            {site.title}
+          <p className="hidden font-mono text-[11px] tracking-[0.2em] text-fg/75 uppercase md:block">
+            One person · Two perspectives
           </p>
         ) : (
-          <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary">
-            {desktopItems.map((item) => {
+          <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
+            {links.map((item) => {
               const active =
                 location.pathname === item.href ||
                 (item.href !== '/work' && location.pathname.startsWith(`${item.href}/`)) ||
@@ -68,12 +88,12 @@ export function Navbar() {
                   data-active={active}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
-                    'nav-link font-mono text-[10px] tracking-[0.22em] uppercase transition-colors',
-                    active ? 'text-accent' : 'text-muted hover:text-fg',
+                    'nav-link min-h-11 font-mono text-[12px] font-medium tracking-[0.18em] uppercase',
+                    active ? 'text-fg' : 'text-fg/70 hover:text-fg',
                   )}
                   onMouseEnter={() => setCursor('view')}
                   onMouseLeave={() => setCursor('default')}
-                  onClick={() => goTo(item.href, item.index, item.label)}
+                  onClick={() => goTo(item.href, '00', item.label)}
                 >
                   {item.label}
                 </button>
@@ -82,27 +102,21 @@ export function Navbar() {
           </nav>
         )}
 
-        <div className="flex items-center gap-3 md:gap-5">
-          {isGate ? (
-            <p className="hidden font-mono text-[10px] tracking-[0.22em] text-meta uppercase sm:block">
-              {site.locationShort}
-            </p>
-          ) : (
-            <ProfileSwitcher className="hidden sm:inline-flex" />
-          )}
+        <div className="flex items-center gap-5">
           {!isGate && (
             <button
               type="button"
-              className="flex min-h-11 min-w-11 items-center justify-center font-mono text-[10px] tracking-[0.2em] text-muted uppercase md:hidden"
-              onClick={() => setCommandOpen(true)}
-              aria-label="Open command"
+              className="hidden min-h-11 items-center font-mono text-[12px] font-medium tracking-[0.18em] text-fg uppercase sm:inline-flex"
+              onMouseEnter={() => setCursor(profile === 'developer' ? 'founder' : 'developer')}
+              onMouseLeave={() => setCursor('default')}
+              onClick={() => switchProfile(profile === 'developer' ? 'founder' : 'developer')}
             >
-              {'>_'}
+              {profile === 'developer' ? 'Founder ↗' : 'Developer ↗'}
             </button>
           )}
           <button
             type="button"
-            className="flex min-h-11 items-center font-mono text-[10px] tracking-[0.28em] uppercase"
+            className="flex min-h-11 items-center font-mono text-[12px] font-medium tracking-[0.2em] text-fg uppercase"
             aria-expanded={menuOpen}
             aria-controls="site-menu"
             onMouseEnter={() => setCursor(menuOpen ? 'close' : 'open')}

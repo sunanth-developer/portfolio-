@@ -1,6 +1,20 @@
+import founderEditorial from '@/assets/founder.png'
+import developerEditorial from '@/assets/developer.png'
+
 export function asset(path: string) {
   return `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
 }
+
+export const editorial = {
+  founder: {
+    src: founderEditorial,
+    alt: 'Editorial desk looking over a dusk city: notebook, laptop and notes on ideas, products, people and impact.',
+  },
+  developer: {
+    src: developerEditorial,
+    alt: 'Engineering desk with system diagrams, code and a city night view. Conceptual workspace, not a portrait.',
+  },
+} as const
 
 export const visuals = {
   gateFounder: {

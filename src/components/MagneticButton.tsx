@@ -39,10 +39,10 @@ export function MagneticButton({
     <button
       ref={ref}
       className={cn(
-        'group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full px-5 py-3 font-mono text-[11px] tracking-[0.22em] uppercase transition-colors duration-300 sm:w-auto',
-        variant === 'solid' && 'bg-fg text-bg hover:bg-accent hover:text-bg',
-        variant === 'ghost' && 'border border-line text-fg hover:border-accent hover:text-accent',
-        variant === 'text' && 'rounded-none px-0 py-2 text-muted hover:text-fg',
+        'group inline-flex min-h-11 items-center gap-3 px-0 py-2 font-mono text-[11px] tracking-[0.22em] uppercase transition-colors duration-300',
+        variant === 'solid' && 'text-fg hover:text-accent',
+        variant === 'ghost' && 'text-muted hover:text-fg',
+        variant === 'text' && 'text-muted hover:text-fg',
         className,
       )}
       onMouseEnter={(event) => {

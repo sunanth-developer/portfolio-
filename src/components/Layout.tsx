@@ -6,7 +6,6 @@ import { Navbar } from '@/components/Navbar'
 import { FullscreenMenu } from '@/components/FullscreenMenu'
 import { PageTransition, GrainOverlay } from '@/components/PageTransition'
 import { CustomCursor } from '@/components/CustomCursor'
-import { ScrollProgress } from '@/components/ScrollProgress'
 import { Footer } from '@/components/Footer'
 import { ProfileTransition } from '@/components/ProfileTransition'
 import { AccessOverlay } from '@/components/AccessOverlay'
@@ -14,6 +13,8 @@ import { CommandPalette } from '@/components/CommandPalette'
 import { DiscoveryToasts, SystemComplete } from '@/components/DiscoverySystem'
 import { ExperimentOverlay } from '@/components/ExperimentOverlay'
 import { Loader } from '@/components/Loader'
+import { FounderBackground } from '@/components/FounderBackground'
+import { DeveloperBackground } from '@/components/DeveloperBackground'
 import { pageMeta, site } from '@/data/site'
 
 export function Layout() {
@@ -80,7 +81,7 @@ export function Layout() {
     const meta = pageMeta[location.pathname]
     document.title =
       location.pathname === '/'
-        ? `${site.name} — Founder × Developer × Builder`
+        ? `${site.name} — ${site.title}`
         : `${meta?.label ?? 'Index'} — ${site.name}`
   }, [location.pathname])
 
@@ -90,8 +91,9 @@ export function Layout() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
+      <FounderBackground />
+      <DeveloperBackground />
       <GrainOverlay />
-      <ScrollProgress />
       <CustomCursor />
       <Navbar />
       <FullscreenMenu />
@@ -104,7 +106,7 @@ export function Layout() {
       <SystemComplete />
       <div
         id="main"
-        className={booted ? undefined : 'invisible'}
+        className={booted ? 'relative z-10' : 'relative z-10 invisible'}
         inert={
           menuOpen ||
           accessOpen ||

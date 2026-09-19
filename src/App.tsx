@@ -15,6 +15,7 @@ const Lab = lazy(() => import('@/pages/Lab'))
 const FieldNotes = lazy(() => import('@/pages/FieldNotes'))
 const FieldNoteDetail = lazy(() => import('@/pages/FieldNoteDetail'))
 const Contact = lazy(() => import('@/pages/Contact'))
+const DriverSpot = lazy(() => import('@/pages/DriverSpot'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 
 function Fallback() {
@@ -29,6 +30,7 @@ export default function App() {
       <AppProvider>
         <Suspense fallback={<Fallback />}>
           <Routes>
+            <Route path="/driverspot" element={<DriverSpot />} />
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/founder" element={<FounderHome />} />

@@ -2,13 +2,23 @@ import { createContext, useContext } from 'react'
 import type { DiscoveryId } from '@/data/discoveries'
 import type { NavItem } from '@/data/site'
 
-export type CursorKind = 'default' | 'view' | 'explore' | 'open' | 'close'
+export type CursorKind =
+  | 'default'
+  | 'view'
+  | 'explore'
+  | 'open'
+  | 'close'
+  | 'case'
+  | 'trace'
+  | 'inspect'
+  | 'founder'
+  | 'developer'
 export type Profile = 'neutral' | 'founder' | 'developer'
 export type ProfileId = 'founder' | 'developer'
 
 export type ProfileSwitchState = {
   active: boolean
-  from: ProfileId
+  from: Profile
   to: ProfileId
 }
 

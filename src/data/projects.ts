@@ -18,6 +18,7 @@ export type Project = {
   category: string
   role: string
   description: string
+  line?: string
   problem?: string
   solution?: string
   product?: string
@@ -39,6 +40,7 @@ export const projects: Project[] = [
     title: 'DriverSpot',
     category: 'Venture',
     role: 'Founder · Product · Engineering',
+    line: 'Chauffeur marketplace',
     description:
       'A chauffeur-on-demand platform connecting vehicle owners with verified, trained and professional drivers.',
     problem:
@@ -134,6 +136,7 @@ export const projects: Project[] = [
     title: 'UrbanScrap',
     category: 'Product',
     role: '',
+    line: 'Scrap pickup',
     description: '',
     status: 'Indexed',
     images: [],
@@ -144,6 +147,7 @@ export const projects: Project[] = [
     title: 'Notrack',
     category: 'Product',
     role: '',
+    line: 'Nutrition',
     description: '',
     status: 'Indexed',
     images: [],
@@ -154,6 +158,7 @@ export const projects: Project[] = [
     title: 'SamudraAstra',
     category: 'Product',
     role: '',
+    line: 'Marine robotics',
     description: '',
     status: 'Indexed',
     images: [],
@@ -164,6 +169,7 @@ export const projects: Project[] = [
     title: 'Shramo',
     category: 'Product',
     role: '',
+    line: 'Event platform',
     description: '',
     status: 'Indexed',
     images: [],

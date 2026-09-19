@@ -1,3 +1,4 @@
+import { useApp } from '@/context/AppContext'
 import { cn } from '@/lib/cn'
 import { asset } from '@/data/visuals'
 
@@ -20,10 +21,13 @@ export function EditorialImage({
   imgClassName?: string
   sizes?: string
 }) {
+  const { profile } = useApp()
+  const founder = profile === 'founder'
+
   return (
     <figure
       className={cn(
-        'media-zoom relative block w-full overflow-hidden border border-line bg-surface',
+        'media-zoom relative block w-full overflow-hidden bg-surface',
         className,
       )}
     >
@@ -36,9 +40,20 @@ export function EditorialImage({
         decoding="async"
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : undefined}
-        className={cn('absolute inset-0 h-full w-full object-cover', imgClassName)}
+        className={cn(
+          'absolute inset-0 h-full w-full object-cover',
+          founder && 'saturate-[0.82] contrast-[1.04]',
+          imgClassName,
+        )}
       />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(8,9,9,0.28)_0%,transparent_42%)]" />
+      <div
+        className={cn(
+          'pointer-events-none absolute inset-0',
+          founder
+            ? 'bg-[linear-gradient(to_top,rgba(246,245,240,0.2)_0%,transparent_42%)]'
+            : 'bg-[linear-gradient(to_top,rgba(8,9,9,0.28)_0%,transparent_42%)]',
+        )}
+      />
     </figure>
   )
 }

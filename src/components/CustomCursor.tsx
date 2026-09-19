@@ -9,6 +9,11 @@ const labels: Record<string, string> = {
   explore: 'EXPLORE →',
   open: 'OPEN →',
   close: 'CLOSE',
+  case: 'VIEW CASE',
+  trace: 'TRACE',
+  inspect: 'INSPECT',
+  founder: 'EXPLORE FOUNDER',
+  developer: 'EXPLORE DEVELOPER',
 }
 
 export function CustomCursor() {
@@ -40,8 +45,11 @@ export function CustomCursor() {
 
   if (!fine || reduced) return null
 
-  const labeled = cursor === 'explore' || cursor === 'open' || cursor === 'close'
+  const labeled = Boolean(labels[cursor])
   const hover = cursor === 'view' || labeled
+  const founder = cursor === 'founder'
+  const developer = cursor === 'developer'
+  const fill = founder ? '#FF5A36' : developer ? '#63F5C2' : 'var(--cursor-dot)'
 
   return (
     <motion.div
@@ -51,17 +59,24 @@ export function CustomCursor() {
       transition={{ type: 'spring', stiffness: 500, damping: 36, mass: 0.22 }}
     >
       <div
-        className="flex items-center justify-center rounded-full font-mono text-[9px] tracking-[0.16em] text-fg"
-        style={{
-          width: labeled ? 84 : hover ? 28 : 8,
-          height: labeled ? 84 : hover ? 28 : 8,
-          transform: 'translate(-50%, -50%)',
-          background: labeled || hover ? 'transparent' : '#F5F4EF',
-          border: hover ? '1px solid var(--color-accent)' : '0',
-          transition: 'width 0.22s ease, height 0.22s ease, border-color 0.22s ease',
-        }}
+        className="flex items-center gap-2 whitespace-nowrap"
+        style={{ transform: 'translate(-50%, -50%)' }}
       >
-        {labeled ? labels[cursor] : null}
+        <span
+          className="block rounded-full"
+          style={{
+            width: hover && !founder && !developer ? 28 : 8,
+            height: hover && !founder && !developer ? 28 : 8,
+            background: founder || developer || !hover ? fill : 'transparent',
+            border: hover && !founder && !developer ? '1px solid var(--color-accent)' : '0',
+            transition: 'width 0.22s ease, height 0.22s ease, background-color 0.22s ease',
+          }}
+        />
+        {labeled ? (
+          <span className="font-mono text-[9px] tracking-[0.16em] text-fg uppercase">
+            {labels[cursor]}
+          </span>
+        ) : null}
       </div>
     </motion.div>
   )

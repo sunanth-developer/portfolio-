@@ -1,28 +1,35 @@
-import { DisplayHeadline } from '@/components/DisplayHeadline'
 import { EditorialImage } from '@/components/EditorialImage'
+import { WaveBuild } from '@/components/WaveBuild'
 import { JourneyTimeline } from '@/components/Timeline'
 import { visuals } from '@/data/visuals'
 
 export default function Journey() {
   return (
-    <article className="px-5 pt-page pb-24 md:px-8">
-      <DisplayHeadline
-        lines={['A journey of building.']}
-        className="text-[12vw] md:text-[7rem]"
-      />
-      <p className="mt-8 max-w-xl text-muted">
-        Not a resume. A sequence of stages already in the work — years only where they are known.
-      </p>
+    <article className="pt-page pb-[var(--space-4xl)]">
+      <div className="container">
+        <p className="type-meta">Journey</p>
+        <WaveBuild
+          as="h1"
+          text="A journey of building."
+          mode="words"
+          play="mount"
+          className="type-xl mt-6 display-w"
+        />
+        <p className="type-body mt-8 text-muted">
+          Not a resume. A sequence of stages already in the work — years only where they are known.
+        </p>
+      </div>
       <EditorialImage
         src={visuals.journeyDesk.src}
         alt={visuals.journeyDesk.alt}
         width={visuals.journeyDesk.width}
         height={visuals.journeyDesk.height}
-        className="mt-10 aspect-[16/10]"
+        priority
+        className="mt-16 aspect-[16/10] w-full lg:aspect-[2.2/1]"
         imgClassName="object-[center_42%]"
         sizes="100vw"
       />
-      <div className="mt-16">
+      <div className="container mt-20">
         <JourneyTimeline />
       </div>
     </article>

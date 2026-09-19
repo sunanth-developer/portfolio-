@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { site } from '@/data/site'
 import { useApp } from '@/context/AppContext'
+import { ProfileSwitcher } from '@/components/ProfileSwitcher'
 import { cn } from '@/lib/cn'
 
 export function Footer() {
@@ -9,19 +10,22 @@ export function Footer() {
   const [statusHits, setStatusHits] = useState(0)
 
   return (
-    <footer className="border-t border-line px-5 py-16 pb-[max(4rem,env(safe-area-inset-bottom))] md:px-8 md:py-20">
-      <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+    <footer className="border-t border-line py-16 pb-[max(4rem,env(safe-area-inset-bottom))] md:py-20">
+      <div className="container flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="font-display text-2xl tracking-[0.16em] uppercase md:text-4xl">{site.name}</p>
           <p className="mt-4 font-mono text-[10px] tracking-[0.18em] text-muted uppercase">
             {site.title}
           </p>
           <p className="mt-3 font-mono text-[10px] tracking-[0.2em] text-meta uppercase">
-            Ideas · Code · Products · Impact
+            Two perspectives. One problem-solving mindset.
           </p>
         </div>
         <div className="text-xs tracking-[0.16em] text-muted uppercase">
           <p>{site.locationShort}</p>
+          <div className="mt-5">
+            <ProfileSwitcher layout="footer" />
+          </div>
           <div className="mt-4 flex flex-wrap gap-5">
             <a
               href={`mailto:${site.email}`}

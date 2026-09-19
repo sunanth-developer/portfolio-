@@ -87,6 +87,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useLayoutEffect(() => {
     applyDocumentProfile(profile)
+    const color =
+      profile === 'founder' ? '#F6F5F0' : profile === 'developer' ? '#080909' : '#EDECE7'
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color)
   }, [profile])
 
   useEffect(() => {
@@ -118,6 +121,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setAccessOpen(false)
       setCommandOpen(false)
       setExperimentId(null)
+      setCursor('default')
       if (location.pathname === href) {
         window.scrollTo(0, 0)
         return
@@ -141,14 +145,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setAccessOpen(false)
       setCommandOpen(false)
       setExperimentId(null)
-      const from: ProfileId = profile === 'developer' ? 'developer' : 'founder'
+      setCursor('default')
+      const from: Profile = profile === 'developer' || profile === 'founder' ? profile : 'neutral'
       if (!forceHome && from === next && location.pathname !== '/') {
         return
       }
       const reduced = prefersReducedMotion()
       setProfileSwitch({ active: true, from, to: next })
-      const moveAt = reduced ? 0 : 380
-      const hideAt = reduced ? 80 : 780
+      const fromGate = from === 'neutral'
+      const moveAt = reduced ? 0 : fromGate ? 620 : 380
+      const hideAt = reduced ? 80 : fromGate ? 1100 : 780
       window.setTimeout(() => {
         setProfile(next)
         persistProfile(next)

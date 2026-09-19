@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { notes, noteCategories } from '@/data/notes'
 import { FieldNoteCard } from '@/components/FieldNoteCard'
-import { DisplayHeadline } from '@/components/DisplayHeadline'
+import { WaveBuild } from '@/components/WaveBuild'
 import { cn } from '@/lib/cn'
 
 export default function FieldNotes() {
@@ -12,43 +12,48 @@ export default function FieldNotes() {
   )
 
   return (
-    <article className="px-5 pt-page pb-24 md:px-8">
-      <DisplayHeadline
-        lines={['Ideas.', 'Observations.', 'Lessons.']}
-        className="text-[12vw] md:text-[6.2rem]"
-      />
-      <p className="mt-6 max-w-xl text-muted">
-        Drafts from the work. These are not published articles — they are sketches, marked clearly until they are
-        finished.
-      </p>
-      <div className="mt-12 flex flex-wrap gap-2">
-        {['ALL', ...noteCategories].map((category) => (
-          <button
-            key={category}
-            type="button"
-            className={cn(
-              'min-h-11 rounded-full border px-4 py-2 font-mono text-[10px] tracking-[0.16em] uppercase',
-              filter === category ? 'border-accent text-accent' : 'border-line text-muted',
-            )}
-            onClick={() => setFilter(category)}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-      <div className="mt-12 grid gap-px bg-line">
-        {visible.length === 0 ? (
-          <p className="bg-bg p-10 text-muted">Nothing filed under this heading yet.</p>
-        ) : (
-          <>
-            {visible[0] && <FieldNoteCard note={visible[0]} featured />}
-            <div className="grid gap-px bg-line md:grid-cols-2">
-              {visible.slice(1).map((note) => (
-                <FieldNoteCard key={note.slug} note={note} />
+    <article className="pt-page pb-[var(--space-4xl)]">
+      <div className="container">
+        <p className="type-meta">Thinking</p>
+        <WaveBuild
+          as="h1"
+          text="Things I'm still figuring out."
+          mode="words"
+          play="mount"
+          className="type-l mt-6 display-w"
+        />
+        <p className="type-body mt-6 text-muted">
+          Drafts from the work. These are not published articles — they are sketches, marked clearly until they are
+          finished.
+        </p>
+        <div className="mt-12 flex flex-wrap gap-x-8 gap-y-2">
+          {['ALL', ...noteCategories].map((category) => (
+            <button
+              key={category}
+              type="button"
+              className={cn(
+                'min-h-11 font-mono text-[10px] tracking-[0.2em] uppercase',
+                filter === category ? 'text-fg' : 'text-meta hover:text-fg',
+              )}
+              onClick={() => setFilter(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+        <div className="mt-16">
+          {visible.length === 0 ? (
+            <p className="type-body text-muted">Nothing filed under this heading yet.</p>
+          ) : (
+            <ul>
+              {visible.map((note, index) => (
+                <li key={note.slug}>
+                  <FieldNoteCard note={note} featured={index === 0} />
+                </li>
               ))}
-            </div>
-          </>
-        )}
+            </ul>
+          )}
+        </div>
       </div>
     </article>
   )

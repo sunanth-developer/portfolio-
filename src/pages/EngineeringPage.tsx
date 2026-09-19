@@ -1,51 +1,63 @@
-import { TechnologyGraph } from '@/components/TechnologyGraph'
-import { ArchitectureGraph } from '@/components/ArchitectureGraph'
-import { DisplayHeadline } from '@/components/DisplayHeadline'
-import { technologyCategories, technologyDetails } from '@/data/technologies'
+import { ProductDeconstruct } from '@/components/ProductDeconstruct'
+import { StackContext } from '@/components/StackContext'
+import { SystemInspect } from '@/components/SystemInspect'
+import { TradeOffs } from '@/components/TradeOffs'
+import { MagneticButton } from '@/components/MagneticButton'
+import { useApp } from '@/context/AppContext'
 
 export default function Engineering() {
+  const { goTo, profile } = useApp()
+  const developer = profile === 'developer'
+
   return (
-    <article className="px-5 pt-page pb-24 md:px-8">
-      <DisplayHeadline
-        lines={['Under', 'the hood.']}
-        className="text-[14vw] md:text-[8rem]"
-      />
-      <p className="mt-8 max-w-xl text-lg text-muted">
-        I build the technology behind the products. Click a layer to see what it does, why it is used, and where it
-        fits.
-      </p>
-      <div className="mt-12">
-        <ArchitectureGraph />
-      </div>
-      <div className="mt-16">
-        <TechnologyGraph />
-      </div>
-      <div className="mt-20">
-        <h2 className="display text-4xl md:text-5xl">Technology</h2>
-        <p className="mt-4 max-w-xl text-muted">What each piece is for — not a score.</p>
-        <ul className="mt-10 grid gap-px bg-line md:grid-cols-2">
-          {technologyDetails.map((item) => (
-            <li key={item.id} className="bg-bg p-5">
-              <p className="font-mono text-[10px] tracking-[0.2em] text-accent uppercase">{item.layer}</p>
-              <h3 className="display mt-3 text-2xl">{item.name}</h3>
-              <p className="mt-3 text-muted">{item.what}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="mt-20 grid gap-12 md:grid-cols-2">
-        {technologyCategories.map((category) => (
-          <section key={category.id} className="border-t border-line pt-6">
-            <h2 className="eyebrow text-accent">{category.label}</h2>
-            <ul className="mt-5">
-              {category.items.map((item) => (
-                <li key={item} className="border-b border-line py-3 font-display text-2xl">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
+    <article className="pt-page pb-[var(--space-4xl)]">
+      <div className="container">
+        <p className="type-meta">Engineering</p>
+        <h1 className="type-xl mt-6 display-w">How it works.</h1>
+        <p className="type-body mt-8 text-muted">
+          A feature is rarely just a feature. It touches interfaces, logic, data, services and the people using it.
+        </p>
+
+        <section className="mt-20">
+          <ProductDeconstruct />
+        </section>
+
+        <section className="mt-24">
+          <h2 className="type-l display-w">A real product creates real engineering problems.</h2>
+          <p className="type-body mt-6 text-muted">
+            DriverSpot is the system that can be inspected. Select a component to see what it connects and what role it
+            plays.
+          </p>
+          <div className="mt-14">
+            <SystemInspect />
+          </div>
+        </section>
+
+        <section className="mt-24">
+          <h2 className="type-l display-w">Good engineering is mostly trade-offs.</h2>
+          <p className="type-body mt-6 text-muted">
+            Decisions from a live marketplace — not a preference for one side of a diagram.
+          </p>
+          <div className="mt-14">
+            <TradeOffs />
+          </div>
+        </section>
+
+        <section className="mt-24">
+          <h2 className="type-l display-w">The tools I use to build.</h2>
+          <p className="type-body mt-6 text-muted">Where each piece sits. Not a logo wall.</p>
+          <div className="mt-14">
+            <StackContext />
+          </div>
+        </section>
+
+        {developer && (
+          <div className="mt-16">
+            <MagneticButton variant="ghost" cursor="case" onClick={() => goTo('/work/driverspot', '02', 'DriverSpot')}>
+              Inspect DriverSpot →
+            </MagneticButton>
+          </div>
+        )}
       </div>
     </article>
   )

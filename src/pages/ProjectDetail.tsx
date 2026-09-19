@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 import { projectById } from '@/data/projects'
 import { projectCovers } from '@/data/visuals'
 import { EditorialImage } from '@/components/EditorialImage'
+import { DeveloperCaseStudy } from '@/components/DeveloperCaseStudy'
 import { ProjectCaseStudy } from '@/components/ProjectCaseStudy'
 import { MagneticButton } from '@/components/MagneticButton'
 import { useApp } from '@/context/AppContext'
@@ -9,14 +10,15 @@ import { PhoneStage } from '@/components/ProjectGallery'
 
 export default function ProjectDetail() {
   const { slug } = useParams()
-  const { goTo } = useApp()
+  const { goTo, profile } = useApp()
   const project = slug ? projectById(slug) : undefined
   const cover = project ? projectCovers[project.id] : undefined
+  const developer = profile === 'developer'
 
   if (!project) {
     return (
-      <article className="px-5 pt-36 pb-24 md:px-8">
-        <h1 className="display text-5xl">File not found</h1>
+      <article className="container pt-page pb-[var(--space-4xl)]">
+        <h1 className="type-l">File not found</h1>
         <div className="mt-8">
           <MagneticButton variant="ghost" onClick={() => goTo('/work', '02', 'Work')}>
             Back to work
@@ -27,15 +29,24 @@ export default function ProjectDetail() {
   }
 
   return (
-    <article className="px-5 pt-page pb-24 md:px-8">
-      <h1 className="display text-[12vw] md:text-[8rem]">{project.title}</h1>
-      <p className="mt-4 text-xs tracking-[0.18em] text-muted uppercase">
-        {[project.role, project.status].filter(Boolean).join(' · ')}
+    <article className="pt-page pb-[var(--space-4xl)]">
+      <div className="container">
+      <p className="type-meta">
+        {developer
+          ? [project.status === 'Live' ? 'PRODUCTION' : project.status, project.line]
+              .filter(Boolean)
+              .join(' · ')
+          : [project.role, project.status].filter(Boolean).join(' · ')}
       </p>
-      {project.description ? (
-        <p className="mt-8 max-w-2xl text-lg text-muted">{project.description}</p>
+      <h1 className="type-xl mt-4">{project.title}</h1>
+      {developer && project.id === 'driverspot' ? (
+        <p className="type-body mt-8 text-muted">
+          A real product creates real engineering problems. This is how the system was constructed.
+        </p>
+      ) : project.description ? (
+        <p className="type-body mt-8 text-muted">{project.description}</p>
       ) : (
-        <p className="mt-8 max-w-2xl text-lg text-muted">
+        <p className="type-body mt-8 text-muted">
           This file is indexed. The full case study populates as verified detail is added to the data layer.
         </p>
       )}
@@ -49,12 +60,12 @@ export default function ProjectDetail() {
           sizes="100vw"
         />
       )}
-      {project.featured && (
+      {!developer && project.featured && (
         <div className="mt-12 md:hidden">
           <PhoneStage index={0} />
         </div>
       )}
-      {project.metrics && (
+      {!developer && project.metrics && (
         <div className="mt-12 grid grid-cols-2 gap-px bg-line md:grid-cols-4">
           {project.metrics.map((metric) => (
             <div key={metric.label} className="bg-bg px-4 py-6">
@@ -64,13 +75,18 @@ export default function ProjectDetail() {
           ))}
         </div>
       )}
-      <div className="mt-16">
-        <ProjectCaseStudy project={project} />
-      </div>
-      <div className="mt-16">
-        <MagneticButton variant="text" onClick={() => goTo('/work', '02', 'Work')}>
-          ← Work
-        </MagneticButton>
+      {developer ? <DeveloperCaseStudy project={project} /> : (
+        <div className="mt-16">
+          <ProjectCaseStudy project={project} />
+        </div>
+      )}
+      {!developer && (
+        <div className="mt-16">
+          <MagneticButton variant="text" onClick={() => goTo('/work', '02', 'Work')}>
+            ← Work
+          </MagneticButton>
+        </div>
+      )}
       </div>
     </article>
   )

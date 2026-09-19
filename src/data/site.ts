@@ -2,8 +2,8 @@ export const site = {
   name: 'Sunanth Samala',
   shortName: 'Sunanth',
   monogram: 'S',
-  title: 'Founder × Developer × Builder',
-  statement: 'Two perspectives. One builder.',
+  title: 'Founder × Developer × Problem Solver',
+  statement: 'Two perspectives. One problem-solving mindset.',
   location: 'Hyderabad, India',
   locationShort: 'Hyderabad · India',
   email: 'sunanth.samala7@gmail.com',
@@ -80,7 +80,7 @@ export const developerNav: NavItem[] = [
     label: 'Home',
     href: '/developer',
     short: 'Home',
-    description: 'The developer perspective.',
+    description: 'How systems become products.',
   },
   {
     id: 'projects',
@@ -96,7 +96,7 @@ export const developerNav: NavItem[] = [
     label: 'Engineering',
     href: '/engineering',
     short: 'Engineering',
-    description: 'Under the hood.',
+    description: 'How it works.',
   },
   {
     id: 'lab',
@@ -104,7 +104,7 @@ export const developerNav: NavItem[] = [
     label: 'Lab',
     href: '/lab',
     short: 'Lab',
-    description: 'Experiments today. Bigger things tomorrow.',
+    description: "Things I'm still figuring out.",
   },
   {
     id: 'about',
@@ -120,7 +120,7 @@ export const developerNav: NavItem[] = [
     label: 'Contact',
     href: '/contact',
     short: 'Contact',
-    description: "Let's build something great.",
+    description: 'A problem worth solving.',
   },
 ]
 
@@ -141,6 +141,7 @@ export const pageMeta: Record<string, { number: string; label: string }> = {
   '/lab': { number: '04', label: 'Lab' },
   '/notes': { number: '04', label: 'Thinking' },
   '/contact': { number: '06', label: 'Contact' },
+  '/driverspot': { number: '00', label: 'DriverSpot' },
 }
 
 export const accessLayer = {

@@ -3,7 +3,7 @@ import { useApp } from '@/context/AppContext'
 import type { ProfileId } from '@/context/AppContext'
 import { cn } from '@/lib/cn'
 
-export function ProfileSwitcher({ className }: { className?: string }) {
+export function ProfileSwitcher({ className, layout = 'nav' }: { className?: string; layout?: string }) {
   const { profile, switchProfile, setCursor } = useApp()
   const active: ProfileId = profile === 'developer' ? 'developer' : 'founder'
 
@@ -30,7 +30,7 @@ export function ProfileSwitcher({ className }: { className?: string }) {
           >
             {selected && (
               <motion.span
-                layoutId="profile-active-pill"
+                layoutId={`profile-active-pill-${layout}`}
                 className={cn(
                   'absolute inset-0 rounded-full',
                   id === 'founder' ? 'bg-founder' : 'bg-developer',

@@ -1,8 +1,7 @@
-import { lazy, Suspense } from 'react'
+import { ProjectIndex } from '@/components/ProjectIndex'
 import { DriverSpotStory } from '@/sections/DriverSpotStory'
-import { DisplayHeadline } from '@/components/DisplayHeadline'
-import { ProjectFiles } from '@/components/ProjectFiles'
 import { useApp } from '@/context/AppContext'
+import { lazy, Suspense } from 'react'
 
 const ProjectShowcase = lazy(() => import('@/components/ProjectShowcase'))
 
@@ -10,31 +9,36 @@ export default function Work() {
   const { profile } = useApp()
   const developer = profile === 'developer'
 
+  if (developer) {
+    return (
+      <article className="pt-page pb-[var(--space-4xl)]">
+        <div className="container">
+          <p className="type-meta">Projects</p>
+          <h1 className="type-xl mt-6 display-w">Things I've built.</h1>
+          <p className="type-body mt-6 text-muted">
+            Real products. Indexed work stays thin until verified detail exists.
+          </p>
+          <div className="mt-16">
+            <ProjectIndex />
+          </div>
+        </div>
+      </article>
+    )
+  }
+
   return (
     <div className="pt-page">
-      <div className="px-5 md:px-8">
-        <DisplayHeadline
-          lines={developer ? ["Things I've built."] : ['What I build.']}
-          className="text-[12vw] md:text-[7rem]"
-        />
-        <p className="mt-6 max-w-xl text-muted">
-          {developer
-            ? 'Technical case files. Indexed work stays thin until verified detail is added.'
-            : 'DriverSpot is the flagship. Other builds are indexed without invented case studies.'}
+      <div className="container">
+        <p className="type-meta">Work</p>
+        <h1 className="type-xl mt-6">What I build.</h1>
+        <p className="type-body mt-6 text-muted">
+          DriverSpot is the flagship. Other builds are indexed without invented case studies.
         </p>
       </div>
-      {developer ? (
-        <div className="px-5 py-12 md:px-8">
-          <ProjectFiles />
-        </div>
-      ) : (
-        <>
-          <DriverSpotStory />
-          <Suspense fallback={<div className="min-h-[40vh]" />}>
-            <ProjectShowcase />
-          </Suspense>
-        </>
-      )}
+      <DriverSpotStory />
+      <Suspense fallback={<div className="min-h-[40vh]" />}>
+        <ProjectShowcase />
+      </Suspense>
     </div>
   )
 }

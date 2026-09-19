@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { timeline } from '@/data/timeline'
 import { useApp } from '@/context/AppContext'
 import { useReducedMotion } from '@/hooks/useMediaQuery'
+import { WaveBuild } from '@/components/WaveBuild'
 
 export function JourneyTimeline({ limit }: { limit?: number }) {
   const { unlock } = useApp()
@@ -42,7 +43,9 @@ export function JourneyTimeline({ limit }: { limit?: number }) {
             {entry.year ? <span className="mr-3 text-2xl tracking-normal md:text-3xl">{entry.year}</span> : null}
             <span className="text-meta">{entry.stage}</span>
           </p>
-          <h3 className="display mt-3 text-3xl md:text-5xl">{entry.title}</h3>
+          <h3 className="display mt-3 text-3xl md:text-5xl">
+            <WaveBuild text={entry.title} mode="words" as="span" delay={index * 0.02} />
+          </h3>
           <p className="mt-4 max-w-2xl text-muted">{entry.body}</p>
         </motion.li>
       ))}

@@ -30,17 +30,30 @@ export function ExperimentOverlay() {
         >
           <button
             type="button"
-            className="sticky top-0 z-10 ml-auto flex min-h-11 items-center bg-bg text-[11px] tracking-[0.24em] uppercase"
+            className="sticky top-0 z-10 ml-auto flex min-h-11 items-center bg-bg font-mono text-[11px] tracking-[0.24em] uppercase"
             onClick={() => setExperimentId(null)}
             onMouseEnter={() => setCursor('close')}
             onMouseLeave={() => setCursor('default')}
           >
             Close
           </button>
-          <p className="eyebrow text-accent">{experiment.code}</p>
-          <h2 className="display mt-8 max-w-4xl text-4xl md:text-8xl">{experiment.title}</h2>
-          <p className="mt-6 text-xs tracking-[0.2em] text-accent uppercase">{experiment.status}</p>
+          <p className="font-mono text-[10px] tracking-[0.22em] text-meta uppercase">
+            {experiment.category} · {experiment.status}
+          </p>
+          <ol className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] tracking-[0.2em] text-developer uppercase">
+            <li>Question</li>
+            <li aria-hidden>→</li>
+            <li>Experiment</li>
+            <li aria-hidden>→</li>
+            <li>Still exploring</li>
+          </ol>
+          <h2 className="display mt-8 max-w-4xl text-4xl md:text-7xl">{experiment.title}</h2>
           <p className="mt-10 max-w-2xl text-lg text-muted">{experiment.body}</p>
+          <ul className="mt-10 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] tracking-[0.18em] text-meta uppercase">
+            {experiment.stack.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </motion.div>
       )}
     </AnimatePresence>

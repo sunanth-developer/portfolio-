@@ -48,7 +48,7 @@ export function FullscreenMenu() {
           </div>
           {profile !== 'neutral' && (
             <div className="mt-6 sm:hidden">
-              <ProfileSwitcher />
+              <ProfileSwitcher layout="menu" />
             </div>
           )}
           <div className="flex flex-1 flex-col justify-center py-6 md:px-8">
@@ -63,7 +63,6 @@ export function FullscreenMenu() {
               onClick={() => goTo('/', '00', 'Perspectives')}
             >
               <span className="flex items-baseline gap-4 md:gap-8">
-                <span className="font-mono text-xs tracking-[0.2em] text-accent">00</span>
                 <span className="display text-4xl uppercase md:text-6xl lg:text-7xl">Perspectives</span>
               </span>
               <span className="mt-1 max-w-sm text-sm text-muted md:mt-0 md:text-right">
@@ -83,7 +82,6 @@ export function FullscreenMenu() {
                 onClick={() => goTo(item.href, item.index, item.label)}
               >
                 <span className="flex items-baseline gap-4 md:gap-8">
-                  <span className="font-mono text-xs tracking-[0.2em] text-accent">{item.index}</span>
                   <span className="display text-4xl uppercase md:text-6xl lg:text-7xl">{item.label}</span>
                 </span>
                 <span className="mt-1 max-w-sm text-sm text-muted md:mt-0 md:text-right">
